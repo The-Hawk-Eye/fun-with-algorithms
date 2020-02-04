@@ -24,4 +24,10 @@ end_pos(ε) = { 0, 1, 2, ..., |w| }
 two strings <i>x, y ε Σ*</i> are <b>end-equivalent on w</b> if and only if <i>end_pos(x) = end_pos(y)</i>  
 end-equivalence will be denoted by ≡<sub>w</sub> , i.e. <i>x ≡<sub>w</sub> y ↔ end_pos(x) = end_pos(y)</i>  
 
-<b>Corollary:</b> The end-equivalence relation is equivalent to Nerode's relation <i>R<sub>L</sub></i>: <i>x ≡<sub>w</sub> y ↔ x ≡<sub>L</sub> y</i>  
+<b>Corollary:</b> The end-equivalence relation is equivalent to Nerode's relation <i>R<sub>L</sub></i>:  
+<i>x ≡<sub>w</sub> y ↔ x ≡<sub>L</sub> y</i>  
+
+<b>Proof:</b> Let <i>w = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> (a<sub>i</sub> ε Σ) and x, y, z ε Σ*</i>.  
+Then <i>xz ε Suffix(w) ↔ xz = a<sub>n-|xz|+1</sub>...a<sub>n</sub></i>  
+<i>→ x = a<sub>n-|xz|+1</sub>...a<sub>n-|z|</sub>  
+  z = a<sub>n-|z|+1</sub>...a<sub>n</sub></i> 
