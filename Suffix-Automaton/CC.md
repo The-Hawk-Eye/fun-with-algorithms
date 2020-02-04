@@ -46,7 +46,7 @@ Let <i>x, y ε Σ*</i> be subwords of <i>w</i> with |x| ≤ |y|, then:
 2. <i>x is a suffix of y → <i>end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>  
 3. We have either <i>end_pos<sub>w</sub>(x) c end_pos<sub>w</sub>(y)</i> or <i>end_pos<sub>w</sub>(x) ∩ end_pos<sub>w</sub>(y) = Ø</i>  
 
-#### Equivalence classes <b><i>[x]<sub>w</sub>, r(x)</i></b> ####
+#### Equivalence classes <b><i>[x]<sub>w</sub></i></b> and representatives <b><i>r(x)</i></b> ####
 Let x be an infix of <i>w</i>. Denote by <i>[x]<sub>w</sub></i> the equivalence class of x with respect to the relation ≡<sub>w</sub> and denote by <b><i>r(x)</i></b> the longes word in the equivalence class <i>[x]<sub>w</sub></i>. We say that <i>r(x)</i> canonically represents the equivalence class <i>[x]<sub>w</sub></i>.  
 <b><i>Lemma:</i></b>
 Let x be an infix of <i>w</i>, then:
