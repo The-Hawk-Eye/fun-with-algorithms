@@ -15,7 +15,7 @@ Any path starting at the initial state <b><i>s<sub>0</sub></i></b> fors a substr
 A suffix automaton is a minimal DFA over the language <i>L = Suffix(w)</i>. From Nerode's theorem it follows that the number of states of the minimal DFA is equal to the number of equivalence classes in the relation <i>R<sub>L</sub></i>, where:  
 <i>{α, ß} ε R<sub>L</sub> (α ≡<sub>L</sub> ß) ↔ for every z ε Σ*: αz ε L ↔ ßz ε L</i>  
 
-#### end_pos ####
+#### End positions <b><i>end_pos</b></i> ####
 Let <i>w</i> = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> <i>(a<sub>i</sub> ε Σ)</i> and <i>y╪ε ε Σ*</i>  
 define: <i><b>end_pos<sub>w</sub>(y)</b> = { i | y = a<sub>i-|y|+1</sub>...a<sub>i</sub> }</i>  
 <i>end_pos<sub>w</sub>(y)</i> is the set of all positions in the string <i>w</i>, in which the occurrences of <i>y</i> end  
@@ -45,3 +45,26 @@ Let <i>x, y ε Σ*</i> be subwords of <i>w</i> with |x| ≤ |y|, then:
 1. <i>end_pos<sub>w</sub>(x) ∩ end_pos<sub>w</sub>(y) ╪ Ø</i> → x is a suffix of y  
 2. <i>x is a suffix of y → <i>end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>  
 3. We have either <i>end_pos<sub>w</sub>(x) c end_pos<sub>w</sub>(y)</i> or <i>end_pos<sub>w</sub>(x) ∩ end_pos<sub>w</sub>(y) = Ø</i>  
+
+#### Equivalence classes <b><i>[x]<sub>w</sub>, r(x)</i></b> ####
+Let x be an infix of <i>w</i>. Denote by <i>[x]<sub>w</sub></i> the equivalence class of x with respect to the relation ≡<sub>w</sub> and denote by <b><i>r(x)</i></b> the longes word in the equivalence class <i>[x]<sub>w</sub></i>. We say that <i>r(x)</i> canonically represents the equivalence class <i>[x]<sub>w</sub></i>.  
+<b><i>Lemma:</i></b>
+Let x be an infix of <i>w</i>, then:
+1. If there is a letter <i>a ε Σ</i>, such that every occurance of x in <i>w</i> is preceeded by <i>a</i>, then x does not represent the equivalence class <i>[x]<sub>w</sub></i>  
+2. If x is a prefix of <i>w</i>, then x is the longest word in <i>[x]<sub>w</sub></i>  
+3. If there are letters <i>b,c ε Σ, b ╪ c</i> and both <i>bx</i> and <i>cx</i> are infixes of <i>w</i>, then x canonically represents the equivalence class <i>[x]<sub>w</sub></i>  
+4. <i>x = r(x)</i> ↔ x is a prefix of <i>w</i> or it occurs in two distinct left contexts  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
