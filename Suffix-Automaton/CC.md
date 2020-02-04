@@ -108,9 +108,13 @@ For any <i>σ c Σ*</i>: σ is an infix of <i>w</i>, we have:
 <i>end_pos<sub>wa</sub>(σ) = end_pos<sub>w</sub>(σ) U { |w| + 1 }</i>, if σ is a suffix of <i>wa</i>  
 <i>end_pos<sub>wa</sub>(σ) = end_pos<sub>w</sub>(σ)</i>, otherwise   
 Let <i>ß = [α]<sub>w</sub> → end_pos<sub>w</sub>(ß) = end_pos<sub>w</sub>(α)</i>  
-Since <i>α ¢ Q<sub>w</sub> → α is a suffix of ß → end_pos<sub>wa</sub>(ß) c end_pos<sub>wa</sub>(α)</i>
+Since <i>α ¢ Q<sub>w</sub> → α is a suffix of ß → end_pos<sub>wa</sub>(ß) c end_pos<sub>wa</sub>(α)</i>  
 Since <i>α c Q<sub>wa</sub> → α = [α]<sub>wa</sub> ╪ ß → end_pos<sub>wa</sub>(ß) ╪ end_pos<sub>wa</sub>(α)</i>  
-This implies that <i>end_pos<sub>wa</sub>(α)\end_pos<sub>wa</sub>(ß) = { |w| + 1 } → α is a suffix of wa and ß is not a suffix of wa</i>  
+This implies that <i>end_pos<sub>wa</sub>(α)\end_pos<sub>wa</sub>(ß) = { |w| + 1 }</i> → α is a suffix of wa and ß is not a suffix of wa  
+Now assume that <i>slink(wa) ╪ α</i>. Since <i>α ╪<sub>wa</sub> wa</i>, we get that <i>|slink(wa)| > |α|</i> and α is a suffix of <i>slink(wa)</i>  
+<i>→end_pos<sub>wa</sub>(slink(wa)) c end_pos<sub>wa</sub)(α) → end_pos<sub>w</sub>(slink(wa)) c end_pos<sub>w</sub>(α)</i>  
+and from Property 2. <i>end_pos<sub>w</sub>(α) c end_pos<sub>w</sub>(slink(wa))</i>  
+<i>→ end_pos<sub>w</sub>(slink(wa)) = end_pos<sub>w</sub>(α) = end_pos<sub>w</sub>(ß)</i>
 
 
 
