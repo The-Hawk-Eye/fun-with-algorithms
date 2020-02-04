@@ -1,5 +1,4 @@
 # Correctness and Complexity
-# Suffix Automaton #
 
 ## Introduction ##
 A suffix automaton for a given string <i>w</i> is a minimal <b>DFA</b> (deterministic finite automaton) that accepts all the suffixes of the string <i>w</i>. For a string of length <b>n</b> it only requires <b><i>O(n)</i></b> memory and it can also be built in <b><i>O(n)</i></b> time. The algorithm was discovered in 1983 by <i>Blumer, Blumer, Haussler, Ehrenfeucht, Chen and Seiferas</i> and was presented in their paper <i>The smallest automaton recognizing the subwords of a text</i>. An important property of a suffix automaton is, that it contains information about all substrings of the string <i>w</i>. This is due to the following theorem:  
@@ -25,10 +24,10 @@ two strings <i>α, ß c Σ*</i> are <b>end-equivalent on w</b> if and only if <i
 end-equivalence will be denoted by <i>≡<sub>w</sub></i> , i.e. <i>α ≡<sub>w</sub> ß ↔ end_pos<sub>w</sub>(α) = end_pos<sub>w</sub>(ß)</i>  
 
 <b><i>Example:</b></i>
-<pre>	<i>w = a b x b x</i>  
+<pre>	<i>w = a b c b c</i>  
 	<i>   0 1 2 3 4 5</i>  
-    	<i>end_pos<sub>w</sub>(bx) = end_pos<sub>w</sub>(x) = {3, 5}</i>  
-    	<i>bx ≡<sub>w</sub> x</i></pre>  
+    	<i>end_pos<sub>w</sub>(bc) = end_pos<sub>w</sub>(c) = {3, 5}</i>  
+    	<i>bc ≡<sub>w</sub> c</i></pre>  
 
 <b><i>Corollary:</i></b> The end-equivalence relation is equivalent to Nerode's relation <i>R<sub>L</sub></i> for the language <i>L = Suffix(w)</i>:  
 <i>α ≡<sub>w</sub> ß ↔ α ≡<sub>Suffix(w)</sub> ß</i>  
@@ -41,23 +40,24 @@ But <i> α ≡<sub>Suffix(w)</sub> ß ↔ for every z c Σ*: αz c Suffix(w) ↔
 
 <b><i>Properties:</i></b>  
 Let <i>α, ß c Σ*</i> be subwords of <i>w</i> with |α| ≤ |ß|, then:
-<i>1. end_pos<sub>w</sub>(α) ∩ end_pos<sub>w</sub>(ß) ╪ Ø → α is a suffix of ß
+1. end_pos<sub>w</sub>(α) ∩ end_pos<sub>w</sub>(ß) ╪ Ø → α is a suffix of ß
 2. α is a suffix of ß → end_pos<sub>w</sub>(ß) c end_pos<sub>w</sub>(α)
-3. We have either end_pos<sub>w</sub>(α) c end_pos<sub>w</sub>(ß) or end_pos<sub>w</sub>(α) ∩ end_pos<sub>w</sub>(ß) = Ø</i>
+3. We have either end_pos<sub>w</sub>(α) c end_pos<sub>w</sub>(ß) or end_pos<sub>w</sub>(α) ∩ end_pos<sub>w</sub>(ß) = Ø
 
 ### Equivalence classes <b><i>[α]<sub>w</sub></i></b> and Representatives <b><i>r(α)</i></b> ###
 Let α be an infix of <i>w</i>. Denote by <i>[α]<sub>w</sub></i> the equivalence class of α with respect to the relation ≡<sub>w</sub> and denote by <b><i>r(α)</i></b> the longest word in the equivalence class <i>[α]<sub>w</sub></i>. We say that <i>r(α)</i> canonically represents the equivalence class <i>[α]<sub>w</sub></i>  
+By definition <i>r(ε) = ε</i> 
 <p></p>  
 
 <b><i>Lemma:</i></b>  
 Let α be an infix of <i>w</i>, then:  
-<i>1. If there is a letter a c Σ, such that every occurance of α in w is preceeded by a, then α does not represent the equivalence class [α]<sub>w</sub>
+1. If there is a letter a c Σ, such that every occurance of α in w is preceeded by a, then α does not represent the equivalence class [α]<sub>w</sub>
 2. If α is a prefix of w, then α is the longest word in [α]<sub>w</sub>
 3. If there are letters x, y c Σ, x ╪ y and both xα and yα are infixes of w, then α canonically represents the equivalence class [α]<sub>w</sub>  
-4. α = r(α) ↔ α is a prefix of w or it occurs in two distinct left contexts</i>
+4. α = r(α) ↔ α is a prefix of w or it occurs in two distinct left contexts
 
 <b><i>Proof:</i></b>
-<i>1. Let a preceed every occurance of α in w. Then for every i c end_pos(α) we have w<sub>i-|α|</sub> = a  
+1. Let a preceed every occurance of α in w. Then for every i c end_pos(α) we have w<sub>i-|α|</sub> = a  
 → i c end_pos(aα)  
 → end_pos(α) c end_pos(aα)  
 And since α is a suffix of aα we have that end_pos(aα) c end_pos(α) (by Property 2.)  
@@ -65,7 +65,26 @@ And since α is a suffix of aα we have that end_pos(aα) c end_pos(α) (by Prop
 It follows that α ≡<sub>w</sub> aα and |α| < |aα| → α ╪ r(α)
 2. Let |α| = i. Since α is a prefix of w we have α = a<sub>1</sub>...a<sub>i</sub> and i c end_pos(α).  
 Suppose ß ≡<sub>w</sub> α → i c end_pos(ß) → |ß| ≤ |a<sub>1</sub>...a<sub>i</sub>| = i = |α|
-</i>
+3. Let x, y c Σ, x ╪ y and both xα and yα are infixes of w. Let i and j be such that:  
+i c end_pos(xα)  
+j c end_pos(yα)  
+Since α is a suffix of both xα and yα we have that i, j c end_pos(α)
+Let ß ≡<sub>w</sub> α, then i, j c end_pos(ß). Assume |ß| > |α| → |ß| ≥ |α| + 1 = |xα| = |yα|  
+→ xα is a suffix of ß and yα is a suffix of ß → x = y - contradiction  
+
+### Suffix links <b><i>slink</i></b> ###
+The automaton <i>A<sub>w</sub> ( Σ, Q<sub>w</sub>, s<sub>0</sub>, F<sub>w</sub>, δ<sub>w</sub>)</i> with:  
+<i>Q<sub>w</sub> = { r(α) | α is an infix of w }</i>  
+<i>δ<sub>w</sub>(α, a) = r(αa), if αa is an infix of w</i>  
+<i>F<sub>w</sub> = { α c Q<sub>w</sub> | α is a suffix of w }</i>  
+is a minimal DFA over the language L = Suffix(w).  
+The states of the automaton are exactly the equivalence classes with respect to the relation ≡<sub>w</sub>.
+For each state we will keep a pointer called a <b><i>suffix link</i></b> that points to the longest suffix of w that is in another equivalence class: <b><i>slink(α)</i></b> is the longest suffix of α: <i>slink(α) ╪<sub>w</sub> α</i>  
+
+<b><i>Lemma:</b></i> <i>( Q<sub>w</sub>, slink, s<sub>0</sub>) is a rooted tree.</i>  
+<b><i>Proof:</b></i> We only need to show that <i>slink(α) c Q<sub>w</sub></i>. Since <i>slink(α)</i> is a suffix of α from Property 2. we have that <i>end_pos(α) c end_pos(slink(α))</i>. And since <i>α ╪ slink(α)</i>, we have that <i>end_pos(α) ╪ end_pos(slink(α))</i>. Let <i>α = x.a.slink(α), x c Σ*, a c Σ</i> and let <i>i c end_pos(slink(α))\end_pos(α)</i>.  
+If <i>i = |slink(α)|</i> → <i>slink(α)</i> is a prefix of w → <i>slink(α) c Q<sub>w</sub></i>  
+If <i>i ╪ |slink(α)|</i> → <i>w<sub>i-|slink(α)|</sub> ╪ a</i> → <i>slink(α)</i> appears in two different left contexts → <i>slink(α) c Q<sub>w</sub></i>  
 
 
 
