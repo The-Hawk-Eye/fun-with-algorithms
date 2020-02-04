@@ -79,7 +79,9 @@ The automaton <i>A<sub>w</sub> ( Σ, Q<sub>w</sub>, s<sub>0</sub>, F<sub>w</sub>
 <i>F<sub>w</sub> = { α c Q<sub>w</sub> | α is a suffix of w }</i>  
 is a minimal DFA over the language L = Suffix(w).  
 The states of the automaton are exactly the equivalence classes with respect to the relation ≡<sub>w</sub>  
-For each state we will keep a pointer called a <b><i>suffix link</i></b> that points to the longest suffix of w that is in another equivalence class: <b><i>slink(α)</i></b> is the longest suffix of α: <i>slink(α) ╪<sub>w</sub> α</i>  
+For each state we will store the length of the longest word in the equivalence class:  
+<b><i>len([α]<sub>w</sub>) = |r(α)|</i></b>  
+For each state we will also store a pointer called a <b><i>suffix link</i></b> that points to the longest suffix of w that is in another equivalence class: <b><i>slink(α)</i></b> is the longest suffix of α: <i>slink(α) ╪<sub>w</sub> α</i>  
 
 <b><i>Lemma:</b></i> <i>( Q<sub>w</sub> , slink, s<sub>0</sub> ) is a rooted tree.</i>  
 <b><i>Proof:</b></i> We only need to show that <i>slink(α) c Q<sub>w</sub></i>. Since <i>slink(α)</i> is a suffix of α from Property 2. we have that <i>end_pos(α) c end_pos(slink(α))</i>. And since <i>α ╪ slink(α)</i>, we have that <i>end_pos(α) ╪ end_pos(slink(α))</i>.  
@@ -89,8 +91,10 @@ If <i>i ╪ |slink(α)|</i> → <i>w<sub>i-|slink(α)|</sub> ╪ a</i> → <i>sl
 
 ![alt text](https://github.com/ThreeChuchura/fun-with-algorithms/blob/master/Suffix-Automaton/img/suffix_links.png)
 
-##  ##
-
+## Construction in linear time <b>O(n)</b> ##
+The algorithm will be online, i.e. we will add the characters of the string one by one, and modify the automaton accordingly in each step. The whole task boils down to implementing the process of <b>adding on character <i>a</i></b> to the end of the current string <i>w</i>.  
+<b><i>Lemma:</i></b> Let <i>w c Σ*</i> and <i>a c Σ</i>. Then <i>Q<sub>wa</sub> = Q<sub>w</sub> U { wa, slink(wa)}</i>  
+<b><i>Proof:</i></b>
 
 
 
