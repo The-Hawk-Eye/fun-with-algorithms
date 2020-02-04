@@ -8,6 +8,12 @@ that accpets all the suffixes of the string <i>w</i>. For a string of length <b>
 in 1983 by <i>Blumer, Blumer, Haussler, Ehrenfeucht, Chen and Seiferas</i> and was presented in their paper 
 <i>The smallest automaton recognizing the subwords of a text</i>. An important property of a suffix automaton 
 is, that it contains information about all substrings of the string <i>w</i>. This is due to the following theorem:  
-<i>Theorem: Given two strings w and x, <b>x is a substring of w</b> if and only if <b>x is a prefix of a suffix of w</b>.</i>
+<i>Theorem: Given two strings w and x, <b>x is a substring of w</b> if and only if <b>x is a prefix of a suffix of w</b>.</i>  
+Any path starting at the initial state <b><i>s<sub>0</sub></i></b> fors a substring of <i>w</i>. And coversely every 
+substring of <i>w</i> corresponds to a certain path starting at <b><i>s<sub>0</sub></i></b>.
 
-
+### Notation ###
+<i>Σ</i> - nonempty alphabet  
+<i>ε</i> - the empty word  
+<i>Σ*</i> - the set of all words over <i>Σ</i>  
+<i>Suffix(w) = {ß ε Σ* | &#8707 α: αß = w}</i>  
