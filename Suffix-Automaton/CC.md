@@ -127,7 +127,7 @@ In this case, since after extending <i>w</i> with the letter <i>a</i> the string
 Suppose <i>ß = x • w<sub>k</sub> • a, x c Σ*</i> and suppose that <i>slink(ß) = σ</i>. We have the following:  
 <i>end_pos<sub>wa</sub>(w<sub>k</sub> • a) = end_pos<sub>w</sub>(w<sub>k</sub> • a) U { |w| + 1 } = end_pos<sub>w</sub>(ß) U {|w| + 1} = end_pos<sub>wa</sub>(ß) U {|w| + 1}</i>  
 <i>end_pos<sub>w</sub>(σ) c end_pos<sub>w</sub>(ß) = end_pos<sub>w</sub>(w<sub>k</sub> • a) → end_pos<sub>wa</sub>(σ) c end_pos<sub>wa</sub>(w<sub>k</sub> • a)</i>  
-
+From this we can conclude that the following update has to be made to the suffix chain: <i>slink(ß) = w<sub>k</sub> • a</i> and <i>slink(w<sub>k</sub> • a) = σ</i>
 
 
 
