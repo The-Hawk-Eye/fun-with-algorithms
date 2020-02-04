@@ -17,5 +17,9 @@ A suffix automaton is a minimal DFA over the language <i>L = Suffix(w)</i>. From
 <i>{α, ß} ε R<sub>L</sub> (α ≡<sub>L</sub> ß) ↔ for every z ε Σ*: αz ε L ↔ ßz ε L</i>  
   
 Let <i>w</i> = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> <i>(a<sub>i</sub> ε Σ)</i> and <i>y╪ε ε Σ*</i>  
-define: <b><i>end_pos(y) = {i | y = a<sub>i-|y|+1</sub>...a<sub>i</sub>}  
+define: <i><b>end_pos(y)</b> = {i | y = a<sub>i-|y|+1</sub>...a<sub>i</sub>}</i>  
 end_pos(y) is the set of all positions in the string <i>w</i>, in which the occurrences of <i>y</i> end  
+end_pos(ε) = {0,1,2,...,|w|}
+
+two strings <i>x,y ε Σ*</i> are <b>end-equivalent on w</b> if and only if end_pos(x)=end_pos(y)  
+end-equivalence will be denoted by ≡<sub>w</sub>, i.e. x ≡<sub>w</sub> y ↔ end_pos(x) = end_pos(y)
