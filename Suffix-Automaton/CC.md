@@ -17,12 +17,12 @@ A suffix automaton is a minimal DFA over the language <i>L = Suffix(w)</i>. From
 <i>{α, ß} ε R<sub>L</sub> (α ≡<sub>L</sub> ß) ↔ for every z ε Σ*: αz ε L ↔ ßz ε L</i>  
   
 Let <i>w</i> = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> <i>(a<sub>i</sub> ε Σ)</i> and <i>y╪ε ε Σ*</i>  
-define: <i><b>end_pos(y)</b> = { i | y = a<sub>i-|y|+1</sub>...a<sub>i</sub> }</i>  
-end_pos(y) is the set of all positions in the string <i>w</i>, in which the occurrences of <i>y</i> end  
-end_pos(ε) = { 0, 1, 2, ..., |w| }
+define: <i><b>end_pos<sub>w</sub>(y)</b> = { i | y = a<sub>i-|y|+1</sub>...a<sub>i</sub> }</i>  
+<i>end_pos<sub>w</sub>(y)</i> is the set of all positions in the string <i>w</i>, in which the occurrences of <i>y</i> end  
+<i>end_pos<sub>w</sub>(ε) = { 0, 1, 2, ..., |w| }</i>
 
-two strings <i>x, y ε Σ*</i> are <b>end-equivalent on w</b> if and only if <i>end_pos(x) = end_pos(y)</i>  
-end-equivalence will be denoted by ≡<sub>w</sub> , i.e. <i>x ≡<sub>w</sub> y ↔ end_pos(x) = end_pos(y)</i>  
+two strings <i>x, y ε Σ*</i> are <b>end-equivalent on w</b> if and only if <i>end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>  
+end-equivalence will be denoted by <i>≡<sub>w</sub></i> , i.e. <i>x ≡<sub>w</sub> y ↔ end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>  
 
 <b><i>Corollary:</i></b> The end-equivalence relation is equivalent to Nerode's relation <i>R<sub>L</sub></i> for the language <i>L = Suffix(w)</i>:  
 <i>x ≡<sub>w</sub> y ↔ x ≡<sub>Suffix(w)</sub> y</i>  
@@ -32,4 +32,10 @@ end-equivalence will be denoted by ≡<sub>w</sub> , i.e. <i>x ≡<sub>w</sub> y
 → x = a<sub>i-|x|+1</sub>...a<sub>i</sub> and i = n - |z|</i>  
 But <i> x ≡<sub>Suffix(w)</sub> y ↔ for every z ε Σ*: xz ε Suffix(w) ↔ yz ε Suffix(w)  
 ↔ for every i: x = a<sub>i-|x|+1</sub>...a<sub>i</sub> ↔ y = a<sub>i-|y|+1</sub>...a<sub>i</sub>  
-↔ end_pos(x) = end_pos(y)</i>
+↔ end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>
+
+<b><i>Example:</b></i>
+		<i>w = a b c b c</i>  
+		<i>   0 1 2 3 4 5</i>  
+		<i>end_pos<sub>w</sub>(bc) = end_pos<sub>w</sub>(c) = { 3, 5 }</i>  
+		<i>bc ≡<sub>w</sub> c</i>  
