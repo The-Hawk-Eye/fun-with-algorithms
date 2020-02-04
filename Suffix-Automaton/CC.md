@@ -46,8 +46,9 @@ Let <i>x, y ε Σ*</i> be subwords of <i>w</i> with |x| ≤ |y|, then:
 
 #### Equivalence classes <b><i>[x]<sub>w</sub></i></b> and Representatives <b><i>r(x)</i></b> ####
 Let x be an infix of <i>w</i>. Denote by <i>[x]<sub>w</sub></i> the equivalence class of x with respect to the relation ≡<sub>w</sub> and denote by <b><i>r(x)</i></b> the longes word in the equivalence class <i>[x]<sub>w</sub></i>. We say that <i>r(x)</i> canonically represents the equivalence class <i>[x]<sub>w</sub></i>  
-<p></p>
-<b><i>Lemma:</i></b>
+<p></p>  
+
+<b><i>Lemma:</i></b>  
 Let x be an infix of <i>w</i>, then:  
 1. If there is a letter <i>a ε Σ</i>, such that every occurance of x in <i>w</i> is preceeded by <i>a</i>, then x does not represent the equivalence class <i>[x]<sub>w</sub></i>  
 2. If x is a prefix of <i>w</i>, then x is the longest word in <i>[x]<sub>w</sub></i>  
