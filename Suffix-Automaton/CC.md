@@ -141,7 +141,7 @@ The creation of a new state also requires updating the suffix link chain. Since 
 <i>end_pos<sub>w</sub>(σ) c end_pos<sub>w</sub>(ß) = end_pos<sub>w</sub>(w<sub>k</sub> • a) → end_pos<sub>wa</sub>(σ) c end_pos<sub>wa</sub>(w<sub>k</sub> • a)</i>  
 From this we can conclude that the following update has to be made to the suffix chain:  
 <i>slink([w<sub>k</sub> • a]<sub>wa</sub>) = slink([ß]<sub>w</sub>)</i> and <i>slink([ß]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i>  
-Finally we need to follow the suffix chain from <i>[w<sub>k</sub>]<sub>w</sub></i> all the way up to <i>s<sub>0</sub></i> and if there is a transition with the letter <i>a</i> to state <i>[ß]<sub>w</sub></i> we have to redirect it to state <i>[w<sub>k</sub> • a]<sub>wa</sub></i>
+Finally we need to follow the suffix chain from <i>[w<sub>k</sub>]<sub>w</sub></i> all the way up to <i>s<sub>0</sub></i> and if there is a transition with the letter <i>a</i> to state <i>[ß]<sub>w</sub></i> we have to redirect it to state <i>[w<sub>k</sub> • a]<sub>wa</sub></i>. To see why this is the case consider a state <i>[α]<sub>w</sub>: δ<sub>w</sub>(α, a) = ß → [αa]<sub>w</sub> = ß</i>. The string α is a suffix of all the strings that belong to the equivalence class [ß]<sub>w</sub> and in particular α is a suffix of <i>w<sub>k</sub> • a</i>. After extending <i>w</i> with the letter <i>a</i>, the new class <i>[w<sub>k</sub> • a]<sub>wa</sub></i> will be shorter than ß and thus <i>δ<sub>wa</sub>(α, a) = w<sub>k</sub> • a</i>  
 
 <pre>
 ModifyTree(p, q<sub>wa</sub>, a) { // p is the result from the function FindStem
