@@ -48,15 +48,16 @@ Let <i>x, y ε Σ*</i> be subwords of <i>w</i> with |x| ≤ |y|, then:
 Let x be an infix of <i>w</i>. Denote by <i>[x]<sub>w</sub></i> the equivalence class of x with respect to the relation ≡<sub>w</sub> and denote by <b><i>r(x)</i></b> the longes word in the equivalence class <i>[x]<sub>w</sub></i>. We say that <i>r(x)</i> canonically represents the equivalence class <i>[x]<sub>w</sub></i>  
 <p></p>
 <b><i>Lemma:</i></b>
-Let x be an infix of <i>w</i>, then:
+Let x be an infix of <i>w</i>, then:  
 1. If there is a letter <i>a ε Σ</i>, such that every occurance of x in <i>w</i> is preceeded by <i>a</i>, then x does not represent the equivalence class <i>[x]<sub>w</sub></i>  
 2. If x is a prefix of <i>w</i>, then x is the longest word in <i>[x]<sub>w</sub></i>  
 3. If there are letters <i>b,c ε Σ, b ╪ c</i> and both <i>bx</i> and <i>cx</i> are infixes of <i>w</i>, then x canonically represents the equivalence class <i>[x]<sub>w</sub></i>  
 4. <i>x = r(x)</i> ↔ x is a prefix of <i>w</i> or it occurs in two distinct left contexts  
 
 <b><i>Proof:</i></b>
-1. Let <i>a</i> preceed every occurance of x in <i>w</i>. Then for every <i>i ε end_pos(x)</i> we have <i>w<sub>i-|x|</sub> = a</i> → <i>i ε end_pos(ax)</i>  
-<i>→ end_pos(x) c end_pos(ax)</i>
+1. Let <i>a</i> preceed every occurance of x in <i>w</i>. Then for every <i>i c end_pos(x)</i> we have <i>w<sub>i-|x|</sub> = a</i>  
+<i>→ i c end_pos(ax)</i>  
+<i>→ end_pos(x) c end_pos(ax)</i>  
 And since x is a suffix of <i>ax</i> we have that <i>end_pos(ax) c end_pos(x) → end_pos(x) = end_pos(ax)</i>
 It follows that <i>x ≡<sub>w</sub> ax</i> and <i>|x| < |ax| → x ╪ r(x)</i>
 
