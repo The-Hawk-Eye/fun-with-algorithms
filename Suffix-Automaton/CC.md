@@ -119,12 +119,14 @@ and from Property 2. we get <i>end_pos<sub>w</sub>(α) c end_pos<sub>w</sub>(sli
 Now let us consider adding a character <i>a</i> to the end of the current string <i>w</i>. We add the new state <i>[wa]<sub>wa</sub></i> but which states have a transition to the new state? Obviously a transition from <i>[w]<sub>w</sub></i> to <i>[wa]<sub>wa</sub></i> with the letter <i>a</i> has to be added to the automaton. Additionally, every suffix <i>w<sub>i</sub></i> of <i>w</i> which represents an equivalence class must have a transition to <i>[wa]<sub>wa</sub></i> with the letter <i>a</i>. In order to do that we traverse the suffix links from <i>[w]<sub>w</sub></i> until we reach <i>s<sub>0</sub></i> and for every state <i>[w<sub>i</sub>]<sub>w</sub></i> that we visit we add a transition with the letter <i>a</i> to the state <i>[wa]<sub>wa</sub></i>. In the end we update the suffix link of <i>wa</i> to be <i>slink(wa) = s<sub>0</sub></i>.  
 A special case arises if at some point we visit a state <i>p = [w<sub>k</sub>]<sub>w</sub></i> that already has a transition with the letter <i>a</i>. This means that <i>w<sub>k</sub></i> is the longest suffix of <i>w</i> that when extended with the letter <i>a</i> appears as a proper infix (or prefix) of <i>wa</i>. It also implies that after extending <i>w</i> with <i>a</i> the string <i>w<sub>k</sub> • a</i> occurs in two distinct left contexts → <b><i>slink(wa) = w<sub>k</sub> • a</i></b>  
 The last statement follows from the following: Suppose <i>slink(wa) = αa</i> and <i>|αa| > |w<sub>k</sub> • a|</i>. This means that <i>αa</i>, and equivalently <i>α</i>, occurs in two distinct left contexts with <i>|α| > |w<sub>k</sub>|</i> and <i>[α]<sub>w</sub></i> has a transition with the letter <i>a</i> - contradiction.  
-Suppose <i>δ<sub>w</sub>(w<sub>k</sub>, a) = ß</i>. We have to consider two cases:  
-	* <i>ß = [w<sub>k</sub> • a]<sub>w</sub></i>  
-In this case we can simply assign <i>slink(wa) = ß</i>  
-	* <i>ß ╪ [w<sub>k</sub> • a]<sub>w</sub></i>  
-In this case, since after extending <i>w</i> with the letter <i>a</i> the string <i>w<sub>k</sub> • a</i> occurs in two distinct left contexts, a new state, <i>[w<sub>k</sub> • a]<sub>wa</sub></i>, has to be created. The creation of a new state requires updating the suffix link chain. Since <i>slink(wa) = w<sub>k</sub> • a</i>, this implies that ß is not a suffix of <i>wa</i>. Suppose <i>ß = x • w<sub>k</sub> • a, x c Σ*</i> and suppose that <i>slink(ß) = σ</i>. We have the following:  
-<i>end_pos<sub>wa</sub>(w<sub>k</sub> • a) = end_pos<sub>w</sub>(w<sub>k</sub> • a) U { |w| + 1 } = end_pos<sub>w</sub>(ß) U { |w| + 1 } = end_pos<sub>wa</sub>(ß) U { |w| + 1 } → end_pos<sub>wa</sub>(w<sub>k</sub> • a) c end_pos<sub>wa</sub>(ß)</i>
+Suppose <i>δ<sub>w</sub>(w<sub>k</sub>, a) = ß</i>. We have to consider two cases:
+* <i>ß = [w<sub>k</sub> • a]<sub>w</sub></i>  
+In this case we can simply assign <i>slink(wa) = ß</i>
+* <i>ß ╪ [w<sub>k</sub> • a]<sub>w</sub></i>  
+In this case, since after extending <i>w</i> with the letter <i>a</i> the string <i>w<sub>k</sub> • a</i> occurs in two distinct left contexts, a new state, <i>[w<sub>k</sub> • a]<sub>wa</sub></i>, has to be created. The creation of a new state requires updating the suffix link chain. Since <i>slink(wa) = w<sub>k</sub> • a</i>, this implies that ß is not a suffix of <i>wa</i>.  
+Suppose <i>ß = x • w<sub>k</sub> • a, x c Σ*</i> and suppose that <i>slink(ß) = σ</i>. We have the following:  
+<i>end_pos<sub>wa</sub>(w<sub>k</sub> • a) = end_pos<sub>w</sub>(w<sub>k</sub> • a) U { |w| + 1 } = end_pos<sub>w</sub>(ß) U { |w| + 1 } = end_pos<sub>wa</sub>(ß) U { |w| + 1 } → end_pos<sub>wa</sub>(w<sub>k</sub> • a) c end_pos<sub>wa</sub>(ß)</i>  
+
 
 
 
