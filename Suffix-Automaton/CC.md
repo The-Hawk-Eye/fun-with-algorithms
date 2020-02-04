@@ -141,7 +141,8 @@ The creation of a new state also requires updating the suffix link chain. Since 
 <i>end_pos<sub>w</sub>(σ) c end_pos<sub>w</sub>(ß) = end_pos<sub>w</sub>(w<sub>k</sub> • a) → end_pos<sub>wa</sub>(σ) c end_pos<sub>wa</sub>(w<sub>k</sub> • a)</i>  
 From this we can conclude that the following update has to be made to the suffix chain:  
 <i>slink([w<sub>k</sub> • a]<sub>wa</sub>) = slink([ß]<sub>w</sub>)</i> and <i>slink([ß]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i>  
-Finally we need to follow the suffix chain from <i>[w<sub>k</sub>]<sub>w</sub></i> all the way up to <i>s<sub>0</sub></i> and whenever there is a transition with the letter <i>a</i> to state <i>[ß]<sub>w</sub></i> we have to redirect it to state <i>[w<sub>k</sub> • a]<sub>wa</sub></i>. To see why this is the case consider a state <i>[α]<sub>w</sub> : δ<sub>w</sub>(α, a) = ß</i>. The string α is a suffix of all the strings that belong to the equivalence class [ß]<sub>w</sub> and in particular α is a suffix of <i>w<sub>k</sub> • a</i>. This implies <i>end_pos<sub>w</sub>(αa) = end_pos<sub>w</sub>(w<sub>k</sub> • a). After extending <i>w</i> with the letter <i>a</i>, we have <i>end_pos<sub>wa</sub>(αa) = end_pos<sub>w</sub>(αa) + {|w| + 1} = end_pos<sub>wa</sub>(w<sub>k</sub> • a)</i> and thus <i>δ<sub>wa</sub>(α, a) = w<sub>k</sub> • a</i>  
+Finally we need to follow the suffix chain from <i>[w<sub>k</sub>]<sub>w</sub></i> all the way up to <i>s<sub>0</sub></i> and whenever there is a transition with the letter <i>a</i> to state <i>[ß]<sub>w</sub></i> we have to redirect it to state <i>[w<sub>k</sub> • a]<sub>wa</sub></i>. To see why this is the case consider a state <i>[α]<sub>w</sub> :  
+δ<sub>w</sub>(α, a) = ß</i>. The string α is a suffix of all the strings that belong to the equivalence class [ß]<sub>w</sub> and in particular α is a suffix of <i>w<sub>k</sub> • a</i>. This implies <i>end_pos<sub>w</sub>(αa) = end_pos<sub>w</sub>(w<sub>k</sub> • a)</i>. After extending <i>w</i> with the letter <i>a</i> we have <i>end_pos<sub>wa</sub>(αa) = end_pos<sub>w</sub>(αa) U {|w| + 1} = end_pos<sub>wa</sub>(w<sub>k</sub> • a)</i> and thus <i>δ<sub>wa</sub>(α, a) = w<sub>k</sub> • a</i>  
 
 <pre>
 ModifyTree(p, q<sub>wa</sub>, a) { // p is the result from the function FindStem
@@ -182,8 +183,31 @@ RedirectTransitions(p, clone ,a) {
 </pre>
 
 
+As stated, building the suffix automaton requires adding the characters one by one and modifying the automaton accordingly in each step.
+After constructing the complete suffix automaton for the entire string <i>w</i> we need to mark all terminal states. The only accpeting states are those equivalence classes that include suffixes of <i>w</i>. To do this, we take the state corresponding the entire string and follow its suffix links until we reach the initial state. We mark all visited states as terminal.
 
+<pre>
+BuildSuffixAutomaton(w) {
+	s<sub>0</sub> = new State
+	len(s<sub>0</sub>) = 0
+	q = s<sub>0</sub>
+	
+	for i = 1 to |w| do:
+		q<sub>wa</sub> = new State
+		len(q<sub>wa</sub> = i
+		p = FindStem(q, q<sub>wa</sub>, w[i])
+		clone = ModifyTree(p, q<sub>wa</sub>, w[i])
+		RedirectTransitions(p, clone, w[i])
+		q = q<sub>wa</sub>
 
+	while q is defined:
+		mark q as final
+		q = slink(q)
+}
+</pre>
+
+## Complexity ##
+Proving the complexity is linear ....
 
 
 
