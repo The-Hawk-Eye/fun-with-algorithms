@@ -84,7 +84,7 @@ For each state we will also store a pointer called a <b><i>suffix link</i></b> t
 
 <b><i>Lemma:</b></i> <i>( Q<sub>w</sub> , slink, s<sub>0</sub> ) is a rooted tree.</i>  
 <b><i>Proof:</b></i> We only need to show that <i>slink(α) c Q<sub>w</sub></i>. Since <i>slink(α)</i> is a suffix of α from Property 2. we have that <i>end_pos(α) c end_pos(slink(α))</i>. And since <i>α ╪ slink(α)</i>, we have that <i>end_pos(α) ╪ end_pos(slink(α))</i>.  
-Let <i>α = x.a.slink(α), x c Σ*, a c Σ</i> and let <i>i c end_pos(slink(α))\end_pos(α)</i>.  
+Let <i>α = x•a•slink(α), x c Σ*, a c Σ</i> and let <i>i c end_pos(slink(α))\end_pos(α)</i>.  
 If <i>i = |slink(α)|</i> → <i>slink(α)</i> is a prefix of w → <i>slink(α) c Q<sub>w</sub></i>  
 If <i>i ╪ |slink(α)|</i> → <i>w<sub>i-|slink(α)|</sub> ╪ a</i> → <i>slink(α)</i> appears in two different left contexts → <i>slink(α) c Q<sub>w</sub></i>  
 
@@ -104,8 +104,14 @@ Let <i>α c Σ*: α = r(α)</i> and <i>[a] c Q<sub>wa</sub>\Q<sub>w</sub></i>
 <i>α c Q<sub>wa</sub> → end_pos<sub>wa</sub>(α) ╪ Ø</i>  
 <i>{ 0, 1, 2,..., |w| } ∩ end_pos<sub>wa</sub>(α) = Ø → end_pos<sub>wa</sub>(α) = { |w|+1 } → α ≡<sub>wa</sub> wa → α = wa</i>
 	* <i>end_pos<sub>w</sub>(α) ╪ Ø</i>  
+For any <i>σ c Σ*</i>: σ is an infix of <i>w</i>, we have:  
+<i>end_pos<sub>wa</sub>(σ) = end_pos<sub>w</sub>(σ) U { |w| + 1 }</i>, if σ is a suffix of <i>wa</i>  
+<i>end_pos<sub>wa</sub>(σ) = end_pos<sub>w</sub>(σ)</i>, otherwise   
 Let <i>ß = [α]<sub>w</sub> → end_pos<sub>w</sub>(ß) = end_pos<sub>w</sub>(α)</i>  
-Since <i>α c Q<sub>w</sub> → α is a suffix of ß → end_pos<sub>wa</sub>(ß) c end_pos<sub>wa</sub>(α)</i>
+Since <i>α ¢ Q<sub>w</sub> → α is a suffix of ß → end_pos<sub>wa</sub>(ß) c end_pos<sub>wa</sub>(α)</i>
+Since <i>α c Q<sub>wa</sub> → α = [α]<sub>wa</sub> ╪ ß → end_pos<sub>wa</sub>(ß) ╪ end_pos<sub>wa</sub>(α)</i>  
+This implies that <i>end_pos<sub>wa</sub>(α)\end_pos<sub>wa</sub>(ß) = { |w| + 1 } → α is a suffix of wa and ß is not a suffix of wa</i>  
+
 
 
 
