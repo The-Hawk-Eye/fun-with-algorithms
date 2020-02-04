@@ -92,8 +92,13 @@ If <i>i ╪ |slink(α)|</i> → <i>w<sub>i-|slink(α)|</sub> ╪ a</i> → <i>sl
 
 ## Construction in linear time <b>O(n)</b> ##
 The algorithm will be online, i.e. we will add the characters of the string one by one, and modify the automaton accordingly in each step. The whole task boils down to implementing the process of <b>adding on character <i>a</i></b> to the end of the current string <b><i>w</i></b>.  
-<b><i>Lemma:</i></b> Let <i>w c Σ*</i> and <i>a c Σ</i>. Then <i>Q<sub>wa</sub> = Q<sub>w</sub> U { wa, slink(wa) }</i>  
+<b><i>Lemma:</i></b> Let <i>w c Σ*</i> and <i>a c Σ</i>. Then <i>Q<sub>wa</sub> = Q<sub>w</sub> U { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> }</i>  
 <b><i>Proof:</i></b>
+1. <i>Q<sub>w</sub> U { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> } c Q<sub>wa</sub></i>
+* Let [α] c Q<sub>w</sub>: then either α is a prefix of w → α is a prefix of wa, or there exist x, y c Σ, x ╪ y and xα, yα are infixes of w → xα, yα are infixes of wa
+* wa is a prefix of wa → wa c Q<sub>wa</sub>
+* slink(wa) is well defined → slink(wa) c Q<sub>wa</sub>
+
 
 
 
