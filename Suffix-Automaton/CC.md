@@ -10,57 +10,58 @@ Any path starting at the initial state <b><i>s<sub>0</sub></i></b> fors a substr
 <i>Σ</i> - nonempty alphabet  
 <i>ε</i> - the empty word  
 <i>Σ*</i> - the set of all words over <i>Σ</i>  
-<i>Suffix(w) = { ß ε Σ* | exists α: αß = w }</i>  
+<i>Suffix(w) = { ß c Σ* | exists α: αß = w }</i>  
   
 A suffix automaton is a minimal DFA over the language <i>L = Suffix(w)</i>. From Nerode's theorem it follows that the number of states of the minimal DFA is equal to the number of equivalence classes in the relation <i>R<sub>L</sub></i>, where:  
-<i>{α, ß} ε R<sub>L</sub> (α ≡<sub>L</sub> ß) ↔ for every z ε Σ*: αz ε L ↔ ßz ε L</i>  
+<i>{α, ß} c R<sub>L</sub> (α ≡<sub>L</sub> ß) ↔ for every z c Σ*: αz c L ↔ ßz c L</i>  
 
 #### End positions <b><i>end_pos</b></i> ####
 Let <i>w</i> = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> <i>(a<sub>i</sub> ε Σ)</i> and <i>y╪ε ε Σ*</i>  
-define: <i><b>end_pos<sub>w</sub>(y)</b> = { i | y = a<sub>i-|y|+1</sub>...a<sub>i</sub> }</i>  
-<i>end_pos<sub>w</sub>(y)</i> is the set of all positions in the string <i>w</i>, in which the occurrences of <i>y</i> end  
+define: <i><b>end_pos<sub>w</sub>(α)</b> = { i | α = a<sub>i-|y|+1</sub>...a<sub>i</sub> }</i>  
+<i>end_pos<sub>w</sub>(α)</i> is the set of all positions in the string <i>w</i>, in which the occurrences of <i>α</i> end  
 <i>end_pos<sub>w</sub>(ε) = { 0, 1, 2, ..., |w| }</i>
 
-two strings <i>x, y ε Σ*</i> are <b>end-equivalent on w</b> if and only if <i>end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>  
-end-equivalence will be denoted by <i>≡<sub>w</sub></i> , i.e. <i>x ≡<sub>w</sub> y ↔ end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>  
+two strings <i>α, ß c Σ*</i> are <b>end-equivalent on w</b> if and only if <i>end_pos<sub>w</sub>(α) = end_pos<sub>w</sub>(ß)</i>  
+end-equivalence will be denoted by <i>≡<sub>w</sub></i> , i.e. <i>α ≡<sub>w</sub> ß ↔ end_pos<sub>w</sub>(α) = end_pos<sub>w</sub>(ß)</i>  
 
 <b><i>Corollary:</i></b> The end-equivalence relation is equivalent to Nerode's relation <i>R<sub>L</sub></i> for the language <i>L = Suffix(w)</i>:  
-<i>x ≡<sub>w</sub> y ↔ x ≡<sub>Suffix(w)</sub> y</i>  
-<b><i>Proof:</i></b> Let <i>w = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> (a<sub>i</sub> ε Σ) and x, y, z ε Σ*</i>. Then <i>xz ε Suffix(w) ↔ xz = a<sub>n-|xz|+1</sub>...a<sub>n</sub>  
-→ x = a<sub>n-|xz|+1</sub>...a<sub>n-|z|</sub> and z = a<sub>n-|z|+1</sub>...a<sub>n</sub>  
-→ x = a<sub>i-|x|+1</sub>...a<sub>i</sub> and i = n - |z|</i>  
-But <i> x ≡<sub>Suffix(w)</sub> y ↔ for every z ε Σ*: xz ε Suffix(w) ↔ yz ε Suffix(w)  
-↔ for every i: x = a<sub>i-|x|+1</sub>...a<sub>i</sub> ↔ y = a<sub>i-|y|+1</sub>...a<sub>i</sub>  
-↔ end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>
+<i>α ≡<sub>w</sub> ß ↔ α ≡<sub>Suffix(w)</sub> ß</i>  
+<b><i>Proof:</i></b> Let <i>w = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> (a<sub>i</sub> ε Σ) and α, ß, z c Σ*</i>. Then <i>αz c Suffix(w) ↔ αz = a<sub>n-|αz|+1</sub>...a<sub>n</sub>  
+→ α = a<sub>n-|αz|+1</sub>...a<sub>n-|z|</sub> and z = a<sub>n-|z|+1</sub>...a<sub>n</sub>  
+→ α = a<sub>i-|α|+1</sub>...a<sub>i</sub> and i = n - |z|</i>  
+But <i> α ≡<sub>Suffix(w)</sub> ß ↔ for every z c Σ*: αz c Suffix(w) ↔ ßz c Suffix(w)  
+↔ for every i: α = a<sub>i-|α|+1</sub>...a<sub>i</sub> ↔ ß = a<sub>i-|ß|+1</sub>...a<sub>i</sub>  
+↔ end_pos<sub>w</sub>(α) = end_pos<sub>w</sub>(ß)</i>
 
 <b><i>Example:</b></i>
-<pre>	<i>w = a b c b c</i>  
+<pre>	<i>w = a b x b x</i>  
 	<i>   0 1 2 3 4 5</i>  
-    	<i>end_pos<sub>w</sub>(bc) = end_pos<sub>w</sub>(c) = {3, 5}</i>  
-    	<i>bc ≡<sub>w</sub> c</i></pre>  
+    	<i>end_pos<sub>w</sub>(bx) = end_pos<sub>w</sub>(x) = {3, 5}</i>  
+    	<i>bx ≡<sub>w</sub> x</i></pre>  
 <b><i>Properties:</i></b>  
-Let <i>x, y ε Σ*</i> be subwords of <i>w</i> with |x| ≤ |y|, then:
-1. end_pos<sub>w</sub>(x) ∩ end_pos<sub>w</sub>(y) ╪ Ø → x is a suffix of y
-2. x is a suffix of y → end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)
-3. We have either end_pos<sub>w</sub>(x) c end_pos<sub>w</sub>(y) or end_pos<sub>w</sub>(x) ∩ end_pos<sub>w</sub>(y) = Ø
+Let <i>α, ß c Σ*</i> be subwords of <i>w</i> with |α| ≤ |ß|, then:
+1. end_pos<sub>w</sub>(α) ∩ end_pos<sub>w</sub>(ß) ╪ Ø → α is a suffix of ß
+2. α is a suffix of ß → end_pos<sub>w</sub>(ß) c end_pos<sub>w</sub>(α)
+3. We have either end_pos<sub>w</sub>(α) c end_pos<sub>w</sub>(ß) or end_pos<sub>w</sub>(α) ∩ end_pos<sub>w</sub>(ß) = Ø
 
-#### Equivalence classes <b><i>[x]<sub>w</sub></i></b> and Representatives <b><i>r(x)</i></b> ####
-Let x be an infix of <i>w</i>. Denote by <i>[x]<sub>w</sub></i> the equivalence class of x with respect to the relation ≡<sub>w</sub> and denote by <b><i>r(x)</i></b> the longes word in the equivalence class <i>[x]<sub>w</sub></i>. We say that <i>r(x)</i> canonically represents the equivalence class <i>[x]<sub>w</sub></i>  
+#### Equivalence classes <b><i>[α]<sub>w</sub></i></b> and Representatives <b><i>r(α)</i></b> ####
+Let α be an infix of <i>w</i>. Denote by <i>[α]<sub>w</sub></i> the equivalence class of α with respect to the relation ≡<sub>w</sub> and denote by <b><i>r(α)</i></b> the longes word in the equivalence class <i>[α]<sub>w</sub></i>. We say that <i>r(α)</i> canonically represents the equivalence class <i>[α]<sub>w</sub></i>  
 <p></p>  
 
 <b><i>Lemma:</i></b>  
-Let x be an infix of <i>w</i>, then:  
-1. If there is a letter a c Σ, such that every occurance of x in w is preceeded by a, then x does not represent the equivalence class [x]<sub>w</sub>
-2. If x is a prefix of w, then x is the longest word in [x]<sub>w</sub>
-3. If there are letters a,b c Σ, a ╪ b and both ax and bx are infixes of w, then x canonically represents the equivalence class [x]<sub>w</sub>  
-4. x = r(x) ↔ x is a prefix of w or it occurs in two distinct left contexts  
+Let α be an infix of <i>w</i>, then:  
+1. If there is a letter a c Σ, such that every occurance of α in w is preceeded by a, then α does not represent the equivalence class [α]<sub>w</sub>
+2. If α is a prefix of w, then α is the longest word in [α]<sub>w</sub>
+3. If there are letters x,y c Σ, x ╪ y and both xα and yα are infixes of w, then α canonically represents the equivalence class [α]<sub>w</sub>  
+4. α = r(α) ↔ α is a prefix of w or it occurs in two distinct left contexts  
 
 <b><i>Proof:</i></b>
-1. Let a preceed every occurance of x in w. Then for every i c end_pos(x) we have w<sub>i-|x|</sub> = a  
-→ i c end_pos(ax)  
-→ end_pos(x) c end_pos(ax)  
-And since x is a suffix of ax we have that end_pos(ax) c end_pos(x) → end_pos(x) = end_pos(ax)  
-It follows that x ≡<sub>w</sub> ax and |x| < |ax| → x ╪ r(x)
+1. Let a preceed every occurance of α in w. Then for every i c end_pos(α) we have w<sub>i-|α|</sub> = a  
+→ i c end_pos(aα)  
+→ end_pos(α) c end_pos(aα)  
+And since α is a suffix of aα we have that end_pos(aα) c end_pos(α) (by Property 2.)  
+→ end_pos(α) = end_pos(aα)  
+It follows that α ≡<sub>w</sub> aα and |α| < |aα| → α ╪ r(α)
 2. Let |α| = i. Since α is a prefix of w we have α = a<sub>1</sub>...a<sub>i</sub> and i c end_pos(α).  
 Suppose ß ≡<sub>w</sub> α → i c end_pos(ß) → |ß| ≤ |a<sub>1</sub>...a<sub>i</sub>| = i = |α|
 
