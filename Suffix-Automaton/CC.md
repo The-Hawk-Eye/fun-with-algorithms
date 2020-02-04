@@ -102,7 +102,10 @@ The algorithm will be online, i.e. we will add the characters of the string one 
 Let <i>α c Σ*: α = r(α)</i> and <i>[a] c Q<sub>wa</sub>\Q<sub>w</sub></i>
 	* <i>end_pos<sub>w</sub>(α) = Ø</i>  
 <i>α c Q<sub>wa</sub> → end_pos<sub>wa</sub>(α) ╪ Ø</i>  
-<i>{ 0, 1, 2,..., |w| } ∩ end_pos<sub>wa</sub>(α) = Ø → end_pos<sub>wa</sub>(α) = { |w|+1 } → α ≡<sub>wa</sub> wa</i>  
+<i>{ 0, 1, 2,..., |w| } ∩ end_pos<sub>wa</sub>(α) = Ø → end_pos<sub>wa</sub>(α) = { |w|+1 } → α ≡<sub>wa</sub> wa → α = wa</i>
+	* <i>end_pos<sub>w</sub>(α) ╪ Ø</i>  
+Let <i>ß = [α]<sub>w</sub> → end_pos<sub>w</sub>(ß) = end_pos<sub>w</sub>(α)</i>  
+Since <i>α c Q<sub>w</sub> → α is a suffix of ß → end_pos<sub>wa</sub>(ß) c end_pos<sub>wa</sub>(α)</i>
 
 
 
