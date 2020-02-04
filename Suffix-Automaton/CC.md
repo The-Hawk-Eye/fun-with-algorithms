@@ -98,7 +98,9 @@ The algorithm will be online, i.e. we will add the characters of the string one 
 	* Let [α] c Q<sub>w</sub>: then either α is a prefix of w → α is a prefix of wa, or there exist x, y c Σ, x ╪ y and xα, yα are infixes of w → xα, yα are infixes of wa
 	* wa is a prefix of wa → wa c Q<sub>wa</sub>
 	* slink(wa) is well defined → slink(wa) c Q<sub>wa</sub>
-
+2. <i>Q<sub>wa</sub> c Q<sub>w</sub> U { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> }</i>  
+Let α c Σ*: α = r(α) and [a] c Q<sub>wa</sub>\Q<sub>w</sub>
+	* end_pos<sub>w</sub>(α) = Ø
 
 
 
