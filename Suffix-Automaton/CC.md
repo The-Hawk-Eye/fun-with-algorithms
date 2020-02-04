@@ -5,7 +5,6 @@
 A suffix automaton for a given string <i>w</i> is a minimal <b>DFA</b> (deterministic finite automaton) that accpets all the suffixes of the string <i>w</i>. For a string of length <b>n</b> it only requires <b><i>O(n)</i></b> memory and it can also be built in <b><i>O(n)</i></b> time. The algorithm was discovered in 1983 by <i>Blumer, Blumer, Haussler, Ehrenfeucht, Chen and Seiferas</i> and was presented in their paper <i>The smallest automaton recognizing the subwords of a text</i>. An important property of a suffix automaton is, that it contains information about all substrings of the string <i>w</i>. This is due to the following theorem:  
 <i>Theorem: Given two strings w and x, <b>x is a substring of w</b> if and only if <b>x is a prefix of a suffix of w</b>.</i>  
 Any path starting at the initial state <b><i>s<sub>0</sub></i></b> fors a substring of <i>w</i>. And coversely every substring of <i>w</i> corresponds to a certain path starting at <b><i>s<sub>0</sub></i></b>.
-  
 
 ### Notation ###
 <i>Σ</i> - nonempty alphabet  
@@ -35,7 +34,7 @@ But <i> x ≡<sub>Suffix(w)</sub> y ↔ for every z ε Σ*: xz ε Suffix(w) ↔ 
 ↔ end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>
 
 <b><i>Example:</b></i>  
-    <i>w = a b c b c</i>  
+<pre><i>w = a b c b c</i>  
     <i>   0 1 2 3 4 5</i>  
     <i>end_pos<sub>w</sub>(bc) = end_pos<sub>w</sub>(c) = { 3, 5 }</i>  
-    <i>bc ≡<sub>w</sub> c</i>  
+    <i>bc ≡<sub>w</sub> c</i></pre>
