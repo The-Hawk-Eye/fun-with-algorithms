@@ -99,8 +99,11 @@ The algorithm will be online, i.e. we will add the characters of the string one 
 	* wa is a prefix of wa → wa c Q<sub>wa</sub>
 	* slink(wa) is well defined → slink(wa) c Q<sub>wa</sub>
 2. <i>Q<sub>wa</sub> c Q<sub>w</sub> U { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> }</i>  
-Let α c Σ*: α = r(α) and [a] c Q<sub>wa</sub>\Q<sub>w</sub>
-	* end_pos<sub>w</sub>(α) = Ø
+Let <i>α c Σ*: α = r(α)</i> and <i>[a] c Q<sub>wa</sub>\Q<sub>w</sub></i>
+	* <i>end_pos<sub>w</sub>(α) = Ø</i>  
+<i>α c Q<sub>wa</sub> → end_pos<sub>wa</sub>(α) ╪ Ø</i>  
+<i>{ 0, 1, 2,..., |w| } ∩ end_pos<sub>wa</sub>(α) = Ø → end_pos<sub>wa</sub>(α) = { |w|+1 } → α ≡<sub>wa</sub> wa</i>  
+
 
 
 
