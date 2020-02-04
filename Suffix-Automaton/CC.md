@@ -125,7 +125,7 @@ In this case we can simply assign <i>slink(wa) = ß</i>
 * <i>ß ╪ [w<sub>k</sub> • a]<sub>w</sub></i>  
 In this case, since after extending <i>w</i> with the letter <i>a</i> the string <i>w<sub>k</sub> • a</i> occurs in two distinct left contexts, a new state, <i>[w<sub>k</sub> • a]<sub>wa</sub></i>, has to be created. The creation of a new state requires updating the suffix link chain. Since <i>slink(wa) = w<sub>k</sub> • a</i>, this implies that ß is not a suffix of <i>wa</i>.  
 Suppose <i>ß = x • w<sub>k</sub> • a, x c Σ*</i> and suppose that <i>slink(ß) = σ</i>. We have the following:  
-<i>end_pos<sub>wa</sub>(w<sub>k</sub> • a) = end_pos<sub>w</sub>(w<sub>k</sub> • a) U { |w| + 1 } = end_pos<sub>w</sub>(ß) U { |w| + 1 } = end_pos<sub>wa</sub>(ß) U { |w| + 1 } → end_pos<sub>wa</sub>(w<sub>k</sub> • a) c end_pos<sub>wa</sub>(ß)</i>  
+<i>end_pos<sub>wa</sub>(w<sub>k</sub> • a) = end_pos<sub>w</sub>(w<sub>k</sub> • a) U { |w| + 1 } = end_pos<sub>w</sub>(ß) U {|w| + 1} = end_pos<sub>wa</sub>(ß) U {|w| + 1}
 
 
 
