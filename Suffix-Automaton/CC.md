@@ -118,7 +118,8 @@ and from Property 2. we get <i>end_pos<sub>w</sub>(α) c end_pos<sub>w</sub>(sli
 
 Now let us consider adding a character <i>a</i> to the end of the current string <i>w</i>. We add the new state <i>[wa]<sub>wa</sub></i> but which states have a transition to the new state? Obviously a transition from <i>[w]<sub>w</sub></i> to <i>[wa]<sub>wa</sub></i> with the letter <i>a</i> has to be added to the automaton. Additionally, every suffix <i>w<sub>i</sub></i> of <i>w</i> which represents an equivalence class must have a transition to <i>[wa]<sub>wa</sub></i> with the letter <i>a</i>. In order to do that we traverse the suffix links from <i>[w]<sub>w</sub></i> until we reach <i>s<sub>0</sub></i> and for every state <i>[w<sub>i</sub>]<sub>w</sub></i> that we visit we add a transition with the letter <i>a</i> to the state <i>[wa]<sub>wa</sub></i>. In the end we update the suffix link of <i>wa</i> to be <i>slink(wa) = s<sub>0</sub></i>.  
 A special case arises if at some point we visit a state <i>[w<sub>k</sub>]<sub>w</sub></i> that already has a transition with the letter <i>a</i>. This means that <i>w<sub>k</sub></i> is the longest suffix of <i>w</i> that when extended with the letter <i>a</i> appears as a proper infix (or prefix) of <i>wa</i>. It also implies that after extending <i>w</i> with <i>a</i> the string <i>w<sub>k</sub> • a</i> occurs in two distinct left contexts → <b><i>slink([wa]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i></b>  
-The last statement follows from the following: Suppose <i>slink(wa) = αa</i> and <i>|αa| > |w<sub>k</sub> • a|</i>. This means that <i>αa</i>, and equivalently <i>α</i>, occurs in two distinct left contexts with <i>|α| > |w<sub>k</sub>|</i> and <i>[α]<sub>w</sub></i> has a transition with the letter <i>a</i> - contradiction.  
+The last statement follows from the following: Suppose <i>slink(wa) = αa</i> and <i>|αa| > |w<sub>k</sub> • a|</i>. This means that <i>αa</i>, and equivalently <i>α</i>, occurs in two distinct left contexts with <i>|α| > |w<sub>k</sub>|</i> and <i>[α]<sub>w</sub></i> has a transition with the letter <i>a</i> - contradiction.
+
 <pre>
 FindStem(q<sub>w</sub>, q<sub>wa</sub>, a) {
 	q = q<sub>w</sub>
@@ -128,6 +129,7 @@ FindStem(q<sub>w</sub>, q<sub>wa</sub>, a) {
 	return q
 }
 </pre>
+
 Suppose <i>δ<sub>w</sub>(w<sub>k</sub>, a) = ß</i>. We have to consider two cases:
 * <i>ß = [w<sub>k</sub> • a]<sub>w</sub></i>  
 In this case we can simply assign <i>slink([wa]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i>
@@ -138,18 +140,17 @@ The creation of a new state also requires updating the suffix link chain. Since 
 <i>end_pos<sub>wa</sub>(w<sub>k</sub> • a) = end_pos<sub>w</sub>(w<sub>k</sub> • a) U { |w| + 1 } = end_pos<sub>w</sub>(ß) U {|w| + 1} = end_pos<sub>wa</sub>(ß) U {|w| + 1}</i>  
 <i>end_pos<sub>w</sub>(σ) c end_pos<sub>w</sub>(ß) = end_pos<sub>w</sub>(w<sub>k</sub> • a) → end_pos<sub>wa</sub>(σ) c end_pos<sub>wa</sub>(w<sub>k</sub> • a)</i>  
 From this we can conclude that the following update has to be made to the suffix chain:  
-<i>slink([w<sub>k</sub> • a]<sub>wa</sub>) = slink([ß]<sub>w</sub></i> and <i>slink([ß]<sub>wa</sub>) = [w<sub>k</sub> • a</i>]<sub>wa</sub></i>  
+<i>slink([w<sub>k</sub> • a]<sub>wa</sub>) = slink([ß]<sub>w</sub>)</i> and <i>slink([ß]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i>
+
 <pre>
 ModifyTree(p, q<sub>wa</sub>, a) { // p is the result from the function FindStem
 	if p is not defined:
 		slink(q<sub>wa</sub>) = s<sub>0</sub>
 		return NULL
-	
 	suf = δ(p, a)
 	if (len(suf) == len(p) + 1):	// suf represents the class [suf]<sub>w</sub>
 		slink(q<sub>wa</sub>) = suf
 		return NULL
-	
 	clone = new State
 	len(clone) = len(p) + 1
 	CopyTransitions(suf, clone)
@@ -160,6 +161,20 @@ ModifyTree(p, q<sub>wa</sub>, a) { // p is the result from the function FindStem
 	return clone
 }
 </pre>
+
+Finally we need to follow the suffix chain from <i>[w<sub>k</sub>]<sub>w</sub></i> all the way up to <i>s<sub>0</sub> and if there is a transition with the letter <i>a</i> to state <i>[ß]<sub>w</sub></i> we have to redirect it to state <i>[w<sub>k</sub> • a]<sub>wa</sub></i>
+
+<pre>
+RedirectTransitions(p, clone ,a) {
+	if p is not defined || clone is not defined:
+		return
+	suf = δ(p, a)
+	while p is defined && δ(p, a) = suf:
+		δ(p, a) = clone
+		p = slink(p)
+}
+</pre>
+
 
 
 
