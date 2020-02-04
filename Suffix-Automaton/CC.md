@@ -91,7 +91,7 @@ If <i>i ╪ |slink(α)|</i> → <i>w<sub>i-|slink(α)|</sub> ╪ a</i> → <i>sl
 ![alt text](https://github.com/ThreeChuchura/fun-with-algorithms/blob/master/Suffix-Automaton/img/suffix_links.png)
 
 ## Construction in linear time <b>O(n)</b> ##
-The algorithm will be online, i.e. we will add the characters of the string one by one, and modify the automaton accordingly in each step. The whole task boils down to implementing the process of <b>adding on character <i>a</i></b> to the end of the current string <b><i>w</i></b>.  
+The algorithm will be online, i.e. we will add the characters of the string one by one, and modify the automaton accordingly in each step. The whole task boils down to implementing the process of <b>adding one character <i>a</i></b> to the end of the current string <b><i>w</i></b>.  
 <b><i>Lemma:</i></b> Let <i>w c Σ*</i> and <i>a c Σ</i>. Then <i>Q<sub>wa</sub> = Q<sub>w</sub> U { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> }</i>  
 <b><i>Proof:</i></b>
 1. <i>Q<sub>w</sub> U { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> } c Q<sub>wa</sub></i>
@@ -113,8 +113,13 @@ Since <i>α c Q<sub>wa</sub> → α = [α]<sub>wa</sub> ╪ ß → end_pos<sub>w
 This implies that <i>end_pos<sub>wa</sub>(α)\end_pos<sub>wa</sub>(ß) = { |w| + 1 }</i> → α is a suffix of wa and ß is not a suffix of wa  
 Since <i>α ╪<sub>wa</sub> wa</i>, we get that <i>|slink(wa)| ≥ |α|</i> and α is a suffix of <i>slink(wa)</i>  
 <i>→end_pos<sub>wa</sub>(slink(wa)) c end_pos<sub>wa</sub>(α) → end_pos<sub>w</sub>(slink(wa)) c end_pos<sub>w</sub>(α)</i>  
-and from Property 2. <i>end_pos<sub>w</sub>(α) c end_pos<sub>w</sub>(slink(wa))</i>  
-<i>→ end_pos<sub>w</sub>(slink(wa)) = end_pos<sub>w</sub>(α) → end_pos<sub>wa</sub>(slink(wa)) = end_pos<sub>wa</sub>(α) → [α]<sub>wa</sub> = [slink(wa)]<sub>wa</sub></i>
+and from Property 2. we get <i>end_pos<sub>w</sub>(α) c end_pos<sub>w</sub>(slink(wa))</i>  
+<i>→ end_pos<sub>w</sub>(slink(wa)) = end_pos<sub>w</sub>(α) → end_pos<sub>wa</sub>(slink(wa)) = end_pos<sub>wa</sub>(α) → [α]<sub>wa</sub> = [slink(wa)]<sub>wa</sub></i>  
+
+Now let us consider adding a character <i>a</i> to the end of the current string <i>w</i>. We add the new state <i>[wa]<sub>wa</sub></i> but which states have a transition to the new state? Obviously a transition from <i>[w]<sub>w</sub></i> to <i>[wa]<sub>wa</sub></i> with the letter <i>a</i> has to be added to the automaton. Additionally, every suffix <i>w<sub>i</sub> of <i>w</i> which represents an equivalence class must have a transition to <i>[wa]<sub>wa</sub></i> with the letter <i>a</i>. In order to do that we traverse the suffix links from <i>[w]<sub>w</sub></i> until we reach <i>s<sub>0</sub></i> and for every state <i>[w<sub>i</sub>]<sub>w</sub></i> that we visit we add a transition with the letter <i>a</i> to the state <i>[wa]<sub>wa</sub></i>. In the end we update the suffix link of <i>wa</i> to be <i>slink(wa) = s<sub>0</sub></i>.  
+A special case arises if at some point we visit a state <i>p = [w<sub>k</sub>]<sub>w</sub></i> that already has a transition with the letter <i>a</i>. Suppose <i>δ<sub>w</sub>(w<sub>k</sub>, a) = ß</i>. This means that <i>w<sub>k</sub></i> is the longest suffix of <i>w</i> that when extended with the letter <i>a</i> appears as a proper infix (or prefix) of <i>wa</i>. It also implies that <i>w<sub>k</sub> • a</i> occurs in two distinct left contexts → <b><i>slink(wa) = w<sub>k</sub> • a</i></b>  
+We have to consider two cases:
+	* <i>ß = [w<sub>k</sub>]<sub>w</sub></i>
 
 
 
