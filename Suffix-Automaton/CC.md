@@ -87,7 +87,7 @@ Let <i>α = x.a.slink(α), x c Σ*, a c Σ</i> and let <i>i c end_pos(slink(α))
 If <i>i = |slink(α)|</i> → <i>slink(α)</i> is a prefix of w → <i>slink(α) c Q<sub>w</sub></i>  
 If <i>i ╪ |slink(α)|</i> → <i>w<sub>i-|slink(α)|</sub> ╪ a</i> → <i>slink(α)</i> appears in two different left contexts → <i>slink(α) c Q<sub>w</sub></i>  
 
-![alt text](images/suffiks_links.png)
+![alt text](https://github.com/ThreeChuchura/fun-with-algorithms/blob/master/Suffix-Automaton/img/suffix_links.png)
 
 ##  ##
 
