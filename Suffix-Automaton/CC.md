@@ -14,7 +14,8 @@ Any path starting at the initial state <b><i>s<sub>0</sub></i></b> fors a substr
   
 A suffix automaton is a minimal DFA over the language <i>L = Suffix(w)</i>. From Nerode's theorem it follows that the number of states of the minimal DFA is equal to the number of equivalence classes in the relation <i>R<sub>L</sub></i>, where:  
 <i>{α, ß} ε R<sub>L</sub> (α ≡<sub>L</sub> ß) ↔ for every z ε Σ*: αz ε L ↔ ßz ε L</i>  
-  
+
+#### end_pos ####
 Let <i>w</i> = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> <i>(a<sub>i</sub> ε Σ)</i> and <i>y╪ε ε Σ*</i>  
 define: <i><b>end_pos<sub>w</sub>(y)</b> = { i | y = a<sub>i-|y|+1</sub>...a<sub>i</sub> }</i>  
 <i>end_pos<sub>w</sub>(y)</i> is the set of all positions in the string <i>w</i>, in which the occurrences of <i>y</i> end  
@@ -37,4 +38,10 @@ But <i> x ≡<sub>Suffix(w)</sub> y ↔ for every z ε Σ*: xz ε Suffix(w) ↔ 
 <pre>	<i>w = a b c b c</i>  
 	<i>   0 1 2 3 4 5</i>  
     	<i>end_pos<sub>w</sub>(bc) = end_pos<sub>w</sub>(c) = {3, 5}</i>  
-    	<i>bc ≡<sub>w</sub> c</i></pre>
+    	<i>bc ≡<sub>w</sub> c</i></pre>  
+
+<b><i>Properties:</i></b>  
+Let <i>x, y ε Σ*</i> be subwords of <i>w</i> with |x| ≤ |y|, then:
+1. <i>end_pos<sub>w</sub>(x) ∩ end_pos<sub>w</sub>(y) ╪ Ø</i> → x is a suffix of y  
+2. <i>x is a suffix of y → <i>end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>  
+3. We have either <i>end_pos<sub>w</sub>(x) c end_pos<sub>w</sub>(y)</i> or <i>end_pos<sub>w</sub>(x) ∩ end_pos<sub>w</sub>(y) = Ø</i>  
