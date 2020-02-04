@@ -44,8 +44,9 @@ Let <i>x, y ε Σ*</i> be subwords of <i>w</i> with |x| ≤ |y|, then:
 2. <i>x is a suffix of y → <i>end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>  
 3. We have either <i>end_pos<sub>w</sub>(x) c end_pos<sub>w</sub>(y)</i> or <i>end_pos<sub>w</sub>(x) ∩ end_pos<sub>w</sub>(y) = Ø</i>  
 
-#### Equivalence classes <b><i>[x]<sub>w</sub></i></b> and representatives <b><i>r(x)</i></b> ####
-Let x be an infix of <i>w</i>. Denote by <i>[x]<sub>w</sub></i> the equivalence class of x with respect to the relation ≡<sub>w</sub> and denote by <b><i>r(x)</i></b> the longes word in the equivalence class <i>[x]<sub>w</sub></i>. We say that <i>r(x)</i> canonically represents the equivalence class <i>[x]<sub>w</sub></i>.  
+#### Equivalence classes <b><i>[x]<sub>w</sub></i></b> and Representatives <b><i>r(x)</i></b> ####
+Let x be an infix of <i>w</i>. Denote by <i>[x]<sub>w</sub></i> the equivalence class of x with respect to the relation ≡<sub>w</sub> and denote by <b><i>r(x)</i></b> the longes word in the equivalence class <i>[x]<sub>w</sub></i>. We say that <i>r(x)</i> canonically represents the equivalence class <i>[x]<sub>w</sub></i>  
+<p></p>
 <b><i>Lemma:</i></b>
 Let x be an infix of <i>w</i>, then:
 1. If there is a letter <i>a ε Σ</i>, such that every occurance of x in <i>w</i> is preceeded by <i>a</i>, then x does not represent the equivalence class <i>[x]<sub>w</sub></i>  
@@ -53,6 +54,11 @@ Let x be an infix of <i>w</i>, then:
 3. If there are letters <i>b,c ε Σ, b ╪ c</i> and both <i>bx</i> and <i>cx</i> are infixes of <i>w</i>, then x canonically represents the equivalence class <i>[x]<sub>w</sub></i>  
 4. <i>x = r(x)</i> ↔ x is a prefix of <i>w</i> or it occurs in two distinct left contexts  
 
+<b><i>Proof:</i></b>
+1. Let <i>a</i> preceed every occurance of x in <i>w</i>. Then for every <i>i ε end_pos(x)</i> we have <i>w<sub>i-|x|</sub> = a</i> → <i>i ε end_pos(ax)</i>  
+<i>→ end_pos(x) c end_pos(ax)</i>
+And since x is a suffix of <i>ax</i> we have that <i>end_pos(ax) c end_pos(x) → end_pos(x) = end_pos(ax)</i>
+It follows that <i>x ≡<sub>w</sub> ax</i> and <i>|x| < |ax| → x ╪ r(x)</i>
 
 
 
