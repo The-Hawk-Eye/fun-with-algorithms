@@ -13,4 +13,4 @@ Any path starting at the initial state <b><i>s<sub>0</sub></i></b> fors a substr
 <i>Suffix(w) = {ß ε Σ* | exists α: αß = w}</i>  
   
 A suffix automaton is a minimal DFA over the language <i>L = Suffix(w)</i>. From Nerode's theorem it follows that the number of states of the minimal DFA is equal to the number of equivalence classes in the relation <i>R<sub>L</sub></i>, where:  
-<i>{α,ß} ε R<sub>L (α ≡<sub>L</sub> ß) ↔ for every z ε Σ*: αz ε L ↔ ßz ε L</i>
+<i>{α,ß} ε R<sub>L</sub> (α ≡<sub>L</sub> ß) ↔ for every z ε Σ*: αz ε L ↔ ßz ε L</i>
