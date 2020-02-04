@@ -134,13 +134,32 @@ In this case we can simply assign <i>slink([wa]<sub>wa</sub>) = [w<sub>k</sub> �
 * <i>ß ╪ [w<sub>k</sub> • a]<sub>w</sub></i>  
 In this case, since after extending <i>w</i> with the letter <i>a</i> the string <i>w<sub>k</sub> • a</i> occurs in two distinct left contexts, a new state, <i>[w<sub>k</sub> • a]<sub>wa</sub></i>, has to be created. All transitions of state <i>[ß]<sub>w</sub></i> have to be copied to the new state <i>[w<sub>k</sub> • a]<sub>wa</sub></i>. For any transition <i>x ╪ a</i> of state <i>[ß]<sub>w</sub></i> we have the following:  
 <i>end_pos<sub>wa</sub>([ßx]<sub>wa</sub>) = end_pos<sub>wa</sub>(ßx) = end_pos<sub>wa</sub>(αx) = end_pos([αx]<sub>wa</sub>)</i>  
-The creation of a new state also requires updating the suffix link chain. Since <i>slink([wa]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i>, this implies that ß is not a suffix of <i>wa</i>.  
-Suppose <i>ß = x • w<sub>k</sub> • a, x c Σ*</i> and suppose that <i>slink([ß]<sub>w</sub>) = σ</i>. We have the following:  
+The creation of a new state also requires updating the suffix link chain. Since <i>slink([wa]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i>, this implies that ß is not a suffix of <i>wa</i>. Suppose <i>ß = x • w<sub>k</sub> • a, x c Σ*</i> and suppose that <i>slink([ß]<sub>w</sub>) = σ</i>. We have the following:  
 <i>end_pos<sub>wa</sub>(w<sub>k</sub> • a) = end_pos<sub>w</sub>(w<sub>k</sub> • a) U { |w| + 1 } = end_pos<sub>w</sub>(ß) U {|w| + 1} = end_pos<sub>wa</sub>(ß) U {|w| + 1}</i>  
 <i>end_pos<sub>w</sub>(σ) c end_pos<sub>w</sub>(ß) = end_pos<sub>w</sub>(w<sub>k</sub> • a) → end_pos<sub>wa</sub>(σ) c end_pos<sub>wa</sub>(w<sub>k</sub> • a)</i>  
 From this we can conclude that the following update has to be made to the suffix chain:  
-<i>slink([ß]<sub>wa</sub>) = [w<sub>k</sub> • a</i>]<sub>wa</sub> and <i>slink([w<sub>k</sub> • a]<sub>wa</sub>) = σ</i>  
+<i>slink([w<sub>k</sub> • a]<sub>wa</sub>) = slink([ß]<sub>w</sub></i> and <i>slink([ß]<sub>wa</sub>) = [w<sub>k</sub> • a</i>]<sub>wa</sub></i>  
+<pre>
+ModifyTree(p, q<sub>wa</sub>, a) { // p is the result from the function FindStem
+	if p is not defined:
+		slink(q<sub>wa</sub>) = s<sub>0</sub>
+		return NULL
+	
+	suf = δ(p, a)
+	if (len(suf) == len(p) + 1):	// suf represents the class [suf]<sub>w</sub>
+		slink(q<sub>wa</sub>) = suf
+		return NULL
+	
+	clone = new State
+	len(clone) = len(p) + 1
+	CopyTransitions(suf, clone)
 
+	slink(clone) = slink(suf)
+	slink(suf) = clone
+	slink(q<sub>wa</sub>) = clone
+	return clone
+}
+</pre>
 
 
 
