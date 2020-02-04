@@ -34,7 +34,7 @@ But <i> x ≡<sub>Suffix(w)</sub> y ↔ for every z ε Σ*: xz ε Suffix(w) ↔ 
 ↔ end_pos<sub>w</sub>(x) = end_pos<sub>w</sub>(y)</i>
 
 <b><i>Example:</b></i>  
-<pre><i>w = a b c b c</i>  
-    <i>   0 1 2 3 4 5</i>  
-    <i>end_pos<sub>w</sub>(bc) = end_pos<sub>w</sub>(c) = { 3, 5 }</i>  
-    <i>bc ≡<sub>w</sub> c</i></pre>
+<pre>	<i>w = a b c b c</i>  
+	<i>   0 1 2 3 4 5</i>  
+    	<i>end_pos<sub>w</sub>(bc) = end_pos<sub>w</sub>(c) = { 3, 5 }</i>  
+    	<i>bc ≡<sub>w</sub> c</i></pre>
