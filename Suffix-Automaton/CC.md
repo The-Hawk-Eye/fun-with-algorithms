@@ -254,5 +254,8 @@ Since the total number of states is <i>Q<sub>w</sub> ≤ 2|w|</i> and the total 
 
 Let <i>SC<sub>w</sub>(α) = { slink<sup>k</sup>(α) | k is an ineger }</i> be the set of all suffix pointers traversed starting at the state [α]<sub>w</sub>.  
 <b><i>Lemma:</i></b> After extending the string <i>w</i> with the letter <i>a</i> the number of modifications of existing transitions does not exceed <i>1 + |SC<sub>w</sub>(w)| - |SC<sub>wa</sub>(wa)|</i>.  
-<b><i>Proof:</i></b> The function <i>RedirectTransitions</i> modifies the transition of state <i>[w<sub>k</sub>]<sub>w</sub></i>. It also modifies the transitions of all states α such that <i>α c SC<sub>w</sub>(w<sub>k</sub>)</i> and <i>α ¢ SC<sub>wa</sub>(wa)</i>. This implies that the number of modifications is:  
-<i>1 + |{α c SC<sub>w</sub>(w<sub>k</sub>) | α ¢ SC<sub>wa</sub>(wa)}| = 1 + |SC<sub>w</sub>(w<sub>k</sub>)| - |SC<sub>wa</sub>(wa)| ≤ 1 + |SC<sub>w</sub>(w)| - |SC<sub>wa</sub>(wa)|
+<b><i>Proof:</i></b> The function <i>RedirectTransitions</i> modifies the transition of state <i>[w<sub>k</sub>]<sub>w</sub></i>. It also modifies the transitions of all states α such that <i>α c SC<sub>w</sub>(w<sub>k</sub>)</i> and <i>δ<sub>w</sub>(α, a) = [w<sub>k</sub> • a]<sub>w</sub></i>. This means that <i>α ¢ SC<sub>wa</sub>(wa)</i>. In other words the function modifies the transitions of all states α such that <i>α c SC<sub>w</sub>(w<sub>k</sub>)</i> and <i>α ¢ SC<sub>wa</sub>(wa)</i>. This implies that the number of modifications is:  
+<i>1 + |{ α c SC<sub>w</sub>(w<sub>k</sub>) | α ¢ SC<sub>wa</sub>(wa) }| = 1 + |SC<sub>w</sub>(w<sub>k</sub>)| - |SC<sub>wa</sub>(wa)| ≤ 1 + |SC<sub>w</sub>(w)| - |SC<sub>wa</sub>(wa)|  
+
+Thus, the total number of modifications of existing transitions is:  
+<i>Σ<sub>i = 0</sub><sup>|w| - 1</sup> (1 + |SC<sub>w<sub>i</sub></sub>(w<sub>i</sub>)| - |SC<sub>w<sub>i + 1</sub></sub>(w<sub>i + 1</sub>)| = |w| + |SC<sub>w<sub>0</sub></sub>(w<sub>0</sub>)| - |SC<sub>w</sub>(w)| ≤ |w| + 1
