@@ -211,7 +211,7 @@ BuildSuffixAutomaton(w) {
 ### Linearity of the number of states ###
 To show that the number of states of the automaton is <b><i>O(n)</i></b> we will use the following statement:  
 <b><i>Lemma:</i></b> Let <i>Φ</i> be a set of subsets of the set <i>{1, 2, 3, ..., n}</i>. For every <i>S<sub>1</sub> , S<sub>2</sub> c Φ</i> we have either <i>S<sub>1</sub> ∩ S<sub>2</sub> = Ø</i> or <i>S<sub>1</sub> c S<sub>2</sub> and S<sub>1</sub> ╪ S<sub>2</sub></i> . Then <i>|Φ| ≤ 2n</i>.  
-<b><i>Proof:</i></b> Let <i>Φ' = Φ U {1, 2, 3, ..., n}</i> and let <i>S = Φ \ {{Ø}, {1, 2, 3, ..., n}}</i>. Then there exists <i>S' c Φ': S c S'</i>.
+<b><i>Proof:</i></b> Let <i>Φ' = Φ U {1, 2, 3, ..., n}</i> and let <i>S = Φ \ {{Ø}, {1, 2, 3, ..., n}}</i>. Then there exists <i>S' c Φ': S c S'</i>. Denote by <i>p(S)</i> the smalles set such that: <i>S c p(S)</i> and <i>S ╪ p(S)</i>. In a sense <i>p(S)</i> is the parent of <i>S</i>. We will show that <i>(Φ'\{Ø}, p, {1, 2, ..., n})</i> is a rooted tree with root <i>{1, 2, ..., n}</i>, parent fuction <i>p</i> and set of states <i>Q = Φ'\{Ø}</i>.
 
 ### Linearity of the number of transitions ###
 We will show that the number of transitions is <i>|δ| ≤ 3n - 4</i>
