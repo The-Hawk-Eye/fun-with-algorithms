@@ -220,7 +220,14 @@ The number of edges in the tree is <i>|E| = |Φ' \ {Ø}| - 1</i>. On the other h
 <i>→ |E| ≥ 0 + |V<sup>1</sup>| + 2|V<sup>≥2</sup>|</i>  
 <i>→ |Φ' \ {Ø}| - 1 ≥ |V<sup>1</sup>| + 2|V<sup>≥2</sup>|</i>  
 <i>↔ |L| + |V<sup>1</sup>| + |V<sup>≥2</sup>| - 1 ≥ V<sup>1</sup>| + 2|V<sup>≥2</sup>|</i>  
-<i>↔ |L| -1 ≥ |V<sup>≥2</sup>|</i>
+<i>↔ |L| -1 ≥ |V<sup>≥2</sup>|</i>  
+<i>→ |Φ' \ {Ø}| ≤ |L| + |V<sup>1</sup>| + |L| - 1 ≤ 2(|L| + |V<sup>1</sup>|) - 1</i>  
+We will use the following strategy to find the cardinality of each of the sets <i>L</i> and <i>V<sup>1</sup></i>:  
+i) For every <i>S c L</i> we pick an arbitrary element <i>f(S) c S</i> to represent the set  
+For any <i>S<sub>1</sub> , S<sub>2</sub> c L</i> we have <i>S<sub>1</sub> ∩ S<sub>2</sub> = Ø → f(S<sub>1</sub>) ╪ f(S<sub>2</sub>)</i>  
+ii) For every <i>S c V<sup>1</sup></i> let <i>child(S)</i> denote the only child of <i>S</i>. We pick an arbitrary element <i>f(S) c S \ child(S)</i>  
+Suppose <i>f(S<sub>1</sub>) = f(S<sub>2</sub>)</i> for some <i>S<sub>1</sub> → S<sub>1</sub> ∩ S<sub>2</sub> ╪ Ø</i>. If <i>S<sub>2</sub> c L</i> then <i>S<sub>2</sub></i> must be in the subtree of <i>S<sub>1</sub> → S<sub>2</sub> c child(S<sub>1</sub>) → f(S<sub>1</sub>) c child(S<sub>1</sub>) - contradiction.</i>
+
 
 ### Linearity of the number of transitions ###
 We will show that the number of transitions is <i>|δ| ≤ 3n - 4</i>
