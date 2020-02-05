@@ -195,7 +195,7 @@ BuildSuffixAutomaton(w) {
 	
 	for i = 1 to |w| do:
 		q<sub>wa</sub> = new State
-		len(q<sub>wa</sub> = i
+		len(q<sub>wa</sub>) = i
 		p = FindStem(q, q<sub>wa</sub>, w[i])
 		clone = ModifyTree(p, q<sub>wa</sub>, w[i])
 		RedirectTransitions(p, clone, w[i])
@@ -240,16 +240,18 @@ The equivalence classes in the end-equivalence relation satisfy the precondition
 ### Linearity of the number of transitions ###
 We will show that the number of transitions of the suffix automaton for the string <i>w</i> does not exceed <b><i>3|w|</i></b>. Let <i>α c Q<sub>w</sub> , |α| ≥ 1</i>, then it follows that <i>α = ßa</i>, for some <i>ß c Σ*</i> and <i>a c Σ</i>, and <i>ß c Q<sub>w</sub></i>. Indeed, if α is a prefix of <i>w</i> then ß is also a prefix of <i>w</i>. And if α occurs in two distinct left contexts then ß also occurs in two distinct left contexts. Let us denote by <i>p(α) = ß</i> the parrent of α, then <i>T = (Q<sub>w</sub>, p, s<sub>0</sub>)</i> forms a rooted tree. The tree <i>T</i> is a spannig tree of the automaton and consists of <i>|Q<sub>w</sub> - 1|</i> transitions.  
 
-Now let <i>S<sub>w</sub> = {<ß, a, α> | δ<sub>w</sub>(ß, a) = α and p(α) ╪ ß}</i> denote the set of all the remaining transitions. For every <i>α c Q<sub>w</sub></i> denote by <i>σ(α)</i> the longest string such that <i>α • σ(α)</i> is a suffix of <i>w</i>. Then for every element of the set <i>S<sub>w</sub></i> the string <i>ß • a • σ(α)</i> corresponds to a unique suffix of the string <i>w</i>. Indeed, suppose <i><ß<sub>1</sub>, a<sub>1</sub>, α<sub>1</sub>>, <ß<sub>2</sub>, a<sub>2</sub>, α<sub>2</sub>> c S<sub>w</sub></i> and <i>ß<sub>1</sub> • a<sub>1</sub> • σ(α<sub>1</sub>) = ß<sub>2</sub> • a<sub>2</sub> • σ(α<sub>2</sub>)</i>. Then <i>ß<sub>1</sub> • a<sub>1</sub></i> is a prefix of <i>ß<sub>2</sub> • a<sub>2</sub></i> or <i>ß<sub>2</sub> • a<sub>2</sub></i> is a prefix of <i>ß<sub>1</sub> • a<sub>1</sub></i>. WLOG we can assume that <i>ß<sub>1</sub> • a<sub>1</sub></i> is a prefix of <i>ß<sub>2</sub> • a<sub>2</sub></i>. Then <i>ß<sub>1</sub> • a<sub>1</sub></i> ╪ <i>ß<sub>2</sub> • a<sub>2</sub></i> otherwise <i><ß<sub>1</sub>, a<sub>1</sub>, α<sub>1</sub>> = <ß<sub>2</sub>, a<sub>2</sub>, α<sub>2</sub>></i>. This means that <i>ß<sub>1</sub> • a<sub>1</sub></i> is a a proper prefix of <i>ß<sub>2</sub> • a<sub>2</sub></i>, implying that <i>ß<sub>1</sub> • a<sub>1</sub></i> is an ancestor of <i>ß<sub>2</sub></i> in <i>T<sub>w</sub></i>. This means that <i><ß<sub>1</sub>, a<sub>1</sub>, α<sub>1</sub>> ¢ S<sub>w</sub></i> - contradiction.  
+Now let <i>S<sub>w</sub> = {<ß, a, α> | δ<sub>w</sub>(ß, a) = α and p(α) ╪ ß}</i> denote the set of all the remaining transitions. For every <i>α c Q<sub>w</sub></i> denote by <i>σ(α)</i> the longest string such that <i>α • σ(α)</i> is a suffix of <i>w</i>. Then for every element of the set <i>S<sub>w</sub></i> the string <i>ß • a • σ(α)</i> corresponds to a unique suffix of the string <i>w</i>. Indeed, suppose <i><ß<sub>1</sub>, a<sub>1</sub>, α<sub>1</sub>>, <ß<sub>2</sub>, a<sub>2</sub>, α<sub>2</sub>> c S<sub>w</sub></i> and <i>ß<sub>1</sub> • a<sub>1</sub> • σ(α<sub>1</sub>) = ß<sub>2</sub> • a<sub>2</sub> • σ(α<sub>2</sub>)</i>. Then <i>ß<sub>1</sub> • a<sub>1</sub></i> is a prefix of <i>ß<sub>2</sub> • a<sub>2</sub></i> or <i>ß<sub>2</sub> • a<sub>2</sub></i> is a prefix of <i>ß<sub>1</sub> • a<sub>1</sub></i>. WLOG we can assume that <i>ß<sub>1</sub> • a<sub>1</sub></i> is a prefix of <i>ß<sub>2</sub> • a<sub>2</sub></i>. Then <i>ß<sub>1</sub> • a<sub>1</sub></i> ╪ <i>ß<sub>2</sub> • a<sub>2</sub></i> otherwise <i><ß<sub>1</sub>, a<sub>1</sub>, α<sub>1</sub>> = <ß<sub>2</sub>, a<sub>2</sub>, α<sub>2</sub>></i>. This means that <i>ß<sub>1</sub> • a<sub>1</sub></i> is a a proper prefix of <i>ß<sub>2</sub> • a<sub>2</sub></i>, implying that <i>ß<sub>1</sub> • a<sub>1</sub></i> is an ancestor of <i>ß<sub>2</sub></i> in <i>T<sub>w</sub></i>. This means that <i>p(ß<sub>2</sub>) = ß<sub>1</sub></i> and that <i><ß<sub>1</sub>, a<sub>1</sub>, α<sub>1</sub>> ¢ S<sub>w</sub></i> - contradiction.  
 This implies that <i>|S<sub>w</sub>| ≤ |w|</i> and we get <i>|δ<sub>w</sub>| = |Q<sub>w</sub>| - 1 + |S<sub>w</sub>| ≤ 2|w| + |w| = 3|w|</i>.
 
-### Linearity of the alorithm ###
-Proving the complexity is linear ....
+### Linearity of the algorithm ###
+Consider the for-loop that builds the suffix automaton. We have the following actions:
+* adding a new state
+* adding new transitions insidue function <i>FindStem</i>
+* adding new transitions and new states inside function <i>ModifyTree</i>
+* modifying existing transitions inside function <i>RedirectTransitions</i>
 
+Since the total number of states is <i>Q<sub>w</sub> ≤ 2|w|</i> and the total number of transitions is <i>|δ<sub>w</sub> ≤ 3|w|</i>, then the total number of steps for executing the first three actions is <i>O(|w|)</i>. It remains to show that the total number of modifications of the existing transitions is <i>O(n)</i>.  
 
-
-
-
-
-
-
+Let <i>SC<sub>w</sub>(α) = {slink<sup>k</sup>(α) | k is an ineger}</i> be the set of all suffix pointers traversed starting at the state [α]<sub>w</sub>.  
+<b><i>Lemma:</i></b> After extending the string <i>w</i> with the letter <i>a</i> the number of modifications of existing transitions does not exceed <i>1 + |SC<sub>w</sub>(w)| - |SC<sub>wa</sub>(wa)|</i>.  
+<b><i>Proof:</i></b>
