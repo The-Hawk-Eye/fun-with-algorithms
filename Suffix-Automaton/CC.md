@@ -215,7 +215,8 @@ To show that the number of states of the automaton is <b><i>O(n)</i></b> we will
 <i>L = {S c Φ' \ {Ø} | S doesnt have any children}</i> is the set of leafs  
 <i>V<sup>1</sup> = {S c Φ' \ {Ø} | S has only one child}</i>  
 <i>V<sup>≥2</sup> = {S c Φ' \ {Ø} | S has more than one child} = Φ' \ {{Ø}, L, V<sup>1</sup>}</i>  
-The number of edges in the tree is <i>E = |Φ' \ {Ø}| - 1</i> and on the other hand we have <i>E = Σ<sub>v c Q</sub>(# of children)</i>
+The number of edges in the tree is <i>E = |Φ' \ {Ø}| - 1</i>. On the other hand we have:  
+<i>E = Σ<sub>v c Q</sub>(# of children of v) = Σ<sub>v c L</sub>(# of children of v) + Σ<sub>v c V<sup>1</sup></sub>(# of children of v) + Σ<sub>v c V<sup>≥2</sup></sub>(# of children of v)</i>  
 
 ### Linearity of the number of transitions ###
 We will show that the number of transitions is <i>|δ| ≤ 3n - 4</i>
