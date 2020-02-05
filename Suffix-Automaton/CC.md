@@ -229,17 +229,18 @@ For any <i>S<sub>1</sub> , S<sub>2</sub> c L</i> we have <i>S<sub>1</sub> ∩ S<
 Suppose <i>f(S<sub>1</sub>) = f(S<sub>2</sub>)</i> for some <i>S<sub>1</sub></i> and <i>S<sub>2</sub></i>. If <i>S<sub>2</sub> c L</i> then, since  S<sub>1</sub> ∩ S<sub>2</sub> ╪ Ø, <i>S<sub>2</sub></i> must be in the subtree of <i>S<sub>1</sub> → S<sub>2</sub> c child(S<sub>1</sub>) → f(S<sub>1</sub>) c child(S<sub>1</sub>) - contradiction.</i> If <i>S<sub>2</sub> c V<sup>1</sup></i> again since S<sub>1</sub> ∩ S<sub>2</sub> ╪ Ø one of the sets must be in the subtree of the other, implying <i>f(S<sub>1</sub>) c child(S<sub>1</sub>)</i> or <i>f(S<sub>2</sub>) c child(S<sub>2</sub>)</i> and leading to contradiction.  
 
 It follows that <i>f: {L U V<sup>1</sup>} → {1, 2, ..., n}</i> is an injective function → <i>|L U V<sup>1</sup>| ≤ n</i>  
-<i>→ |Φ' \ {Ø}| ≤ 2(|L| + |V<sup>1</sup>|) - 1 ≤ 2n -1</i>  
+<i>→ |Φ' \ {Ø}| ≤ 2(|L| + |V<sup>1</sup>|) - 1 ≤ 2n - 1</i>  
 <i>→ |Φ'| ≤ 2n</i>  
 
-<b><i>Corollary:</i></b> The number of states of the suffix automaton for the string <i>w</i> is at most <i>2|w|</i>.
+<b><i>Corollary:</i></b> The number of states of the suffix automaton for the string <i>w</i> is at most <i>2|w|</i>.  
 <b><i>Proof:</i></b> The number of states of the automaton is equal to the equivalence classes in the relation <i>R<sub>Suffix(w)</sub></i> which is equivalent to the end-equivalence relation <i>≡<sub>w</sub></i>  
 <i>α ≡<sub>w</sub> ß → end_pos<sub>w</sub>(α) = end_pos<sub>w</sub>(ß)</i>  
-The equivalence classes in the end-equivalence relation satisfy the preconditions of the previous Lemma. This implies that <i>ind(≡<sub>w</sub>) ≤ 2|w|</i>
+The equivalence classes in the end-equivalence relation satisfy the preconditions of the previous Lemma. This implies that <i>ind(≡<sub>w</sub>) ≤ 2|w|</i>  
 
 ### Linearity of the number of transitions ###
-We will show that the number of transitions is <i>|δ| ≤ 3n - 4</i>
+We will show that the number of transitions of the suffix automaton for the string <i>w</i> does not exceed <b><i>3|w|</i></b>. Let <i>α c Q<sub>w</sub> , |α| ≥ 1</i>, then it follows that <i>α = ßa</i>, for some <i>ß c Σ*</i> and <i>a c Σ</i>, and <i>ß c Q<sub>w</sub></i>. Indeed, if α is a prefix of <i>w</i> then ß is also a prefix of <i>w</i>. And if α occurs in two distinct left contexts then ß also appears in two distinct left contexts. Let us denote by <i>p(α) = ß</i> the parrent of α, then <i>T = (Q<sub>w</sub>, p, s<sub>0</sub>)</i> forms a rooted tree. The tree <i>T</i> is a spannig tree of the automaton and consists of <i>|Q<sub>w</sub> - 1|</i> transitions.  
 
+Now let <i>S<sub>w</sub> = {<ß, a, α> | δ<sub>w</sub>(ß, a) = α and p(α) ╪ ß}</i> denote the set of all the remaining transitions. For every <i>α c Q<sub>w</sub></i> denote by <i>σ(α)</i> the longest string such that <i>α • σ(α)</i> is a suffix of <i>w</i>. Then for every element of the set <i>S<sub>w</sub></i> the string <i>[ß]<sub>w</sub> • a • σ(α)</i> corresponds to a unique suffix of the string <i>w</i>. This implies that <i>|S<sub>w</sub>| ≤ |w|</i> and we get <i>|δ<sub>w</sub> = |Q<sub>w</sub>| - 1 + |S<sub>w</sub>| ≤ 2|w| + |w| = 3|w|</i>.
 
 ### Linearity of the alorithm ###
 Proving the complexity is linear ....
