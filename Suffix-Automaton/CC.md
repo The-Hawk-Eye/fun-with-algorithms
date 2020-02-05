@@ -258,4 +258,4 @@ Let <i>SC<sub>w</sub>(α) = { slink<sup>k</sup>(α) | k is an ineger }</i> be th
 <i>1 + |{ α c SC<sub>w</sub>(w<sub>k</sub>) | α ¢ SC<sub>wa</sub>(wa) }| = 1 + |SC<sub>w</sub>(w<sub>k</sub>)| - |SC<sub>wa</sub>(wa)| ≤ 1 + |SC<sub>w</sub>(w)| - |SC<sub>wa</sub>(wa)|  
 
 Thus, the total number of modifications of existing transitions is:  
-<i>Σ<sub>i = 0</sub><sup>|w| - 1</sup> (1 + |SC<sub>w<sub>i</sub></sub>(w<sub>i</sub>)| - |SC<sub>w<sub>i + 1</sub></sub>(w<sub>i + 1</sub>)| = |w| + |SC<sub>w<sub>0</sub></sub>(w<sub>0</sub>)| - |SC<sub>w</sub>(w)| ≤ |w| + 1
+<i>Σ<sub>0 ≤ i < |w|</sub> (1 + |SC<sub>w<sub>i</sub></sub>(w<sub>i</sub>)| - |SC<sub>w<sub>i + 1</sub></sub>(w<sub>i + 1</sub>)| = |w| + |SC<sub>w<sub>0</sub></sub>(w<sub>0</sub>)| - |SC<sub>w</sub>(w)| ≤ |w| + 1
