@@ -250,8 +250,9 @@ Consider the for-loop that builds the suffix automaton. We have the following ac
 * adding new transitions and new states inside function <i>ModifyTree</i>
 * modifying existing transitions inside function <i>RedirectTransitions</i>
 
-Since the total number of states is <i>Q<sub>w</sub> ≤ 2|w|</i> and the total number of transitions is <i>|δ<sub>w</sub> ≤ 3|w|</i>, then the total number of steps for executing the first three actions is <i>O(|w|)</i>. It remains to show that the total number of modifications of the existing transitions is <i>O(n)</i>.  
+Since the total number of states is <i>Q<sub>w</sub> ≤ 2|w|</i> and the total number of transitions is <i>|δ<sub>w</sub>| ≤ 3|w|</i>, then the total number of steps for executing the first three actions is <i>O(|w|)</i>. It remains to show that the total number of modifications of the existing transitions is <i>O(|w|)</i>.  
 
-Let <i>SC<sub>w</sub>(α) = {slink<sup>k</sup>(α) | k is an ineger}</i> be the set of all suffix pointers traversed starting at the state [α]<sub>w</sub>.  
+Let <i>SC<sub>w</sub>(α) = { slink<sup>k</sup>(α) | k is an ineger }</i> be the set of all suffix pointers traversed starting at the state [α]<sub>w</sub>.  
 <b><i>Lemma:</i></b> After extending the string <i>w</i> with the letter <i>a</i> the number of modifications of existing transitions does not exceed <i>1 + |SC<sub>w</sub>(w)| - |SC<sub>wa</sub>(wa)|</i>.  
-<b><i>Proof:</i></b>
+<b><i>Proof:</i></b> The function <i>RedirectTransitions</i> modifies the transition of state <i>[w<sub>k</sub>]<sub>w</sub></i>. It also modifies the transitions of all states α such that <i>α c SC<sub>w</sub>(w<sub>k</sub>)</i> and <i>α ¢ SC<sub>wa</sub>(wa)</i>. This implies that the number of modifications is:  
+<i>1 + |{α c SC<sub>w</sub>(w<sub>k</sub>) | α ¢ SC<sub>wa</sub>(wa)}| = 1 + |SC<sub>w</sub>(w<sub>k</sub>)| - |SC<sub>wa</sub>(wa)| ≤ 1 + |SC<sub>w</sub>(w)| - |SC<sub>wa</sub>(wa)|
