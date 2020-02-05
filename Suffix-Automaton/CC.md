@@ -143,6 +143,7 @@ From this we can conclude that the following update has to be made to the suffix
 <i>slink([w<sub>k</sub> • a]<sub>wa</sub>) = slink([ß]<sub>w</sub>)</i> and <i>slink([ß]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i>  
 Finally we need to follow the suffix chain from <i>[w<sub>k</sub>]<sub>w</sub></i> all the way up to <i>s<sub>0</sub></i> and whenever there is a transition with the letter <i>a</i> to state <i>[ß]<sub>w</sub></i> we have to redirect it to state <i>[w<sub>k</sub> • a]<sub>wa</sub></i>. To see why this is the case consider a state <i>[α]<sub>w</sub> :  
 δ<sub>w</sub>(α, a) = ß</i>. The string α is a suffix of all the strings that belong to the equivalence class [ß]<sub>w</sub> and in particular α is a suffix of <i>w<sub>k</sub> • a</i>. This implies <i>end_pos<sub>w</sub>(αa) = end_pos<sub>w</sub>(w<sub>k</sub> • a)</i>. After extending <i>w</i> with the letter <i>a</i> we have <i>end_pos<sub>wa</sub>(αa) = end_pos<sub>w</sub>(αa) U {|w| + 1} = end_pos<sub>wa</sub>(w<sub>k</sub> • a)</i> and thus <i>δ<sub>wa</sub>(α, a) = w<sub>k</sub> • a</i>  
+<b><i>Lemma:</i></b> No other transitions need to be modified.  
 
 <pre>
 ModifyTree(p, q<sub>wa</sub>, a) { // p is the result from the function FindStem
@@ -207,6 +208,15 @@ BuildSuffixAutomaton(w) {
 </pre>
 
 ## Complexity ##
+### Linearity of the number of states ###
+To show that the number of states is <b><i>O(n)</i></b> we will use the following statement:
+<b><i>Lemma:</i></b> Let <i>Φ</i> be a set of subsets of the set <i>{1, 2, 3,..., n}</i>. For every <i>S<sub>1</sub> , S<sub>2</sub> c Φ</i> we have either <i>S<sub>1</sub> ∩ S<sub>2</sub> = Ø</i> or <i>S<sub>1</sub> c S<sub>2</sub></i> . Then <i>|Φ|</i> ≤ n.
+
+### Linearity of the number of transitions ###
+We will show that the number of transitions is <i>|δ| ≤ 3n - 4</i>
+
+
+### Linearity of the alorithm ###
 Proving the complexity is linear ....
 
 
