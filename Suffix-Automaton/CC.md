@@ -214,8 +214,8 @@ To show that the number of states of the automaton is <b><i>O(n)</i></b> we will
 <b><i>Proof:</i></b> Let <i>Φ' = Φ U {1, 2, ..., n}</i> and let <i>S = Φ \ {{Ø}, {1, 2, ..., n}}</i>. Then there exists <i>S' c Φ': S c S'</i>. Denote by <i>p(S)</i> the smalles set such that: <i>S c p(S)</i> and <i>S ╪ p(S)</i>. In a sense <i>p(S)</i> is the parent of <i>S</i>, it exists and it is unique. It follows that <i>(Φ' \ {Ø}, p, {1, 2, ..., n})</i> is a rooted tree with root <i>{1, 2, ..., n}</i>, parent fuction <i>p</i> and set of states <i>Q = Φ' \ {Ø}</i>. We will use the following notation:  
 <i>L = {S c Φ' \ {Ø} | S doesnt have any children}</i> is the set of leafs  
 <i>V<sup>1</sup> = {S c Φ' \ {Ø} | S has only one child}</i>  
-<i>V<sup>2</sup> = {S c Φ' \ {Ø} | S has more than one child} = Φ' \ {{Ø}, L, V<sup>1</sup>}</i>  
-
+<i>V<sup>≥2</sup> = {S c Φ' \ {Ø} | S has more than one child} = Φ' \ {{Ø}, L, V<sup>1</sup>}</i>  
+The number of edges in the tree is <i>E = |Φ' \ {Ø}| - 1</i> and on the other hand we have <i>E = Σ<sub>v c Q</sub>(# of children)</i>
 
 ### Linearity of the number of transitions ###
 We will show that the number of transitions is <i>|δ| ≤ 3n - 4</i>
