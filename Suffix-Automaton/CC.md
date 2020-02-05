@@ -209,8 +209,8 @@ BuildSuffixAutomaton(w) {
 
 ## Complexity ##
 ### Linearity of the number of states ###
-To show that the number of states is <b><i>O(n)</i></b> we will use the following statement:
-<b><i>Lemma:</i></b> Let <i>Φ</i> be a set of subsets of the set <i>{1, 2, 3,..., n}</i>. For every <i>S<sub>1</sub> , S<sub>2</sub> c Φ</i> we have either <i>S<sub>1</sub> ∩ S<sub>2</sub> = Ø</i> or <i>S<sub>1</sub> c S<sub>2</sub></i> . Then <i>|Φ|</i> ≤ n.
+To show that the number of states of the automaton is <b><i>O(n)</i></b> we will use the following statement:  
+<b><i>Lemma:</i></b> Let <i>Φ</i> be a set of subsets of the set <i>{1, 2, 3,..., n}</i>. For every <i>S<sub>1</sub> , S<sub>2</sub> c Φ</i> we have either <i>S<sub>1</sub> ∩ S<sub>2</sub> = Ø</i> or <i>S<sub>1</sub> c S<sub>2</sub></i> . Then <i>|Φ| ≤ 2n</i>.
 
 ### Linearity of the number of transitions ###
 We will show that the number of transitions is <i>|δ| ≤ 3n - 4</i>
