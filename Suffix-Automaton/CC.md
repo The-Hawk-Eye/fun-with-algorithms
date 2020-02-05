@@ -227,6 +227,7 @@ We will use the following strategy to find the cardinality of each of the sets <
 For any <i>S<sub>1</sub> , S<sub>2</sub> c L</i> we have <i>S<sub>1</sub> ∩ S<sub>2</sub> = Ø → f(S<sub>1</sub>) ╪ f(S<sub>2</sub>)</i>
 * For every <i>S c V<sup>1</sup></i> let <i>child(S)</i> denote the only child of <i>S</i>. We pick an arbitrary element <i>f(S) c S \ child(S)</i>  
 Suppose <i>f(S<sub>1</sub>) = f(S<sub>2</sub>)</i> for some <i>S<sub>1</sub></i> and <i>S<sub>2</sub></i>. If <i>S<sub>2</sub> c L</i> then, since  S<sub>1</sub> ∩ S<sub>2</sub> ╪ Ø, <i>S<sub>2</sub></i> must be in the subtree of <i>S<sub>1</sub> → S<sub>2</sub> c child(S<sub>1</sub>) → f(S<sub>1</sub>) c child(S<sub>1</sub>) - contradiction.</i> If <i>S<sub>2</sub> c V<sup>1</sup></i> again since S<sub>1</sub> ∩ S<sub>2</sub> ╪ Ø one of the sets must be in the subtree of the other, implying <i>f(S<sub>1</sub>) c child(S<sub>1</sub>)</i> or <i>f(S<sub>2</sub>) c child(S<sub>2</sub>)</i> and leading to contradiction.  
+
 It follows that <i>f: L U V<sup>1</sup> → {1, 2, ..., n}</i> is an injective function → <i>|L U V<sup>1</sup>| ≤ n</i>  
 <i>→ |Φ' \ {Ø}| ≤ 2(|L| + |V<sup>1</sup>|) - 1 ≤ 2n -1 → |Φ'| ≤ 2n</i>  
 
