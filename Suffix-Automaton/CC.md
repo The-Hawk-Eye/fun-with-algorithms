@@ -211,7 +211,8 @@ BuildSuffixAutomaton(w) {
 ### Linearity of the number of states ###
 To show that the number of states of the automaton is <b><i>O(n)</i></b> we will use the following statement:  
 <b><i>Lemma:</i></b> Let <i>Φ</i> be a set of subsets of the set <i>{1, 2, ..., n}</i>. For every <i>S<sub>1</sub> , S<sub>2</sub> c Φ</i> we have either <i>S<sub>1</sub> ∩ S<sub>2</sub> = Ø</i> or <i>S<sub>1</sub> c S<sub>2</sub> and S<sub>1</sub> ╪ S<sub>2</sub></i> . Then <i>|Φ| ≤ 2n</i>.  
-<b><i>Proof:</i></b> Let <i>Φ' = Φ U {1, 2, ..., n}</i> and let <i>S = Φ \ {{Ø}, {1, 2, ..., n}}</i>. Then there exists <i>S' c Φ': S c S'</i>. Denote by <i>p(S)</i> the smalles set such that: <i>S c p(S)</i> and <i>S ╪ p(S)</i>. In a sense <i>p(S)</i> is the parent of <i>S</i>, it exists and it is unique. It follows that <i>(Φ' \ {Ø}, p, {1, 2, ..., n})</i> is a rooted tree with root <i>{1, 2, ..., n}</i>, parent fuction <i>p</i> and set of states <i>Q = Φ' \ {Ø}</i>. We will use the following notation:  
+<b><i>Proof:</i></b> Let <i>Φ' = Φ U {1, 2, ..., n}</i> and let <i>S = Φ \ {{Ø}, {1, 2, ..., n}}</i>. Then there exists <i>S' c Φ': S c S'</i>. Denote by <i>p(S)</i> the smalles set such that: <i>S c p(S)</i> and <i>S ╪ p(S)</i>. In a sense <i>p(S)</i> is the parent of <i>S</i>, it exists and it is unique.  
+It follows that <i>(Φ' \ {Ø}, p, {1, 2, ..., n})</i> is a rooted tree with root <i>{1, 2, ..., n}</i>, parent fuction <i>p</i> and set of states <i>Q = Φ' \ {Ø}</i>. We will use the following notation:  
 <i>L = {S c Φ' \ {Ø} | S doesnt have any children}</i> is the set of leafs  
 <i>V<sup>1</sup> = {S c Φ' \ {Ø} | S has only one child}</i>  
 <i>V<sup>≥2</sup> = {S c Φ' \ {Ø} | S has more than one child} = Φ' \ {{Ø}, L, V<sup>1</sup>}</i>  
@@ -219,7 +220,7 @@ The number of edges in the tree is <i>|E| = |Φ' \ {Ø}| - 1</i>. On the other h
 <i>|E| = Σ<sub>v c Q</sub>(# of children of v) = Σ<sub>v c L</sub>(# of children of v) + Σ<sub>v c V<sup>1</sup></sub>(# of children of v) + Σ<sub>v c V<sup>≥2</sup></sub>(# of children of v)</i>  
 <i>→ |E| ≥ 0 + |V<sup>1</sup>| + 2|V<sup>≥2</sup>|</i>  
 <i>→ |Φ' \ {Ø}| - 1 ≥ |V<sup>1</sup>| + 2|V<sup>≥2</sup>|</i>  
-<i>↔ |L| + |V<sup>1</sup>| + |V<sup>≥2</sup>| - 1 ≥ V<sup>1</sup>| + 2|V<sup>≥2</sup>|</i>  
+<i>↔ |L| + |V<sup>1</sup>| + |V<sup>≥2</sup>| - 1 ≥ |V<sup>1</sup>| + 2|V<sup>≥2</sup>|</i>  
 <i>↔ |L| -1 ≥ |V<sup>≥2</sup>|</i>  
 <i>→ |Φ' \ {Ø}| ≤ |L| + |V<sup>1</sup>| + |L| - 1 ≤ 2(|L| + |V<sup>1</sup>|) - 1</i>  
 We will use the following strategy to find the cardinality of each of the sets <i>L</i> and <i>V<sup>1</sup></i>:
