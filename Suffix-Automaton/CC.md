@@ -88,7 +88,7 @@ Let <i>α = x•a•slink(α), x c Σ*, a c Σ</i> and let <i>i c end_pos(slink(
 If <i>i = |slink(α)|</i> → <i>slink(α)</i> is a prefix of w → <i>slink(α) c Q<sub>w</sub></i>  
 If <i>i ╪ |slink(α)|</i> → <i>w<sub>i-|slink(α)|</sub> ╪ a</i> → <i>slink(α)</i> appears in two different left contexts → <i>slink(α) c Q<sub>w</sub></i>  
 
-![alt text](https://github.com/ThreeChuchura/fun-with-algorithms/blob/master/Suffix-Automaton/img/suffix_links.png)
+![alt text](https://github.com/The-Hawk-Eye/fun-with-algorithms/blob/master/Suffix-Automaton/img/suffix_links.png)
 
 ## Construction in linear time <b>O(n)</b> ##
 The algorithm will be online, i.e. we will add the characters of the string one by one, and modify the automaton accordingly in each step. The whole task boils down to implementing the process of <b>adding one character <i>a</i></b> to the end of the current string <b><i>w</i></b>.  
