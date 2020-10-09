@@ -66,7 +66,7 @@ Let &alpha; be an infix of <i>w</i>, then:
   &rarr; <i>end_pos(&alpha;) &sube; end_pos(a&alpha;)</i>  
   And since &alpha; is a suffix of a&alpha we have that <i>end_pos(a&alpha;) &sube; end_pos(&alpha;)</i> (by <i>Property 2.</i>)  
   &rarr; <i>end_pos(&alpha;) = end_pos(a&alpha;)</i>  
-  It follows that &alpha; &eqiv;<sub>w</sub> a&alpha; and |&alpha;| < |a&alpha;| &rarr; &alpha; &ne; r(&alpha;)
+  It follows that &alpha; &equiv;<sub>w</sub> a&alpha; and |&alpha;| < |a&alpha;| &rarr; &alpha; &ne; r(&alpha;)
   2. Let |&alpha;| = i. Since &alpha; is a prefix of <i>w</i> we have &alpha; = a<sub>1</sub>...a<sub>i</sub> and i &isin; <i>end_pos(&alpha;)</i>.  
   Suppose &beta; &equiv;<sub>w</sub> &alpha; &rarr; i &isin; <i>end_pos(&beta;)</i> &rarr; |&beta;| &le; |a<sub>1</sub>...a<sub>i</sub>| = i = |&alpha;|
   3. Let x, y &isin; &Sigma;, x &ne; y and both x&alpha; and y&alpha; are infixes of <i>w</i>. Let i and j be such that:  
@@ -107,7 +107,7 @@ The algorithm will be online, i.e. we will add the characters of the string one 
   Let &alpha; &isin; &Sigma;* : &alpha; = r(&alpha;) & [&alpha;] &isin; <i>Q<sub>wa</sub>\Q<sub>w</sub></i>  
 	* <i>end_pos<sub>w</sub>(&alpha;)</i> = &empty;  
     &alpha; &isin; <i>Q<sub>wa</sub></i> &rarr; <i>end_pos<sub>wa</sub>(&alpha;)</i> &ne; &empty;  
-    { 0, 1, 2,..., |w| } &cup; <i>end_pos<sub>wa</sub>(&alpha;)</i> = &empty; &rarr; <i>end_pos<sub>wa</sub>(&alpha;)</i> = { |w|+1 } &rarr; &alpha; &eqiv;<sub>wa</sub> <i>wa</i> &rarr; &alpha; = <i>wa</i>
+    { 0, 1, 2,..., |w| } &cup; <i>end_pos<sub>wa</sub>(&alpha;)</i> = &empty; &rarr; <i>end_pos<sub>wa</sub>(&alpha;)</i> = { |w|+1 } &rarr; &alpha; &equiv;<sub>wa</sub> <i>wa</i> &rarr; &alpha; = <i>wa</i>
 	* <i>end_pos<sub>w</sub>(&alpha;)</i> &ne; &empty;  
     For any &sigma; &isin; &Sigma;*: &sigma; is an infix of <i>w</i>, we have:  
     <i>end_pos<sub>wa</sub>(&sigma;) = end_pos<sub>w</sub>(&sigma;) &cup; { |w| + 1 }</i>, if &sigma; is a suffix of <i>wa</i>  
@@ -252,7 +252,7 @@ It follows that <i>f: {L &cup; V<sup>1</sup>} &rarr; {1, 2, ..., n}</i> is an in
 <b><i>Corollary:</i></b> The number of states of the suffix automaton for the string <i>w</i> is at most <i>2|w|</i>.  
 <b><i>Proof:</i></b> The number of states of the automaton is equal to the equivalence classes in the relation <i>R<sub>Suffix(w)</sub></i> which is equivalent to the end-equivalence relation <i>&equiv;<sub>w</sub></i>  
 &alpha; &equiv;<sub>w</sub> &beta; &rarr; <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>  
-The equivalence classes in the end-equivalence relation satisfy the preconditions of the previous Lemma. This implies that <i>ind(&eqiv;<sub>w</sub>) &le; 2|w|</i>  
+The equivalence classes in the end-equivalence relation satisfy the preconditions of the previous Lemma. This implies that <i>ind(&equiv;<sub>w</sub>) &le; 2|w|</i>  
 
 ### Linearity of the number of transitions ###
 We will show that the number of transitions of the suffix automaton for the string <i>w</i> does not exceed <b><i>3|w|</i></b>. Let &alpha; &isin; <i>Q<sub>w</sub></i> , |&alpha;| ≥ 1, then it follows that &alpha; = &beta;a, for some &beta; &isin; &Sigma;* and <i>a</i> &isin; &Sigma;, and &beta; &isin; <i>Q<sub>w</sub></i>. Indeed, if &alpha; is a prefix of <i>w</i> then &beta; is also a prefix of <i>w</i>. And if &alpha; occurs in two distinct left contexts then &beta; also occurs in two distinct left contexts. Let us denote by <i>p(&alpha;) = &beta;</i> the parrent of &alpha;, then <i>T = (Q<sub>w</sub>, p, s<sub>0</sub>)</i> forms a rooted tree. The tree <i>T</i> is a spannig tree of the automaton and consists of <i>|Q<sub>w</sub> - 1|</i> transitions.  
