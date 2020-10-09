@@ -92,7 +92,7 @@ Let &alpha; = x•a•slink(&alpha;), x &isin; &Sigma;* , &alpha; &isin; &Sigma;
 If <i>i = |slink(&alpha;)|</i> &rarr; <i>slink(&alpha;)</i> is a prefix of w &rarr; <i>slink(&alpha;) &isin; Q<sub>w</sub></i>  
 If <i>i &ne; |slink(&alpha;)|</i> &rarr; w<sub>i-|slink(&alpha;)|</sub> &ne; a &rarr; <i>slink(&alpha;)</i> appears in two different left contexts &rarr; <i>slink(α) &isin; Q<sub>w</sub></i>  
 
-![alt text](https://github.com/cacao-macao/fun-with-algorithms/Suffix-Automaton/img/suffix_links.png)
+![alt text](https://github.com/cacao-macao/fun-with-algorithms/tree/master/Suffix-Automaton/img/suffix_links.png)
 
 
 ## CONSTRUCTION IN LINEAR TIME <b><i>O(n)</i></b> ##
