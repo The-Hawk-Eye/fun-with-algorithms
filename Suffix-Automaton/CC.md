@@ -9,10 +9,10 @@ Any path starting at the initial state <b><i>s<sub>0</sub></i></b> forms a subst
 
 ## NOTATION ##
 &Sigma; - nonempty alphabet  
-&epsilon; - the empty word  
 &Sigma;* - the set of all words over &Sigma;  
-<i>Suffix(w) = { &beta; &isin; &Sigma;* | &exist; &alpha;: &alpha;&beta; = w }</i>  
-  
+&epsilon; - the empty word  
+<i>Suffix(w) = { &beta; &isin; &Sigma;* | &exist; &alpha; &isin; &Sigma;* : &alpha;&beta; = w }</i>  
+
 A suffix automaton is a minimal DFA over the language <i>L = Suffix(w)</i>. From Nerode's theorem it follows that the number of states of the minimal DFA is equal to the number of equivalence classes in the relation <i>R<sub>L</sub></i>, where:  
 <i>{&alpha;, &beta;} &isin; R<sub>L</sub> (&alpha; &equiv;<sub>L</sub> &beta;) &harr; &forall; z &isin; &Sigma;* : &alpha;z &isin; L &harr; &beta;z &isin; L</i>  
 
@@ -23,7 +23,7 @@ define: <i><b>end_pos<sub>w</sub>(&alpha;)</b> = { i | &alpha; = a<sub>i-|&alpha
 <i>end_pos<sub>w</sub>(&epsilon;) = { 0, 1, 2, ..., |w| }</i>  
 
 Two strings &alpha;, &beta; &isin; &Sigma;* are <b>end-equivalent on w</b> if and only if <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>  
-End-equivalence will be denoted by &eqiv;<sub>w</sub> , i.e. &alpha; &eqiv;<sub>w</sub> &beta; &harr; <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>  
+End-equivalence will be denoted by &equiv;<sub>w</sub> , i.e. &alpha; &eqiv;<sub>w</sub> &beta; &harr; <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>  
 
 <b><i>Example:</i></b>
 <pre>	<i>w = a b c b c</i>  
@@ -36,7 +36,7 @@ End-equivalence will be denoted by &eqiv;<sub>w</sub> , i.e. &alpha; &eqiv;<sub>
 <b><i>Proof:</i></b> Let <i>w</i> = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> (a<sub>i</sub> &isin; &Sigma;) and let &alpha;, &beta;, z &isin; &Sigma;*. Then &alpha;z &isin; <i>Suffix(w)</i> &harr; &alpha;z = a<sub>n-|&alpha;z|+1</sub>...a<sub>n</sub>  
 &rarr; &alpha; = a<sub>n-|&alpha;z|+1</sub>...a<sub>n-|z|</sub> and z = a<sub>n-|z|+1</sub>...a<sub>n</sub>  
 &rarr; &alpha; = a<sub>i-|&alpha;|+1</sub>...a<sub>i</sub> and i = n - |z|  
-But &alpha; &equiv;<sub>Suffix(w)</sub> &beta; &harr; &forall; z &isin; &Sigma;*: &alpha;z &isin; <i>Suffix(w)</i> &harr; &beta;z &isin; <i>Suffix(w)</i>  
+But &alpha; &equiv;<sub>Suffix(w)</sub> &beta; &harr; &forall; z &isin; &Sigma;* : &alpha;z &isin; <i>Suffix(w)</i> &harr; &beta;z &isin; <i>Suffix(w)</i>  
 &harr; &forall; i: &alpha; = a<sub>i-|&alpha;|+1</sub>...a<sub>i</sub> &harr; &beta; = a<sub>i-|&beta;|+1</sub>...a<sub>i</sub>  
 &harr; <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>
 
@@ -55,13 +55,13 @@ By definition <i>r(&epsilon;) = &epsilon;</i>
 
 <b><i>Lemma:</i></b>  
 Let &alpha; be an infix of <i>w</i>, then:  
-  1. If there is a letter a &isin; &Sigma;, such that every occurance of &alpha; in w is preceeded by a, then &alpha; does not represent the equivalence class [&alpha;]<sub>w</sub>
+  1. If there is a letter a &isin; &Sigma;, such that every occurance of &alpha; in <i>w</i> is preceeded by a, then &alpha; does not represent the equivalence class [&alpha;]<sub>w</sub>
   2. If &alpha; is a prefix of w, then &alpha; is the longest word in [&alpha;]<sub>w</sub>
-  3. If there are letters x, y &isin; &Sigma;, x &ne; y and both x&alpha; and y&alpha; are infixes of w, then &alpha; canonically represents the equivalence class [&alpha;]<sub>w</sub>  
-  4. &alpha; = r(&alpha;) &harr; &alpha; is a prefix of w or it occurs in two distinct left contexts
+  3. If there are letters x, y &isin; &Sigma;, x &ne; y and both x&alpha; and y&alpha; are infixes of <i>w</i>, then &alpha; canonically represents the equivalence class [&alpha;]<sub>w</sub>  
+  4. &alpha; = r(&alpha;) &harr; &alpha; is a prefix of <i>w</i> or &alpha; occurs in two distinct left contexts
 
 <b><i>Proof:</i></b>
-  1. Let a preceed every occurance of &alpha; in w. Then for every i &isin; end_pos(&alpha;) we have w<sub>i-|&alpha;|</sub> = a  
+  1. Let a preceed every occurance of &alpha; in <i>w</i>. Then for every i &isin; end_pos(&alpha;) we have w<sub>i-|&alpha;|</sub> = a  
   &rarr; i &isin; <i>end_pos(a&alpha;)</i>  
   &rarr; <i>end_pos(&alpha;) &sube; end_pos(a&alpha;)</i>  
   And since &alpha; is a suffix of a&alpha we have that <i>end_pos(a&alpha;) &sube; end_pos(&alpha;)</i> (by <i>Property 2.</i>)  
@@ -69,7 +69,7 @@ Let &alpha; be an infix of <i>w</i>, then:
   It follows that &alpha; &eqiv;<sub>w</sub> a&alpha; and |&alpha;| < |a&alpha;| &rarr; &alpha; &ne; r(&alpha;)
   2. Let |&alpha;| = i. Since &alpha; is a prefix of <i>w</i> we have &alpha; = a<sub>1</sub>...a<sub>i</sub> and i &isin; <i>end_pos(&alpha;)</i>.  
   Suppose &beta; &equiv;<sub>w</sub> &alpha; &rarr; i &isin; <i>end_pos(&beta;)</i> &rarr; |&beta;| &le; |a<sub>1</sub>...a<sub>i</sub>| = i = |&alpha;|
-  3. Let x, y &isin; &Sigma;, x &ne; y and both x&alpha; and y&alpha; are infixes of w. Let i and j be such that:  
+  3. Let x, y &isin; &Sigma;, x &ne; y and both x&alpha; and y&alpha; are infixes of <i>w</i>. Let i and j be such that:  
   i &isin; <i>end_pos(x&alpha;)</i>  
   j &isin; <i>end_pos(y&alpha;)</i>  
   Since &alpha; is a suffix of both x&alpha; and y&alpha; we have that i, j &isin; <i>end_pos(&alpha;)</i>  
@@ -84,7 +84,7 @@ The automaton <i>A<sub>w</sub> (&Sigma;, Q<sub>w</sub>, s<sub>0</sub>, F<sub>w</
 is a minimal DFA over the language L = Suffix(w).  
 The states of the automaton are exactly the equivalence classes with respect to the relation &equiv;<sub>w</sub>  
 For each state we will store the length of the longest word in the equivalence class: <b><i>len([&alpha;]<sub>w</sub>) = |r(&alpha;)|</i></b>  
-For each state we will also store a pointer called a <b><i>suffix link</i></b> that points to the longest suffix of w that is in another equivalence class: <b><i>slink(&alpha;)</i></b> is the longest suffix of &alpha;: <i>slink(&alpha;) &neq;<sub>w</sub> &alpha;</i>  
+For each state we will also store a pointer called a <b><i>suffix link</i></b> that points to the longest suffix of <i>w</i> that is in another equivalence class: <b><i>slink(&alpha;)</i></b> is the longest suffix of &alpha; such that <i>slink(&alpha;) &ne;<sub>w</sub> &alpha;</i>  
 
 <b><i>Lemma:</b></i> <i>( Q<sub>w</sub> , slink, s<sub>0</sub> ) is a rooted tree.</i>  
 <b><i>Proof:</b></i> We only need to show that <i>slink(&alpha;) &isin; Q<sub>w</sub></i> (i.e. every node has a parent). Since <i>slink(&alpha;)</i> is a suffix of &alpha; from <i>Property 2.</i> we have that <i>end_pos(&alpha;) &sube; end_pos(slink(&alpha;))</i>. And since <i>&alpha; &ne;<sub>w</sub> slink(&alpha;)</i>, we have that <i>end_pos(&alpha;) &ne; end_pos(slink(&alpha;))</i>.  
