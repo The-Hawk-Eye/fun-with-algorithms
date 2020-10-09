@@ -6,8 +6,8 @@ A suffix automaton for a given string <i>w</i> is a minimal <b>DFA</b> (determin
 Any path starting at the initial state <b><i>s<sub>0</sub></i></b> forms a substring of <i>w</i>. And conversely every substring of <i>w</i> corresponds to a certain path starting at <b><i>s<sub>0</sub></i></b>.
 
 ## Notation ##
-<i>Σ</i> - nonempty alphabet  
-<i>ε</i> - the empty word  
+<i>&Sigma</i> - nonempty alphabet  
+<i>&epsilon</i> - the empty word  
 <i>Σ*</i> - the set of all words over <i>Σ</i>  
 <i>Suffix(w) = { ß c Σ* | exists α: αß = w }</i>  
   
