@@ -99,12 +99,12 @@ If <i>i &ne; |slink(&alpha;)|</i> &rarr; w<sub>i-|slink(&alpha;)|</sub> &ne; a &
 The algorithm will be online, i.e. we will add the characters of the string one by one, and modify the automaton accordingly in each step. The whole task boils down to implementing the process of <b>adding one character <i>a</i></b> to the end of the current string <b><i>w</i></b>.  
 <b><i>Lemma:</i></b> Let <i>w</i> &isin; &Sigma;* and a &isin; &Sigma;. Then <i>Q<sub>wa</sub> = Q<sub>w</sub> &cup; { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> }</i>  
 <b><i>Proof:</i></b>
-  1. <i>Q<sub>w</sub> &cup; { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> } &sube; Q<sub>wa</sub></i>
+  1. <i>Q<sub>w</sub> &cup; { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> } &sube; Q<sub>wa</sub></i>  
     * Let [&alpha;] &isin; <i>Q<sub>w</sub></i>. Then, either &alpha; is a prefix of <i>w</i> and thus &alpha; is a prefix of <i>wa</i>, or there exist x, y &isin; &Sigma;: x &ne; y & x&alpha;, y&alpha; are infixes of <i>w</i> and thus x&alpha;, y&alpha; are infixes of <i>wa</i> &rarr; [&alpha;] &isin; <i>Q<sub>wa</sub></i>
 	* <i>w</i>a is a prefix of <i>w</i>a &rarr; <i>wa &isin; Q<sub>wa</sub></i>
 	* <i>slink(wa)</i> is well defined &rarr; <i>slink(wa) &isin; Q<sub>wa</sub></i>
   2. <i>Q<sub>wa</sub> &sube; Q<sub>w</sub> &cup; { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> }</i>  
-  Let &alpha; &isin; &Sigma;*: &alpha; = r(&alpha;) & [&alpha;] &isin; <i>Q<sub>wa</sub>\Q<sub>w</sub></i>
+  Let &alpha; &isin; &Sigma;* : &alpha; = r(&alpha;) & [&alpha;] &isin; <i>Q<sub>wa</sub>\Q<sub>w</sub></i>  
 	* <i>end_pos<sub>w</sub>(&alpha;)</i> = &empty;  
     &alpha; &isin; <i>Q<sub>wa</sub></i> &rarr; <i>end_pos<sub>wa</sub>(&alpha;)</i> &ne; &empty;  
     { 0, 1, 2,..., |w| } &cup; <i>end_pos<sub>wa</sub>(&alpha;)</i> = &empty; &rarr; <i>end_pos<sub>wa</sub>(&alpha;)</i> = { |w|+1 } &rarr; &alpha; &eqiv;<sub>wa</sub> <i>wa</i> &rarr; &alpha; = <i>wa</i>
