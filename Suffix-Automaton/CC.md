@@ -87,7 +87,7 @@ For each state we will store the length of the longest word in the equivalence c
 For each state we will also store a pointer called a <b><i>suffix link</i></b> that points to the longest suffix of <i>w</i> that is in another equivalence class: <b><i>slink(&alpha;)</i></b> is the longest suffix of &alpha; such that <i>slink(&alpha;) &ne;<sub>w</sub> &alpha;</i>  
 
 <b><i>Lemma:</b></i> <i>( Q<sub>w</sub> , slink, s<sub>0</sub> ) is a rooted tree.</i>  
-<b><i>Proof:</b></i> We only need to show that <i>slink(&alpha;) &isin; Q<sub>w</sub></i> (i.e. every node has a parent). Since <i>slink(&alpha;)</i> is a suffix of &alpha; from <i>Property 2.</i> we have that <i>end_pos(&alpha;) &sube; end_pos(slink(&alpha;))</i>. And since <i>&alpha; &ne;<sub>w</sub> slink(&alpha;)</i>, we have that <i>end_pos(&alpha;) &ne; end_pos(slink(&alpha;))</i>.  
+<b><i>Proof:</b></i> We only need to show that <i>slink(&alpha;) &isin; Q<sub>w</sub></i> (i.e. every node has a unique parent). Since <i>slink(&alpha;)</i> is a suffix of &alpha; from <i>Property 2.</i> we have that <i>end_pos(&alpha;) &sube; end_pos(slink(&alpha;))</i>. And since <i>&alpha; &ne;<sub>w</sub> slink(&alpha;)</i>, we have that <i>end_pos(&alpha;) &ne; end_pos(slink(&alpha;))</i>.  
 Let &alpha; = x•a•slink(&alpha;), x &isin; &Sigma;* , &alpha; &isin; &Sigma; and let <i>i &isin; end_pos(slink(α))\end_pos(α)</i>.  
 If <i>i = |slink(&alpha;)|</i> &rarr; <i>slink(&alpha;)</i> is a prefix of w &rarr; <i>slink(&alpha;) &isin; Q<sub>w</sub></i>  
 If <i>i &ne; |slink(&alpha;)|</i> &rarr; w<sub>i-|slink(&alpha;)|</sub> &ne; a &rarr; <i>slink(&alpha;)</i> appears in two different left contexts &rarr; <i>slink(α) &isin; Q<sub>w</sub></i>  
@@ -143,6 +143,7 @@ Suppose &delta;<sub>w</sub>(w<sub>k</sub>, a) = &beta;. We have to consider two 
   * &beta; = [w<sub>k</sub> • a]<sub>w</sub>  
   In this case we can simply assign <i>slink([wa]<sub>wa</sub>)</i> = [w<sub>k</sub> • a]<sub>wa</sub>
   * &beta; &ne; [w<sub>k</sub> • a]<sub>w</sub>  
+  Let &alpha; = [w<sub>k</sub> • a]<sub>w</sub>  
   In this case, since after extending <i>w</i> with the letter <i>a</i> the string <i>w<sub>k</sub> • a</i> occurs in two distinct left contexts, a new state, [w<sub>k</sub> • a]<sub>wa</sub>, has to be created. All transitions of state [&beta;]<sub>w</sub> have to be copied to the new state [w<sub>k</sub> • a]<sub>wa</sub>. For any transition <i>x &ne; a</i> of state [&beta;]<sub>w</sub> we have the following:  
   <i>end_pos<sub>wa</sub>([&beta;x]<sub>wa</sub>) = end_pos<sub>wa</sub>(&beta;x) = end_pos<sub>wa</sub>(&alpha;x) = end_pos([&alpha;x]<sub>wa</sub>)</i>  
   The creation of a new state also requires updating the suffix link chain. Since <i>slink([wa]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i>, this implies that &beta; is not a suffix of <i>wa</i>. Suppose &beta; = x • w<sub>k</sub> • a, x &isin; &Sigma;* and suppose that <i>slink([&beta;]<sub>w</sub>) = &sigma;</i>. We have the following:  
@@ -222,7 +223,7 @@ BuildSuffixAutomaton(w) {
 To show that the number of states of the automaton is <b><i>O(n)</i></b> we will use the following statement:  
 <b><i>Lemma:</i></b> Let <i>Φ</i> be a set of subsets of the set <i>{1, 2, ..., n}</i>. For every <i>S<sub>1</sub> , S<sub>2</sub> &isin; Φ</i> we have either <i>S<sub>1</sub> &cap; S<sub>2</sub> = &empty;</i> or <i>S<sub>1</sub> &sub; S<sub>2</sub> and S<sub>1</sub> &ne; S<sub>2</sub></i> . Then <i>|Φ| ≤ 2n</i>.  
 <b><i>Proof:</i></b> Let <i>Φ' = Φ U {1, 2, ..., n}</i> and let <i>S = Φ \ {{&empty;}, {1, 2, ..., n}}</i>. Then there exists <i>S' &sub; Φ': S &sub; S'</i>. Denote by <i>p(S)</i> the smallest set such that: <i>S &sub; p(S)</i> and <i>S &ne; p(S)</i>. In a sense <i>p(S)</i> is the parent of <i>S</i>, it exists and it is unique.  
-It follows that <i>(Φ' \ {&empty;}, p, {1, 2, ..., n})</i> is a rooted tree with root <i>{1, 2, ..., n}</i>, parent fuction <i>p</i> and set of states <i>Q = Φ' \ {&emtpy;}</i>. We will use the following notation:  
+It follows that <i>(Φ' \ {&empty;}, p, {1, 2, ..., n})</i> is a rooted tree with root <i>{1, 2, ..., n}</i>, parent fuction <i>p</i> and set of states <i>Q = Φ' \ {&empty;}</i>. We will use the following notation:  
 <i>L = {S &sub; Φ' \ {&empty;} | S doesn't have any children}</i> is the set of leafs  
 <i>V<sup>1</sup> = {S &sub; Φ' \ {&empty;} | S has only one child}</i>  
 <i>V<sup>≥2</sup> = {S &sub; Φ' \ {&empty;} | S has more than one child} = Φ' \ {{&empty;}, L, V<sup>1</sup>}</i>  
