@@ -97,19 +97,19 @@ If <i>i &ne; |slink(&alpha;)|</i> &rarr; w<sub>i-|slink(&alpha;)|</sub> &ne; a &
 
 ## CONSTRUCTION IN LINEAR TIME <b><i>O(n)</i></b> ##
 The algorithm will be online, i.e. we will add the characters of the string one by one, and modify the automaton accordingly in each step. The whole task boils down to implementing the process of <b>adding one character <i>a</i></b> to the end of the current string <b><i>w</i></b>.  
-<b><i>Lemma:</i></b> Let <i>w</i> &isin; &Sigma;* and a &isin; &Sigma;. Then <i>Q<sub>wa</sub> = Q<sub>w</sub> &cup; { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> }</i>  
+<b><i>Lemma:</i></b> Let <i>w</i> &isin; &Sigma;* and a &isin; &Sigma;. Then <i>Q<sub>wa</sub> = Q<sub>w</sub> &cup; { [wa]<sub>wa</sub> , [slink(wa)]<sub>wa</sub> }</i>  
 <b><i>Proof:</i></b>
-  1. <i>Q<sub>w</sub> &cup; { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> } &sube; Q<sub>wa</sub></i>
+  1. <i>Q<sub>w</sub> &cup; { [wa]<sub>wa</sub> , [slink(wa)]<sub>wa</sub> } &sube; Q<sub>wa</sub></i>
   * Let [&alpha;] &isin; <i>Q<sub>w</sub></i>. Then, either &alpha; is a prefix of <i>w</i> and thus &alpha; is a prefix of <i>wa</i>, or there exist x, y &isin; &Sigma;: x &ne; y & x&alpha;, y&alpha; are infixes of <i>w</i> and thus x&alpha;, y&alpha; are infixes of <i>wa</i> &rarr; [&alpha;] &isin; <i>Q<sub>wa</sub></i>
   * <i>w</i>a is a prefix of <i>w</i>a &rarr; <i>wa &isin; Q<sub>wa</sub></i>
   * <i>slink(wa)</i> is well defined &rarr; <i>slink(wa) &isin; Q<sub>wa</sub></i>
-  2. <i>Q<sub>wa</sub> &sube; Q<sub>w</sub> &cup; { [wa]<sub>wa</sub>, [slink(wa)]<sub>wa</sub> }</i>  
+  2. <i>Q<sub>wa</sub> &sube; Q<sub>w</sub> &cup; { [wa]<sub>wa</sub> , [slink(wa)]<sub>wa</sub> }</i>  
   Let &alpha; &isin; &Sigma;* : &alpha; = r(&alpha;) & [&alpha;] &isin; <i>Q<sub>wa</sub>\Q<sub>w</sub></i>
-  * <i>end_pos<sub>w</sub>(&alpha;)</i> = &empty;
+  * <i>end_pos<sub>w</sub>(&alpha;)</i> = &empty;  
   &alpha; &isin; <i>Q<sub>wa</sub></i> &rarr; <i>end_pos<sub>wa</sub>(&alpha;)</i> &ne; &empty;  
   { 0, 1, 2,..., |w| } &cup; <i>end_pos<sub>wa</sub>(&alpha;)</i> = &empty; &rarr; <i>end_pos<sub>wa</sub>(&alpha;)</i> = { |w|+1 } &rarr; &alpha; &equiv;<sub>wa</sub> <i>wa</i> &rarr; &alpha; = <i>wa</i>
   * <i>end_pos<sub>w</sub>(&alpha;)</i> &ne; &empty;  
-  For any &sigma; &isin; &Sigma;*: &sigma; is an infix of <i>w</i>, we have:  
+  For any &sigma; &isin; &Sigma;* : &sigma; is an infix of <i>w</i>, we have:  
   <i>end_pos<sub>wa</sub>(&sigma;) = end_pos<sub>w</sub>(&sigma;) &cup; { |w| + 1 }</i>, if &sigma; is a suffix of <i>wa</i>  
   <i>end_pos<sub>wa</sub>(&sigma;) = end_pos<sub>w</sub>(&sigma;)</i>, otherwise   
   Let &beta; = [&alpha;]<sub>w</sub> &rarr; <i>end_pos<sub>w</sub>(&beta;) = end_pos<sub>w</sub>(&alpha;)</i>  
@@ -126,14 +126,14 @@ The algorithm will be online, i.e. we will add the characters of the string one 
   &rarr; [&alpha;]<sub>wa</sub> = <i>[slink(wa)]<sub>wa</sub></i>  
 
 Now let us consider adding a character <i>a</i> to the end of the current string <i>w</i>. We add the new state <i>[wa]<sub>wa</sub></i> but which states have a transition to the new state? Obviously a transition from <i>[w]<sub>w</sub></i> to <i>[wa]<sub>wa</sub></i> with the letter <i>a</i> has to be added to the automaton. Additionally, every suffix <i>w<sub>i</sub></i> of <i>w</i> which represents an equivalence class must have a transition to <i>[wa]<sub>wa</sub></i> with the letter <i>a</i>. In order to do that we traverse the suffix links from <i>[w]<sub>w</sub></i> until we reach <i>s<sub>0</sub></i> and for every state <i>[w<sub>i</sub>]<sub>w</sub></i> that we visit we add a transition with the letter <i>a</i> to the state <i>[wa]<sub>wa</sub></i>. In the end we update the suffix link of <i>wa</i> to be <i>slink(wa) = s<sub>0</sub></i>.  
-A special case arises if at some point we visit a state <i>[w<sub>k</sub>]<sub>w</sub></i> that already has a transition with the letter <i>a</i>. This means that <i>w<sub>k</sub></i> is the longest suffix of <i>w</i> that when extended with the letter <i>a</i> appears as a proper infix (or prefix) of <i>wa</i>. It also implies that after extending <i>w</i> with <i>a</i> the string <i>w<sub>k</sub> • a</i> occurs in two distinct left contexts &harr; <b><i>slink([wa]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i></b>  
-The last statement follows from the following: Suppose <i>slink(wa) = &alpha;a</i> and <i>|&alpha;a| > |w<sub>k</sub> • a|</i>. This means that <i>&alpha;a</i>, and equivalently &alpha;, occurs in two distinct left contexts with <i>|&alpha;| > |w<sub>k</sub>|</i> and <i>[&alpha;]<sub>w</sub></i> has a transition with the letter <i>a</i> - contradiction with the fact that <i>[w<sub>k</sub>]<sub>w</sub></i> is the first state that has a transition with the letter <i>a</i>.
+A special case arises if at some point we visit a state <i>[w<sub>k</sub>]<sub>w</sub></i> that already has a transition with the letter <i>a</i>. This means that <i>w<sub>k</sub></i> is the longest suffix of <i>w</i> that when extended with the letter <i>a</i> appears as a proper infix (or prefix) of <i>wa</i>. It also implies that after extending <i>w</i> with <i>a</i> the string <i>w<sub>k</sub>•a</i> occurs in two distinct left contexts &rarr; <b><i>slink([wa]<sub>wa</sub>) = [w<sub>k</sub> • a]<sub>wa</sub></i></b>  
+The last statement follows from the following: suppose <i>slink(wa) = &alpha;a</i> and <i>|&alpha;a| > |w<sub>k</sub> • a|</i>. This means that <i>&alpha;a</i>, and equivalently &alpha;, occurs in two distinct left contexts with <i>|&alpha;| > |w<sub>k</sub>|</i> and <i>[&alpha;]<sub>w</sub></i> has a transition with the letter <i>a</i> - contradiction with the fact that <i>[w<sub>k</sub>]<sub>w</sub></i> is the first state that has a transition with the letter <i>a</i>.
 
 <pre>
 FindStem(q<sub>w</sub>, q<sub>wa</sub>, a) {
   q = q<sub>w</sub>
   while (q is defined && &delta;(q, a) is not defined):
-    &delkta;(q, a) = q<sub>wa</sub>
+    &delta;(q, a) = q<sub>wa</sub>
     q = slink(q)
   return q
 }
