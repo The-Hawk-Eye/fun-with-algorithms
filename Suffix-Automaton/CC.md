@@ -33,10 +33,10 @@ End-equivalence will be denoted by &equiv;<sub>w</sub> , i.e. &alpha; &equiv;<su
 
 <b><i>Corollary:</i></b> The end-equivalence relation is equivalent to Nerode's relation <i>R<sub>L</sub></i> for the language <i>L = Suffix(w)</i>:  
 &alpha; &equiv;<sub>w</sub> &beta; &harr; &alpha; &equiv;<sub>Suffix(w)</sub> &beta;  
-<b><i>Proof:</i></b> Let <i>w</i> = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> (a<sub>i</sub> &isin; &Sigma;) and let &alpha;, &beta;, z &isin; &Sigma;*. Then &alpha;z &isin; <i>Suffix(w)</i> &harr; &alpha;z = a<sub>n-|&alpha;z|+1</sub>...a<sub>n</sub>  
+<b><i>Proof:</i></b> Let <i>w</i> = a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub> (a<sub>i</sub> &isin; &Sigma;) and let &alpha;, &beta;, z &isin; &Sigma;* . Then &alpha;z &isin; <i>Suffix(w)</i> &harr; &alpha;z = a<sub>n-|&alpha;z|+1</sub>...a<sub>n</sub>  
 &rarr; &alpha; = a<sub>n-|&alpha;z|+1</sub>...a<sub>n-|z|</sub> and z = a<sub>n-|z|+1</sub>...a<sub>n</sub>  
 &rarr; &alpha; = a<sub>i-|&alpha;|+1</sub>...a<sub>i</sub> and i = n - |z|  
-But &alpha; &equiv;<sub>Suffix(w)</sub> &beta; &harr; &forall; z &isin; &Sigma;* : &alpha;z &isin; <i>Suffix(w)</i> &harr; &beta;z &isin; <i>Suffix(w)</i>  
+But &alpha; &equiv;<sub>Suffix(w)</sub> &beta; &harr; &forall; z &isin; &Sigma;*  : &alpha;z &isin; <i>Suffix(w)</i> &harr; &beta;z &isin; <i>Suffix(w)</i>  
 &harr; &forall; i: &alpha; = a<sub>i-|&alpha;|+1</sub>...a<sub>i</sub> &harr; &beta; = a<sub>i-|&beta;|+1</sub>...a<sub>i</sub>  
 &harr; <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>
 
