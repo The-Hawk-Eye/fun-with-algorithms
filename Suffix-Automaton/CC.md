@@ -249,17 +249,14 @@ It follows that <i>f: {L &cup; V<sup>1</sup>} &rarr; {1, 2, ..., n}</i> is an in
 &rarr; <i>|Φ' \ {&empty;}| &le; 2(|L| + |V<sup>1</sup>|) - 1 &le; 2n - 1</i>  
 &rarr; <i>|Φ'| &le; 2n</i>  
 
-<i></i>
 <b><i>Corollary:</i></b> The number of states of the suffix automaton for the string <i>w</i> is at most <i>2|w|</i>.  
 <b><i>Proof:</i></b> The number of states of the automaton is equal to the equivalence classes in the relation <i>R<sub>Suffix(w)</sub></i> which is equivalent to the end-equivalence relation <i>&equiv;<sub>w</sub></i>  
 &alpha; &equiv;<sub>w</sub> &beta; &rarr; <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>  
 The equivalence classes in the end-equivalence relation satisfy the preconditions of the previous Lemma. This implies that <i>ind(&eqiv;<sub>w</sub>) &le; 2|w|</i>  
 
 ### Linearity of the number of transitions ###
-<i></i>
 We will show that the number of transitions of the suffix automaton for the string <i>w</i> does not exceed <b><i>3|w|</i></b>. Let &alpha; &isin; <i>Q<sub>w</sub></i> , |&alpha;| ≥ 1, then it follows that &alpha; = &beta;a, for some &beta; &isin; &Sigma;* and <i>a</i> &isin; &Sigma;, and &beta; &isin; <i>Q<sub>w</sub></i>. Indeed, if &alpha; is a prefix of <i>w</i> then &beta; is also a prefix of <i>w</i>. And if &alpha; occurs in two distinct left contexts then &beta; also occurs in two distinct left contexts. Let us denote by <i>p(&alpha;) = &beta;</i> the parrent of &alpha;, then <i>T = (Q<sub>w</sub>, p, s<sub>0</sub>)</i> forms a rooted tree. The tree <i>T</i> is a spannig tree of the automaton and consists of <i>|Q<sub>w</sub> - 1|</i> transitions.  
 
-<i></i>
 Now let <i>S<sub>w</sub> = { <&beta;, a, &alpha;> | &delta;<sub>w</sub>(&beta;, a) = &alpha; and p(&alpha;) &ne; &beta; }</i> denote the set of all the remaining transitions. For every &alpha; &isin; <i>Q<sub>w</sub></i> denote by &sigma;(&alpha;) the longest string such that &alpha;•&sigma;(&alpha;) is a suffix of <i>w</i>. Then for every element of the set <i>S<sub>w</sub></i> the string &beta;•a•&sigma;(&alpha;) corresponds to a unique suffix of the string <i>w</i>. Indeed, suppose <&beta;<sub>1</sub>, a<sub>1</sub>, &alpha;<sub>1</sub>>, <&beta;<sub>2</sub>, a<sub>2</sub>, &alpha;<sub>2</sub>> &isin; <i>S<sub>w</sub></i> and &beta;<sub>1</sub>•a<sub>1</sub>•&sigma;(&alpha;<sub>1</sub>) = &beta;<sub>2</sub>•a<sub>2</sub>•&sigma;(&alpha;<sub>2</sub>). Then &beta;<sub>1</sub>•a<sub>1</sub> is a prefix of &beta;<sub>2</sub>•a<sub>2</sub> or &beta;<sub>2</sub>•a<sub>2</sub> is a prefix of &beta;<sub>1</sub>•a<sub>1</sub>. WLOG we can assume that &beta;<sub>1</sub>•a<sub>1</sub> is a prefix of &beta;<sub>2</sub>•a<sub>2</sub>. Then &beta;<sub>1</sub>•a<sub>1</sub> &ne; &beta;<sub>2</sub>•a<sub>2</sub> otherwise <&beta;<sub>1</sub>, a<sub>1</sub>, &alpha;<sub>1</sub>> = <&beta;<sub>2</sub>, a<sub>2</sub>, &alpha;<sub>2</sub>>. This means that &beta;<sub>1</sub>•a<sub>1</sub> is a a proper prefix of &beta;<sub>2</sub>•a<sub>2</sub>, implying that &beta;<sub>1</sub>•a<sub>1</sub> is an ancestor of &beta;<sub>2</sub> in <i>T<sub>w</sub></i>. This means that <i>p(&beta;<sub>2</sub>) = &beta;<sub>1</sub></i> and that <&beta;<sub>1</sub>, a<sub>1</sub>, &alpha;<sub>1</sub>> &notin; <i>S<sub>w</sub></i> - contradiction.  
 This implies that <i>|S<sub>w</sub>| &le; |w|</i> and we get <i>|&delta;<sub>w</sub>| = |Q<sub>w</sub>| - 1 + |S<sub>w</sub>| &le; 2|w| + |w| = 3|w|</i>.
 
@@ -270,11 +267,10 @@ Consider the for-loop that builds the suffix automaton. We have the following ac
   * adding new transitions and new states inside function <i>ModifyTree</i>
   * modifying existing transitions inside function <i>RedirectTransitions</i>
 
-<i>
 Since the total number of states is <i>Q<sub>w</sub> &le; 2|w|</i> and the total number of transitions is |&delta;<sub>w</sub>| ≤ 3|<i>w</i>|, then the total number of steps for executing the first three actions is <i>O(|w|)</i>. It remains to show that the total number of modifications of the existing transitions is <i>O(|w|)</i>.  
 
-<i></i>
 Let <i>SC<sub>w</sub>(&alpha;) = { slink<sup>k</sup>(&alpha;) | k is an ineger }</i> be the set of all suffix pointers traversed starting at the state [&alpha;]<sub>w</sub>.  
+
 <b><i>Lemma:</i></b> After extending the string <i>w</i> with the letter <i>a</i> the number of modifications of existing transitions does not exceed <i>1 + |SC<sub>w</sub>(w)| - |SC<sub>wa</sub>(wa)|</i>.  
 <b><i>Proof:</i></b> The function <i>RedirectTransitions</i> modifies the transition of state <i>[w<sub>k</sub>]<sub>w</sub></i>. It also modifies the transitions of all states &alpha; such that &alpha; &isin; <i>SC<sub>w</sub>(w<sub>k</sub>)</i> and &delta;<sub>w</sub>(&alpha;, a) = [w<sub>k</sub> • a]<sub>w</sub>. This means that &alpha; &notin; <i>SC<sub>wa</sub>(wa)</i>. In other words the function modifies the transitions of all states &alpha; such that &alpha; &isin; <i>SC<sub>w</sub>(w<sub>k</sub>)</i> and &alpha; &notin; <i>SC<sub>wa</sub>(wa)</i>. This implies that the number of modifications is:  
 <i>1 + |{ &alpha; &isin; SC<sub>w</sub>(w<sub>k</sub>) | &alpha; &notin; SC<sub>wa</sub>(wa) }| = 1 + |SC<sub>w</sub>(w<sub>k</sub>)| - |SC<sub>wa</sub>(wa)| &le; 1 + |SC<sub>w</sub>(w)| - |SC<sub>wa</sub>(wa)|  
