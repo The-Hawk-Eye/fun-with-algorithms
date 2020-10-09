@@ -23,7 +23,7 @@ define: <i><b>end_pos<sub>w</sub>(&alpha;)</b> = { i | &alpha; = a<sub>i-|&alpha
 <i>end_pos<sub>w</sub>(&epsilon;) = { 0, 1, 2, ..., |w| }</i>  
 
 Two strings &alpha;, &beta; &isin; &Sigma;* are <b>end-equivalent on w</b> if and only if <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>  
-End-equivalence will be denoted by &equiv;<sub>w</sub> , i.e. &alpha; &eqiv;<sub>w</sub> &beta; &harr; <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>  
+End-equivalence will be denoted by &equiv;<sub>w</sub> , i.e. &alpha; &equiv;<sub>w</sub> &beta; &harr; <i>end_pos<sub>w</sub>(&alpha;) = end_pos<sub>w</sub>(&beta;)</i>  
 
 <b><i>Example:</i></b>
 <pre>	<i>w = a b c b c</i>  
