@@ -6,10 +6,10 @@ A suffix automaton for a given string <i>w</i> is a minimal <b>DFA</b> (determin
 Any path starting at the initial state <b><i>s<sub>0</sub></i></b> forms a substring of <i>w</i>. And conversely every substring of <i>w</i> corresponds to a certain path starting at <b><i>s<sub>0</sub></i></b>.
 
 ## Notation ##
-<i>&Sigma;</i> - nonempty alphabet  
-<i>&epsilon;</i> - the empty word  
-<i>Σ*</i> - the set of all words over <i>Σ</i>  
-<i>Suffix(w) = { ß c Σ* | exists α: αß = w }</i>  
+&Sigma; - nonempty alphabet  
+&epsilon; - the empty word  
+&Sigma;* - the set of all words over &Sigma;  
+<i>Suffix(w) = { &beta; &isin; &Sigma;* | &exist; &alpha;: &alpha;&beta; = w }</i>  
   
 A suffix automaton is a minimal DFA over the language <i>L = Suffix(w)</i>. From Nerode's theorem it follows that the number of states of the minimal DFA is equal to the number of equivalence classes in the relation <i>R<sub>L</sub></i>, where:  
 <i>{α, ß} c R<sub>L</sub> (α ≡<sub>L</sub> ß) ↔ for every z c Σ*: αz c L ↔ ßz c L</i>  
