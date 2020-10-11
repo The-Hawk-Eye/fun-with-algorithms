@@ -31,7 +31,7 @@ Let <i>E[1...(2n-1)]</i> store the nodes visited in the Euler Tour.
 Let <i>L[1...(2n-1)]</i> store the levels of the nodes visited in the Euler Tour. The level of a node is its distance from the root. <i>L[i]</i> is the level of node <i>E[i]</i>.  
 Let <i>R[1...n]</i> store the first occurance of every node in the Euler Tour. <i>R[i] = argmin<sub>j</sub> (E[j] = i)</i>  
 
-![alt text](../img/euler_tour.png)
+![alt text](/img/euler_tour.png)
 
 Let <i>u, v &isin; V</i> and let <i>i<sub>u</sub> = R[u] < i<sub>v</sub> = R[v]</i>  
 Let <i>k = RMQ<sub>L</sub>(i<sub>u</sub>, i<sub>v</sub>)</i>  
