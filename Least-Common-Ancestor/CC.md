@@ -65,7 +65,7 @@ Another simple algorithm is based on the observation that there are only <i>&The
 The <i>\<O(n<sup>2</sup>), O(1)\></i> solution gives fast queries because every range we might look up has already been precomputed. But the preprocessing is slow because we have to precompute the minimum of every possible range.  
 If we precompute the answers on too many ranges, the preprocessing will be slow. If we precompute the answers on too few ranges, the query time will be slow.  
 
-![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/observation.png)
+![alt text](Least-Common-Ancestor/img/observation.png)
 
 We want to precompute <i>RMQ</i> over <i>o(n<sup>2</sup>)</i> set of ranges such that <i>O(1)</i> query time is supported.  
 For each index <i>i</i>, we will compute <i>RMQ</i> for ranges starting at <i>i</i> of size 1, 2, 4, 8, ..., 2<sup>k</sup> as long as they fit in the array.  
