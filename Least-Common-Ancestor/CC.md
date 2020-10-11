@@ -31,7 +31,7 @@ Let <i>E[1...(2n-1)]</i> store the nodes visited in the Euler Tour.
 Let <i>L[1...(2n-1)]</i> store the levels of the nodes visited in the Euler Tour. The level of a node is its distance from the root. <i>L[i]</i> is the level of node <i>E[i]</i>.  
 Let <i>R[1...n]</i> store the first occurance of every node in the Euler Tour. <i>R[i] = argmin<sub>j</sub> (E[j] = i)</i>  
 
-![alt text](/img/euler_tour.png)
+![alt text](img/euler_tour.png)
 
 Let <i>u, v &isin; V</i> and let <i>i<sub>u</sub> = R[u] < i<sub>v</sub> = R[v]</i>  
 Let <i>k = RMQ<sub>L</sub>(i<sub>u</sub>, i<sub>v</sub>)</i>  
@@ -65,7 +65,7 @@ Another simple algorithm is based on the observation that there are only <i>&The
 The <i>\<O(n<sup>2</sup>), O(1)\></i> solution gives fast queries because every range we might look up has already been precomputed. But the preprocessing is slow because we have to precompute the minimum of every possible range.  
 If we precompute the answers on too many ranges, the preprocessing will be slow. If we precompute the answers on too few ranges, the query time will be slow.  
 
-![alt text](Least-Common-Ancestor/img/observation.png)
+![alt text](img/observation.png)
 
 We want to precompute <i>RMQ</i> over <i>o(n<sup>2</sup>)</i> set of ranges such that <i>O(1)</i> query time is supported.  
 For each index <i>i</i>, we will compute <i>RMQ</i> for ranges starting at <i>i</i> of size 1, 2, 4, 8, ..., 2<sup>k</sup> as long as they fit in the array.  
@@ -79,7 +79,7 @@ The total number of ranges is <i>O(nlogn)</i>. Again, using dynamic programming 
   * <i>O(nlogn)</i> processing time  
   * <i>O(1)</i> query time  
 
-![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/sparse_table.png)
+![alt text](img/sparse_table.png)
 
 ### Block Decomposition ###
 We could speed up the algorithm by using <i>block decomposition</i>.  
