@@ -140,7 +140,7 @@ The Cartesian tree for an array is a binary tree obeying the min-heap property w
 
 ![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/cartesian_tree.png)
 
-Building the Cartesian tree recurssively is inefficient. If the min is always in the middle, runtime is <i>&Theta;(nlogn)</i>. If the min is always all the way to the side, runtime is <i>&Theta;(n<sub>2</sub>)</i>.  
+Building the Cartesian tree recurssively is inefficient. If the min is always in the middle, runtime is <i>&Theta;(nlogn)</i>. If the min is always all the way to the side, runtime is <i>&Theta;(n<sup>2</sup>)</i>.  
 We can build the Cartesian tree iteratively by building a cartesian tree for the first element, then the first two, then the first three, and so on. At each step we add the next element of the array to the current cartesian tree following these rules:  
   * the newly added node must be the rightmost node in the tree  
   * Cartesian trees are min-heaps. Each node's value is at least as large as its parent's  
