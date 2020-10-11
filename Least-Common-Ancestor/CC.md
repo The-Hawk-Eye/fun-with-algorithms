@@ -19,9 +19,7 @@ The <i>Range Minimum Query</i> (RMQ) problem is the following:
 
 The <i>LCA</i> problem can be reduced in <i>O(n)</i> time to a special case of the <i>RMQ</i> problem called the <i>&plusmn;1 RMQ</i>.  
 We will show that the solution to the <i>&plusmn;1 RMQ</i> problem has complexity <i>\<O(n), O(1)\></i>.  
-Finally, we will show that the <i>RMQ</i> problem can be solved in <i>\<O(n), O(1)\></i> time using <i>Cartesian Trees</i>.  
-
-<!-- Finally, the <i>RMQ</i> problem can be reduced in <i>O(n)</i> time back to the <i>LCA</i> problem. -->
+Finally, the general <i>RMQ</i> problem can be solved in <i>\<O(n), O(1)\></i> by reducing it to the <i>LCA</i> problem in <i>O(n)</i> time.  
 
 <!-- insert pic -->
 
@@ -130,4 +128,4 @@ Choosing <i>b = (logn / 2)</i> we have:
 (n/b)log(n/b) + 2<sup>b</sup>b<sup>2</sup> = 2(n/logn)logn + (1/4)log<sup>2</sup>n&radic;n &isin; O(n)
 
 
-## <i>RMQ</i> IN <i>O(n)</i> TIME USING CARTESIAN TREES ##
+## REDUCTION OF <i>RMQ</i> TO <i>LCA</i> IN <i>O(n)</i> TIME ##
