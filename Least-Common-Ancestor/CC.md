@@ -27,21 +27,21 @@ Finally, the general <i>RMQ</i> problem can be solved in <i>\<O(n), O(1)\></i> b
 ## REDUCTION OF <i>LCA</i> TO <i>RMQ</i> IN <i>O(n)</i> TIME ##
 The <i>LCA</i> problem can be reduced to the <i>RMQ</i> problem by traversing the tree in an <i>Euler Tour</i>.  
 
-Let <i>E[1...(2n-1)]</i> store the nodes visited in the Euler Tour.  
-Let <i>L[1...(2n-1)]</i> store the levels of the nodes visited in the Euler Tour. The level of a node is its distance from the root. <i>L[i]</i> is the level of node <i>E[i]</i>.  
-Let <i>R[1...n]</i> store the first occurance of every node in the Euler Tour. <i>R[i] = argmin<sub>j</sub> (E[j] = i)</i>  
+Let <i>visits[0...(2n-1)]</i> store the nodes visited in the Euler Tour.  
+Let <i>levels[0...(2n-1)]</i> store the levels of the nodes visited in the Euler Tour. The level of a node is its distance from the root. <i>L[i]</i> is the level of node <i>E[i]</i>.  
+Let <i>start[0...(n-1)]</i> store the first occurance of every node in the Euler Tour. <i>start[i] = argmin<sub>j</sub> (visits[j] = i)</i>  
 
 ![euler_tour](img/euler_tour.png)
 
-Let <i>u, v &isin; V</i> and let <i>i<sub>u</sub> = R[u] < i<sub>v</sub> = R[v]</i>  
-Let <i>k = RMQ<sub>L</sub>(i<sub>u</sub>, i<sub>v</sub>)</i>  
-Then <i>LCA(u, v) = E[k]</i>  
-To see why this is the case consider the node <i>w = E[k]</i>.  
-  * If this is the first visit to node <i>w</i>, then there must be a node <i>w'</i> from which we descended to visit <i>w</i> for the first time. This means that <i>L[R[w']] < L[k]</i> - contradiction.  
-  * If this is the last visit to node <i>w</i>, then there must be a node <i>w'</i> to which we ascend after the visit. This means that <i>L[R[w']] < L[k]</i> - contradiction.  
+Let <i>u, v &isin; V</i> and let <i>i<sub>u</sub> = start[u] < i<sub>v</sub> = start[v]</i>  
+Let <i>k = RMQ<sub>levels</sub>(i<sub>u</sub>, i<sub>v</sub>)</i>  
+Then <i>LCA(u, v) = visits[k]</i>  
+To see why this is the case consider the node <i>w = visits[k]</i>.  
+  * If this is the first visit to node <i>w</i>, then there must be a node <i>w'</i> from which we descended to visit <i>w</i> for the first time. This means that <i>levels[start[w']] < levels[k]</i> - contradiction.  
+  * If this is the last visit to node <i>w</i>, then there must be a node <i>w'</i> to which we ascend after the visit. This means that <i>levels[start[w']] < levels[k]</i> - contradiction.  
 
 This means that nodes <i>u</i> and <i>v</i> were visited after the first visit to <i>w</i>, but before the last visit to <i>w</i>. Thus, <i>w</i> is an ancestor of both <i>u</i> and <i>v</i>.  
-Now let <i>z</i> be an ancestor of both <i>u</i> and <i>v</i>, and let <i>Last[z] = argmax<sub>j</sub> (E[j] = z)</i> be the last visit to <i>z</i>. We have that <i>R[z] < i<sub>u</sub> < k < i<sub>v</sub> < Last[z]</i>. Thus, node <i>w</i> is visited inside the interval [R[z], Last[z]]  
+Now let <i>z</i> be an ancestor of both <i>u</i> and <i>v</i>, and let <i>end[z] = argmax<sub>j</sub> (visits[j] = z)</i> be the last visit to <i>z</i>. We have that <i>start[z] < i<sub>u</sub> < k < i<sub>v</sub> < end[z]</i>. Thus, node <i>w</i> is visited inside the interval [start[z], end[z]]  
 &rarr; node <i>w</i> is a descendant of node <i>z</i>  
 &rarr; node <i>w</i> has the maximum depth from the root.  
 
@@ -118,8 +118,8 @@ There are two questions we need to answer:
   * How can we tell when two blocks can share <i>RMQ</i> structures?  
   * How many block types are there, as a function of <i>b</i>?  
 
-In the case of the <i>LCA</i> problem we are solving <i>RMQ</i> on the array <i>L[0...(2n-1)]</i>. However, in this particular case the following holds:  
-<i>&forall; i: L[i] - L[i + 1] = &plusmn;1</i>  
+In the case of the <i>LCA</i> problem we are solving <i>RMQ</i> on the array <i>levels[0...(2n-1)]</i>. However, in this particular case the following holds:  
+<i>&forall; i: levels[i] - levels[i + 1] = &plusmn;1</i>  
 This is known as the <i>&plusmn;1 RMQ</i>.  
 Every block of the decomposition is unambiguously defined by the sequence of <i>1</i> or <i>-1</i> jumps between consecutive elements. We can associate each of the blocks with a <i>(b - 1)</i>-bit number, and thus, the total number of <i>structurally</i> different blocks is: <i>2<sup>b - 1</sup></i>.  
 We could precompute a simple <i>RMQ</i> table for every type of block in <i>O(2<sup>b</sup>b<sup>2</sup>)</i> time. For the summary structure we would use a sparse table with complexity <i>\<O((n/b)log(n/b)), O(1)\></i>.  
