@@ -121,11 +121,49 @@ There are two questions we need to answer:
 In the case of the <i>LCA</i> problem we are solving <i>RMQ</i> on the array <i>L[0...(2n-1)]</i>. However, in this particular case the following holds:  
 <i>&forall; i: L[i] - L[i + 1] = &plusmn;1</i>  
 This is known as the <i>&plusmn;1 RMQ</i>.  
-Every block of the decomposition is unambiguously defined by the sequence of <i>1</i> or <i>-1</i> jumps between consecutive elements. We can assosiate each of the blocks with a <i>(b - 1)</i>-bit number, and thus, the total number of <i>structurally</i> different blocks is: <i>2<sup>b - 1</sup></i>.  
-We could precompute a simple <i>RMQ</i> table for every type of block in <i>O(2<sup>b</sup>b<sup>2</sup>)</i> time.  
+Every block of the decomposition is unambiguously defined by the sequence of <i>1</i> or <i>-1</i> jumps between consecutive elements. We can associate each of the blocks with a <i>(b - 1)</i>-bit number, and thus, the total number of <i>structurally</i> different blocks is: <i>2<sup>b - 1</sup></i>.  
+We could precompute a simple <i>RMQ</i> table for every type of block in <i>O(2<sup>b</sup>b<sup>2</sup>)</i> time. For the summary structure we would use a sparse table with complexity <i>\<O((n/b)log(n/b)), O(1)\></i>.  
 To preprocess the entire structure in <i>O(n)</i> time we need to choose <i>b</i> such that: <i>(n/b)log(n/b) + 2<sup>b</sup>b<sup>2</sup> &isin; O(n)</i>.  
 Choosing <i>b = (logn / 2)</i> we have:  
-(n/b)log(n/b) + 2<sup>b</sup>b<sup>2</sup> = 2(n/logn)logn + (1/4)log<sup>2</sup>n&radic;n &isin; O(n)
+O((n/b)log(n/b) + 2<sup>b</sup>b<sup>2</sup>) = O(2(n/logn)logn + (1/4)log<sup>2</sup>n&radic;n) = O(n)
 
 
 ## REDUCTION OF <i>RMQ</i> TO <i>LCA</i> IN <i>O(n)</i> TIME ##
+The general <i>RMQ</i> can be solved in <i>\<O(n), O(1)\></i> complexity by reducing it to the <i>LCA</i> problem. To solve the general <i>RMQ</i> problem we would convert it to an <i>LCA</i> problem in <i>O(n)</i> time and then convert the <i>LCA</i> answer to an <i>RMQ</i> answer in O(1) time.  
+
+To convert the <i>RMQ</i> problem on an input array <i>A[0...(n-1)]</i> to an <i>LCA</i> problem we need to build the <i>Cartesian tree</i> of <i>A</i>.  
+A Cartesian tree for an array is a binary tree built as follows:  
+  * The root of the tree is the minimum element of the array  
+  * The left and right subtrees are formed by recursively building Cartesian trees for the subarrays to the left and right of the minimum  
+
+The Cartesian tree for an array is a binary tree obeying the min-heap property whose inorder traversal gives back the original array.  
+
+![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/cartesian_tree.png)
+
+Building the Cartesian tree recurssively is inefficient. If the min is always in the middle, runtime is <i>&Theta;(nlogn)</i>. If the min is always all the way to the side, runtime is <i>&Theta;(n<sub>2</sub>)</i>.  
+We can build the Cartesian tree iteratively by building a cartesian tree for the first element, then the first two, then the first three, and so on. At each step we add the next element of the array to the current cartesian tree following these rules:  
+  * the newly added node must be the rightmost node in the tree  
+  * Cartesian trees are min-heaps. Each node's value is at least as large as its parent's  
+
+We can implement this algorithm efficiently by maintaining a stack of the nodes in the right spine. When adding a new element we pop the stack until the stack top is less than or equal to the new value (or the stack is empty). We add the new element as the right child of the stack top and we make the most-recently popped node the new node's left child. Finally, we add the new node to the top of the stack.  
+This algorithm takes <i>O(n)</i> time. Each element is pushed into the stack exactly once, and each element cam be popped at most once. Therefore, there are <i>O(n)</i> pushes and <i>O(n)</i> pops, so the running time is <i>O(n)</i>.  
+
+![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/build_cartesian_tree.png)
+
+## FISCHER-HEUN STRUCTURE ##
+The <i>RMQ</i> problem can be solved in <i>\<O(n), O(1)\></i> time without solving the <i>LCA</i> problem.  
+Consider again the hybrid structure using block decomposition. We said that in the case of the <i>&plusmn;1 RMQ</i> there are at most <i>2<sup>b - 1</sup></i> different blocks. We will show that in the general <i>RMQ</i> there are at most <i>4<sup>b</sup></i> different blocks using the following observation:  
+<i>In order for B<sub>1</sub> to have the same block type as B<sub>2</sub>, the minimum element of B<sub>1</sub> must occur at the same position as the minimum element of B<sub>2</sub>. This property must hold recursively on the subarrays to the left and right of the minimum.</i>  
+
+Thus, we can make the following conclusion:  
+<i>B<sub>1</sub> &sim; B<sub>2</sub> if and only if B<sub>1</sub> and B<sub>2</sub> have isomorphic Cartesian trees.</i>  
+
+Using the previous stack-based approach for building Cartesian trees, we can count the number of possible executions of that algorithm. For an array of size <i>b</i> there are at most <i>2b</i> stack operations during the execution of the algorithm: <i>b</i> pushes and no more than <i>b</i> pops. Representing the execution as binary number where 1 means "push" and 0 means "pop", we can see that the algorithm can be encoded as a <i>2b-bit</i> number (we will pad the end with 0s poping everything from the stack). Thus, the total number of different blocks is: <i>2<sup>2b</sup> = 4<sup>b</sup></i>.  
+
+![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/cartesian_tree_number.png)
+
+Two blocks share an <i>RMQ</i> structure if and only if they have the same Cartesian tree number. Since we only care whether blocks can share <i>RMQ</i> structures or not, we never need to build Cartesian trees. We can just compute the Cartesian tree number for each block.  
+Choosing <i>b = (logn / 4)</i> we have:  
+O((n/b)log(n/b) + 4<sup>b</sup>b<sup>2</sup>) = O(4(n/logn)logn + (1/16)log<sup>2</sup>n&radic;n) = O(n)  
+
+![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/block_structure_rmq.png)
