@@ -31,7 +31,7 @@ Let <i>E[1...(2n-1)]</i> store the nodes visited in the Euler Tour.
 Let <i>L[1...(2n-1)]</i> store the levels of the nodes visited in the Euler Tour. The level of a node is its distance from the root. <i>L[i]</i> is the level of node <i>E[i]</i>.  
 Let <i>R[1...n]</i> store the first occurance of every node in the Euler Tour. <i>R[i] = argmin<sub>j</sub> (E[j] = i)</i>  
 
-![alt text](img/euler_tour.png)
+![euler_tour](img/euler_tour.png)
 
 Let <i>u, v &isin; V</i> and let <i>i<sub>u</sub> = R[u] < i<sub>v</sub> = R[v]</i>  
 Let <i>k = RMQ<sub>L</sub>(i<sub>u</sub>, i<sub>v</sub>)</i>  
@@ -65,7 +65,7 @@ Another simple algorithm is based on the observation that there are only <i>&The
 The <i>\<O(n<sup>2</sup>), O(1)\></i> solution gives fast queries because every range we might look up has already been precomputed. But the preprocessing is slow because we have to precompute the minimum of every possible range.  
 If we precompute the answers on too many ranges, the preprocessing will be slow. If we precompute the answers on too few ranges, the query time will be slow.  
 
-![alt text](img/observation.png)
+![observation](img/observation.png)
 
 We want to precompute <i>RMQ</i> over <i>o(n<sup>2</sup>)</i> set of ranges such that <i>O(1)</i> query time is supported.  
 For each index <i>i</i>, we will compute <i>RMQ</i> for ranges starting at <i>i</i> of size 1, 2, 4, 8, ..., 2<sup>k</sup> as long as they fit in the array.  
@@ -79,7 +79,7 @@ The total number of ranges is <i>O(nlogn)</i>. Again, using dynamic programming 
   * <i>O(nlogn)</i> processing time  
   * <i>O(1)</i> query time  
 
-![alt text](img/sparse_table.png)
+![sparse_table](img/sparse_table.png)
 
 ### Block Decomposition ###
 We could speed up the algorithm by using <i>block decomposition</i>.  
@@ -91,7 +91,7 @@ We could speed up the algorithm by using <i>block decomposition</i>.
 Suppose we use a <i>\<p<sub>1</sub>(n), q<sub>1</sub>(n)\></i> time algorithm for the summary <i>RMQ</i> and a <i>\<p<sub>2</sub>(n), q<sub>2</sub>(n)\></i> time algorithm for each block.  
 The preprocessing time for this hybrid structure would be: <i>O(n)</i> time to compute the minima of each block, <i>O(p<sub>1</sub>(n/b))</i> time to construct <i>RMQ</i> on the minima, and <i>O((n/b)p<sub>2</sub>(b))</i> time to construct the block <i>RMQ</i> structures.  
 
-![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/block_structure.png)
+![block_structure](img/block_structure.png)
 
 The query time would be: <i>O(q<sub>1</sub>(n/b))</i> time to query the summary <i>RMQ</i>, and <i>O(q<sub>2</sub>(b))</i> time to query the block <i>RMQ</i> structures.  
   * <i>O(n + p<sub>1</sub>(n/b) + (n/b)p<sub>2</sub>(b))</i> processing time  
@@ -99,7 +99,7 @@ The query time would be: <i>O(q<sub>1</sub>(n/b))</i> time to query the summary 
 
 Suppose we use the <i>\<O(nlogn), O(1)\></i> sparse table for both the summary and the block <i>RMQ</i> structures with block size of log<i>n</i>. We would have a <i>\<O(n logn logn), O(1)\></i> solution to the <i>RMQ</i> problem.  
 
-![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/hybrid_structure.png)
+![hybrid_structure](img/hybrid_structure.png)
 
 ### <i>O(n)</i> time solution to the &plusmn;1 RMQ ###
 Notice that if we want to build a <i>\<O(n), O(1)\></i> time algorithm for the <i>RMQ</i> structure using block decomposition, we need to have:  
@@ -138,7 +138,7 @@ A Cartesian tree for an array is a binary tree built as follows:
 
 The Cartesian tree for an array is a binary tree obeying the min-heap property whose inorder traversal gives back the original array.  
 
-![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/cartesian_tree.png)
+![cartesian_tree](img/cartesian_tree.png)
 
 Building the Cartesian tree recurssively is inefficient. If the min is always in the middle, runtime is <i>&Theta;(nlogn)</i>. If the min is always all the way to the side, runtime is <i>&Theta;(n<sup>2</sup>)</i>.  
 We can build the Cartesian tree iteratively by building a cartesian tree for the first element, then the first two, then the first three, and so on. At each step we add the next element of the array to the current cartesian tree following these rules:  
@@ -148,7 +148,7 @@ We can build the Cartesian tree iteratively by building a cartesian tree for the
 We can implement this algorithm efficiently by maintaining a stack of the nodes in the right spine. When adding a new element we pop the stack until the stack top is less than or equal to the new value (or the stack is empty). We add the new element as the right child of the stack top and we make the most-recently popped node the new node's left child. Finally, we add the new node to the top of the stack.  
 This algorithm takes <i>O(n)</i> time. Each element is pushed into the stack exactly once, and each element cam be popped at most once. Therefore, there are <i>O(n)</i> pushes and <i>O(n)</i> pops, so the running time is <i>O(n)</i>.  
 
-![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/build_cartesian_tree.png)
+![build_cartesian_tree](img/build_cartesian_tree.png)
 
 ## FISCHER-HEUN STRUCTURE ##
 The <i>RMQ</i> problem can be solved in <i>\<O(n), O(1)\></i> time without solving the <i>LCA</i> problem.  
@@ -160,10 +160,10 @@ Thus, we can make the following conclusion:
 
 Using the previous stack-based approach for building Cartesian trees, we can count the number of possible executions of that algorithm. For an array of size <i>b</i> there are at most <i>2b</i> stack operations during the execution of the algorithm: <i>b</i> pushes and no more than <i>b</i> pops. Representing the execution as binary number where 1 means "push" and 0 means "pop", we can see that the algorithm can be encoded as a <i>2b-bit</i> number (we will pad the end with 0s poping everything from the stack). Thus, the total number of different blocks is: <i>2<sup>2b</sup> = 4<sup>b</sup></i>.  
 
-![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/cartesian_tree_number.png)
+![cartesian_tree_number](img/cartesian_tree_number.png)
 
 Two blocks share an <i>RMQ</i> structure if and only if they have the same Cartesian tree number. Since we only care whether blocks can share <i>RMQ</i> structures or not, we never need to build Cartesian trees. We can just compute the Cartesian tree number for each block.  
 Choosing <i>b = (logn / 4)</i> we have:  
 O((n/b)log(n/b) + 4<sup>b</sup>b<sup>2</sup>) = O(4(n/logn)logn + (1/16)log<sup>2</sup>n&radic;n) = O(n)  
 
-![alt text](https://github.com/cacao-macao/fun-with-algorithms/blob/master/Least-Common-Ancestor/img/block_structure_rmq.png)
+![block_structure_rmq](img/block_structure_rmq.png)
