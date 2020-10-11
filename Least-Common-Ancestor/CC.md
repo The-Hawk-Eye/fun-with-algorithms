@@ -28,7 +28,7 @@ Finally, the general <i>RMQ</i> problem can be solved in <i>\<O(n), O(1)\></i> b
 The <i>LCA</i> problem can be reduced to the <i>RMQ</i> problem by traversing the tree in an <i>Euler Tour</i>.  
 
 Let <i>visits[0...(2n-1)]</i> store the nodes visited in the Euler Tour.  
-Let <i>levels[0...(2n-1)]</i> store the levels of the nodes visited in the Euler Tour. The level of a node is its distance from the root. <i>L[i]</i> is the level of node <i>E[i]</i>.  
+Let <i>levels[0...(2n-1)]</i> store the levels of the nodes visited in the Euler Tour. The level of a node is its distance from the root. <i>level[i]</i> is the level of node <i>visits[i]</i>.  
 Let <i>start[0...(n-1)]</i> store the first occurance of every node in the Euler Tour. <i>start[i] = argmin<sub>j</sub> (visits[j] = i)</i>  
 
 ![euler_tour](img/euler_tour.png)
