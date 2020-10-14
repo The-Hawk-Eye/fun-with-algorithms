@@ -36,7 +36,6 @@ class Tree:
             self._parent = parent
             self._children = children if children is not None else []
 
-
     #----------------- nested Position class ------------------#
     class Position:
         def __init__(self, container, node):
@@ -70,7 +69,6 @@ class Tree:
             @return equal (bool): Boolean True or False.
             """
             return not (self == other)
-
 
     #---------------- public accessors ----------------#
     def __init__(self):
@@ -130,7 +128,6 @@ class Tree:
     def is_empty(self):
         """ Return True if the tree is empty. """
         return len(self) == 0
-
 
     #---- private methods - should not be invoked by the user ----#
     def _make_position(self, node):
