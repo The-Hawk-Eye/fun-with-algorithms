@@ -69,7 +69,7 @@ If we precompute the answers on too many ranges, the preprocessing will be slow.
 
 We want to precompute <i>RMQ</i> over <i>o(n<sup>2</sup>)</i> set of ranges such that <i>O(1)</i> query time is supported.  
 For each index <i>i</i>, we will compute <i>RMQ</i> for ranges starting at <i>i</i> of size 1, 2, 4, 8, ..., 2<sup>k</sup> as long as they fit in the array.  
-Any range of the array can be formed as the union of two of these ranges. To see why this is the case consider the query <i>RMQ(i, j)</i>. Let <i>l</i> be such that <i>2<sup>k</sup> &le; j - i + 1 &le; 2<sup>k + 1</sup></i>. Then:  
+Any range of the array can be formed as the union of two of these ranges. To see why this is the case consider the query <i>RMQ(i, j)</i>. Let <i>k</i> be such that <i>2<sup>k</sup> &le; j - i + 1 &le; 2<sup>k + 1</sup></i>. Then:  
 <i>RMQ(i, j) = min(RMQ(i, i + 2<sup>k</sup> - 1), RMQ(j - 2<sup>k</sup> + 1, j))</i>  
 Each range can be looked up in time <i>O(1)</i>. We must precompute a table <i>log[0...n]</i> such that <i>log[i] = k &harr; 2<sup>k</sup> &le; i < 2<sup>k + 1</sup></i>. Now the total query time is <i>O(1)</i>.  
 The total number of ranges is <i>O(nlogn)</i>. Again, using dynamic programming we can compute all of them in time <i>O(nlogn)</i>.  
@@ -141,14 +141,14 @@ The Cartesian tree for an array is a binary tree obeying the min-heap property w
 ![cartesian_tree](img/cartesian_tree.png)
 
 Building the Cartesian tree recurssively is inefficient. If the min is always in the middle, runtime is <i>&Theta;(nlogn)</i>. If the min is always all the way to the side, runtime is <i>&Theta;(n<sup>2</sup>)</i>.  
-We can build the Cartesian tree iteratively by building a cartesian tree for the first element, then the first two, then the first three, and so on. At each step we add the next element of the array to the current cartesian tree following these rules:  
+We can build the Cartesian tree iteratively by building a Cartesian tree for the first element, then the first two, then the first three, and so on. At each step we add the next element of the array to the current cartesian tree following these rules:  
   * the newly added node must be the rightmost node in the tree  
   * Cartesian trees are min-heaps. Each node's value is at least as large as its parent's  
 
 We can implement this algorithm efficiently by maintaining a stack of the nodes in the right spine. When adding a new element we pop the stack until the stack top is less than or equal to the new value (or the stack is empty). We add the new element as the right child of the stack top and we make the most-recently popped node the new node's left child. Finally, we add the new node to the top of the stack.  
-This algorithm takes <i>O(n)</i> time. Each element is pushed into the stack exactly once, and each element cam be popped at most once. Therefore, there are <i>O(n)</i> pushes and <i>O(n)</i> pops, so the running time is <i>O(n)</i>.  
+This algorithm takes <i>O(n)</i> time. Each element is pushed into the stack exactly once, and each element can be popped at most once. Therefore, there are <i>O(n)</i> pushes and <i>O(n)</i> pops, so the running time is <i>O(n)</i>.  
 
-![build_cartesian_tree](img/build_cartesian_tree.png)
+![building_cartesian_tree](img/building_cartesian_tree.png)
 
 ## FISCHER-HEUN STRUCTURE ##
 The <i>RMQ</i> problem can be solved in <i>\<O(n), O(1)\></i> time without solving the <i>LCA</i> problem.  
