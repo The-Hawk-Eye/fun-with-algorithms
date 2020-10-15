@@ -256,7 +256,6 @@ class RMQ_1(RMQ_block):
         for i in range(len(arr) - 1):
             assert(arr[i]-arr[i+1]==1 or arr[i]-arr[i+1]==-1)
 
-
     def _compute_block_id(self, block):
         """ Compute an id for each block.
         Since consecutive elements differ by +/- 1, every block is
@@ -282,7 +281,6 @@ class RMQ_1(RMQ_block):
 
         code = "".join(str(bit) for bit in binary_code)
         return int(code, 2)
-
 
 
 if __name__ == "__main__":

@@ -115,7 +115,6 @@ if __name__ == "__main__":
         for size in sizes:
             T = generate_random_tree(size)
             lca = LCA(T)
-
             for i in range(trials):
                 p = get_random_position(T)
                 q = get_random_position(T)
