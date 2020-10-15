@@ -296,23 +296,25 @@ if __name__ == "__main__":
         return arr
 
     def check_correctness(RMQ_strategy):
-        trials, size = 100, 1000
-        arr = generate_random_array(size)
-        rmq = RMQ_strategy(arr)
-        for i in range(trials):
-            start = random.randint(0, size-1)
-            end = random.randint(start, size-1)
-            _min = start + arr[start:end+1].index(min(arr[start:end+1]))
-            _min_rmq = rmq(start, end)
-            if _min != _min_rmq:
-                raise Exception("%s not implemented correctly!" % (rmq.__class__.__name__))
+        sizes = [10, 100, 1000, 10000]
+        trials = 20
+        for size in sizes:
+            arr = generate_random_array(size)
+            rmq = RMQ_strategy(arr)
+            for i in range(trials):
+                start = random.randint(0, size-1)
+                end = random.randint(start, size-1)
+                _min = start + arr[start:end+1].index(min(arr[start:end+1]))
+                _min_rmq = rmq(start, end)
+                if _min != _min_rmq:
+                    raise Exception("%s not implemented correctly!" % (rmq.__class__.__name__))
         print("%s implementation is correct!" % (rmq.__class__.__name__))
 
     def check_complexity(RMQ_strategy):
         if RMQ_strategy.__name__ == "RMQ_table":
-            sizes = [1600, 3200, 6400, 12800]
+            sizes = [1600, 3200, 6400, 12800]   # x2
         else:
-            sizes = [1600, 12800, 102400, 819200, 6553600]
+            sizes = [1600, 12800, 102400, 819200, 6553600]  # x8
         print("size \t\t time")
         for size in sizes:
             arr = generate_random_array(size)

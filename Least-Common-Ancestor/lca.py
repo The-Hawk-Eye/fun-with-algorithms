@@ -1,133 +1,126 @@
+import time
+import random
 import sys
 sys.path.append("..")
 
+from collections import deque
 from utils.tree import Tree
-from rmq import RMQ_table, RMQ_sparse, RMQ_1
+from rmq import RMQ_1
 
 
 class LCA_index:
-	def __init__(self, tree, RMQ_strategy):
-		""" Constructs an LCA index for the tree object.
-		@param tree (Tree): A tree object.
-		"""
-		self._tree = tree
-		self._visits = []
-		self._levels = []
-		self._start = [0] * len(tree)
+    def __init__(self, tree):
+        """ Constructs an LCA index for the tree object.
+        @param tree (Tree): A tree object.
+        """
+        self._tree = tree
+        self._visits = []
+        self._levels = []
+        self._start = [0] * len(tree)
 
-		self._time = 0
-		self._reduce(tree.root())
-		self._rmq = RMQ_strategy(self._levels)
+        self._time = 0
+        self._reduce(tree.root())
+        self._rmq = RMQ_1(self._levels)
 
-	def _reduce(self, p):
-		""" Reduce the LCA problem to RMQ problem using recursive depth-first traversal.
-		This function recursively builds the arrays needed for the RMQ problem. It should
-		not be invoked by the user.
-		@param p (Position): Position representing the node in the tree.
-		"""
-		self._visits.append(p)
-		self._levels.append(self._tree.depth(p))
-		self._start[p.index()] = self._time
+    def _reduce(self, p):
+        """ Reduce the LCA problem to RMQ problem using recursive depth-first traversal.
+        This function recursively builds the arrays needed for the RMQ problem. It should
+        not be invoked by the user.
+        @param p (Position): Position representing the node in the tree.
+        """
+        self._visits.append(p)
+        self._levels.append(self._tree.depth(p))
+        self._start[p.index()] = self._time
 
-		for q in self._tree.children(p):
-			self._time += 1
-			self._reduce(q)
-			self._visits.append(p)
-			self._levels.append(self._tree.depth(p))
+        for q in self._tree.children(p):
+            self._time += 1
+            self._reduce(q)
+            self._visits.append(p)
+            self._levels.append(self._tree.depth(p))
 
-		self._time += 1
+        self._time += 1
 
-	def __call__(self, p, q):
-		""" Given the positions of two nodes in the tree, finds the
-		least common ancestor of the two nodes.
-		@param p (Position): Position representing a node in the tree.
-		@param q (Position): Position representing a node in the tree.
-		@return w (Position): Position of the least common ancestor of nodes
-							  at positions p and q.
-		"""
-		idx = self._rmq(self._start[p.index()], self._start[q.index()])
-		return self._visits[idx]
+    def __call__(self, p, q):
+        """ Given the positions of two nodes in the tree, finds the
+        least common ancestor of the two nodes.
+        @param p (Position): Position representing a node in the tree.
+        @param q (Position): Position representing a node in the tree.
+        @return w (Position): Position of the least common ancestor of nodes
+                              at positions p and q.
+        """
+        idx = self._rmq(self._start[p.index()], self._start[q.index()])
+        return self._visits[idx]
 
 
 
 
 if __name__ == "__main__":
-	T = Tree()
+    random.seed(0)
 
-	_r = T._add_root(33)
-	_c = T._add_child(_r, 84)
-	_d = T._add_child(_r, 58)
-	_e = T._add_child(_c, 93)
-	_f = T._add_child(_d, 62)
-	_g = T._add_child(_f, 64)
-	_h = T._add_child(_f, 63)
-	_i = T._add_child(_h, 83)
+    def generate_random_tree(size):
+        MAX_VAL = 100000
+        T = Tree()
+        frontier = deque()
 
-	lca = LCA_index(T, RMQ_sparse)
-	print("visits:")
-	for elem in lca._visits:
-		print(elem.value(), end=" ")
-	print("\nlevels:\n", lca._levels)
-	print("start:\n", lca._start)
+        def add_children(node, num_child):
+            for i in range(num_child):
+                value = random.randint(1, MAX_VAL)
+                T._add_child(node, value)
 
-	for idx in lca._start:
-		print(idx, lca._visits[idx].value())
+        root = T._add_root(random.randint(0, MAX_VAL))
+        frontier.append(root)
+        while len(T) < size:
+            node = frontier.popleft()
+            num_children = min(random.randint(1, 3), size - len(T))
+            add_children(node, num_children)
+            frontier.extend(T.children(node))
+        return T
 
-	pos = lca(_c, _h)
-	print("LCA(84, 63) = ", pos.value())
+    def get_random_position(T):
+        p = T.root()
+        while True:
+            if T.is_leaf(p):    # stop searching and return
+                break
 
-	pos = lca(_g, _i)
-	print("LCA(64, 83) = ", pos.value())
+            flag = random.randint(0, 3)
+            if not flag:        # 25% chance to stop at this node
+                break
 
-	pos = lca(_d, _e)
-	print("LCA(58, 93) = ", pos.value())
+            child_idx = random.randint(0, T.num_children(p) - 1)
+            a = []
+            a.extend(T.children(p))
+            p = a[child_idx]
+        return p
 
-	pos = lca(_r, _i)
-	print("LCA(33, 83) = ", pos.value())
+    def find_parent_naive(T, p, q):
+        """ Find least common ancestor naively. """
+        while p != q:
+            if T.depth(p) < T.depth(q):
+                q = T.parent(q)
+            elif T.depth(p) > T.depth(q):
+                p = T.parent(p)
+            else:
+                p = T.parent(p)
+                q = T.parent(q)
+        return p
 
+    def check_correctness(LCA):
+        sizes = [10, 100, 1000, 10000, 100000]
+        trials = 200
 
-	print("RMQ +/- 1")
-	lca_2 = LCA_index(T, RMQ_1)
-	pos = lca_2(_c, _h)
-	print("LCA(84, 63) = ", pos.value())
+        for size in sizes:
+            T = generate_random_tree(size)
+            lca = LCA(T)
 
-	pos = lca_2(_g, _i)
-	print("LCA(64, 83) = ", pos.value())
+            for i in range(trials):
+                p = get_random_position(T)
+                q = get_random_position(T)
+                w = lca(p, q)
+                u = find_parent_naive(T, p, q)
+                if w != u:
+                    raise Exception("%s not implemented correctly!" % (lca.__class__.__name__))
 
-	pos = lca_2(_d, _e)
-	print("LCA(58, 93) = ", pos.value())
-
-	pos = lca_2(_r, _i)
-	print("LCA(33, 83) = ", pos.value())
-
-
-	my_arr = [31, 41, 59, 26, 53, 58, 97, 93]
-	rmq_tab = RMQ_table(my_arr)
-	for i in range(len(my_arr)):
-		j = 0
-		while j < i:
-			print("  ", end=" ")
-			j += 1
-		while j < len(my_arr):
-			print(my_arr[rmq_tab._table[i][j]], end=" ")
-			j += 1
-		print()
-
-	rmq_sp = RMQ_sparse(my_arr)
-	for i in range(len(my_arr)):
-		for j in range(rmq_sp._loglength):
-			try:
-				print(my_arr[rmq_sp._table[i][j]], end=" ")
-			except:
-				print("  ", end=" ")
-		print()
+        print("%s implementation is correct!" % (lca.__class__.__name__))
 
 
-	for i in range(len(lca._levels)):
-		for j in range(lca._rmq._loglength):
-			try:
-				print(lca._levels[lca._rmq._table[i][j]], end=" ")
-			except:
-				print("  ", end=" ")
-		print()
-
+    check_correctness(LCA_index)
