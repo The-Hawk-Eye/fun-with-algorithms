@@ -15,13 +15,14 @@ The tree ADT supports the following accessor methods:
     T.is_empty(): Return True if tree T does not contain any nodes.
 """
 
+from collections import deque
 
 class Tree:
     #---------------- nested Node class ----------------------#
     class _Node:
         """ Lightweight non-public class for storing a node. """
         __slots__ = "_value", "_index", "_depth", "_parent", "_children"
-        def __init__(self, value, idx, depth=0, parent=None, children=None):
+        def __init__(self, value, idx, depth, parent=None, children=None):
             """ Initialize a _Node instance.
             @param value: Value stored by the node.
             @param idx (int): Integer used to uniquely define a Node object.
@@ -113,6 +114,17 @@ class Tree:
         node = self._validate(p)
         return node._depth
 
+    # def attach(self, p, T):
+    #     """ Attach the internal structure of tree T as a subtree at the node at position p.
+    #     Reset T to an empty tree.
+    #     @param p (Position): Position representing the node in the tree.
+    #     @param T (Tree): Tree object to be attached as a subtree of node at position p.
+    #     """
+        
+    #     node = self._validate(p)
+    #     T._root._parent = node
+    #     node._children.append(T._root)
+
     def __len__(self):
         """ Return the total number of nodes in the tree. """
         return self._size
@@ -128,6 +140,22 @@ class Tree:
     def is_empty(self):
         """ Return True if the tree is empty. """
         return len(self) == 0
+
+    def print(self):
+        """
+        """
+        root = self.root()
+        frontier = deque()
+        frontier.append(root)
+
+        while len(frontier) > 0:    # frontier not empty
+            p = frontier.popleft()
+            if not isinstance(p, self.Position):
+                print(p)
+            else:
+                print(p.value())
+                frontier.append("node %d has %d children" % (p.value(), self.num_children(p)))
+                frontier.extend(self.children(p))
 
     #---- private methods - should not be invoked by the user ----#
     def _make_position(self, node):
@@ -152,7 +180,7 @@ class Tree:
         """
         if self._root is not None:
             raise ValueError("Root exists")
-        self._root = self._Node(val, idx=self._size)
+        self._root = self._Node(val, idx=0, depth=0)
         self._size = 1
         return self._make_position(self._root)
 
