@@ -1,6 +1,12 @@
 import time
 import math
 import random
+import sys
+sys.path.append("..")
+
+from utils.tree import Tree
+import lca
+
 
 class RMQ_base:
     """ Abstract base class for the RMQ indexing structure.
@@ -12,7 +18,6 @@ class RMQ_base:
         """
         self._arr = arr
         self._length = len(arr)
-        self._table = None
 
         self._preprocess()
 
@@ -283,6 +288,55 @@ class RMQ_1(RMQ_block):
         return int(code, 2)
 
 
+class RMQ_Index:
+    """ Concrete class for RMQ indexing structure.
+    The RMQ problem is reduced to the LCA problem by building a Cartesian tree
+    for the array. Searching for a minimal element in a subarray amounts to
+    finding the least common ancestor of the nodes representing the start and the
+    end of that subarray.
+    We keep an _index array storying positions of the nodes in the tree.
+    The position sotred at index *i* corresponds to the array element at index *i*.
+    """
+    def __init__(self, arr):
+        self._arr = arr
+        self._length = len(arr)
+        self._index = [None] * self._length
+
+        self._tree = Tree()
+        self._reduce(0, self._length, None)
+        self._lca = lca.LCA_Index(self._tree)
+
+    def _reduce(self, start, end, p):
+        """ Reduce the RMQ problem to LCA by building a Cartesian tree for the array.
+        @param start (int): Start index of the subarray.
+        @param end (int): End index of the subarray.
+        @param p (Position): Position representing the node in the tree to which
+                             the Cartesian tree of the subarray must be attached.
+        """
+        min_elem = min(self._arr[start : end])
+        min_idx = start + self._arr[start : end].index(min_elem)
+
+        if self._tree.is_empty():
+            node = self._tree._add_root(min_idx)
+        else:
+            node = self._tree._add_child(p, min_idx)
+
+        if min_idx > start:
+            self._reduce(start, min_idx, node)
+        if min_idx + 1 < end:
+            self._reduce(min_idx + 1, end, node)
+
+        self._index[min_idx] = node
+
+    def __call__(self, i, j):
+        """
+        """
+        u = self._index[i]
+        v = self._index[j]
+        w = self._lca(u, v)
+        return w.value()
+
+
 if __name__ == "__main__":
     random.seed(0)
 
@@ -310,9 +364,9 @@ if __name__ == "__main__":
 
     def check_complexity(RMQ_strategy):
         if RMQ_strategy.__name__ == "RMQ_table":
-            sizes = [1600, 3200, 6400, 12800]   # x2
+            sizes = [1000, 2000, 4000]#, 8000, 16000]   # x2
         else:
-            sizes = [1600, 12800, 102400, 819200, 6553600]  # x8
+            sizes = [1000, 8000, 64000]#, 512000, 4096000]  # x8
         print("size \t\t time")
         for size in sizes:
             arr = generate_random_array(size)
@@ -322,10 +376,10 @@ if __name__ == "__main__":
             print("%d \t\t %.3f" %(size, toc - tic))
 
 
-    for strategy in (RMQ_table, RMQ_sparse, RMQ_1):
+    for strategy in (RMQ_table, RMQ_sparse, RMQ_1, RMQ_Index):
         check_correctness(strategy)
 
-    # complexity      O(n^2)     O(nlogn)    O(n)
-    for strategy in (RMQ_table, RMQ_sparse, RMQ_1):
+    # complexity      O(n^2)     O(nlogn)    O(n)     O(n)
+    for strategy in (RMQ_table, RMQ_sparse, RMQ_1, RMQ_Index):
         print("\nCheck time complexity for %s" % (strategy.__name__))
         check_complexity(strategy)

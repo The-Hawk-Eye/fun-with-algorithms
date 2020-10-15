@@ -5,9 +5,9 @@ sys.path.append("..")
 
 from collections import deque
 from utils.tree import Tree
-from rmq import RMQ_1
+import rmq
 
-class LCA_index:
+class LCA_Index:
     def __init__(self, tree):
         """ Constructs an LCA index for the tree object.
         @param tree (Tree): A tree object.
@@ -19,7 +19,7 @@ class LCA_index:
 
         self._time = 0
         self._reduce(tree.root())
-        self._rmq = RMQ_1(self._levels)
+        self._rmq = rmq.RMQ_1(self._levels)
 
     def _reduce(self, p):
         """ Reduce the LCA problem to RMQ problem using recursive depth-first traversal.
@@ -125,4 +125,4 @@ if __name__ == "__main__":
 
         print("%s implementation is correct!" % (lca.__class__.__name__))
 
-    check_correctness(LCA_index)
+    check_correctness(LCA_Index)
