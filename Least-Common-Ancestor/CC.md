@@ -8,6 +8,8 @@ Given a rooted tree <i>T = (V, p, r)</i>
 <i>LCA<sub>T</sub>(u, v) = w</i>  
 where <i>w &isin; { p<sup>(k)</sup>(u) | k &isin; &#8469; } &cap; { p<sup>(k)</sup>(v) | k &isin; &#8469; }</i>, and <i>w</i> has maximum depth from the root  
 
+![lca problem](img/lca_problem.png)
+
 <i>T</i> can be preprocessed in time <i>O(n)</i> (where <i>n</i> is the number of nodes), to answer <i>LCA</i> queries in time <i>O(1)</i>.  
 If an algorithm has preprocessing time <i>f(n)</i> and query time <i>g(n)</i>, we will say that the algorithm has complexity <i>\<f(n), g(n)\></i>. Thus, the solution to the <i>LCA</i> problem has complexity <i>\<O(n), O(1)\></i>.  
  The algorithm presented here is from the paper <i>"The LCA Problem Revisited"</i> by <i>Michael Bender</i> and <i>Martin Farach-Colton</i> from the year 2000.  
@@ -127,6 +129,8 @@ To preprocess the entire structure in <i>O(n)</i> time we need to choose <i>b</i
 Choosing <i>b = (logn / 2)</i> we have:  
 O((n/b)log(n/b) + 2<sup>b</sup>b<sup>2</sup>) = O(2(n/logn)logn + (1/4)log<sup>2</sup>n&radic;n) = O(n)
 
+![block_structure_rmq](img/block_structure_rmq.png)
+
 
 ## REDUCTION OF <i>RMQ</i> TO <i>LCA</i> IN <i>O(n)</i> TIME ##
 The general <i>RMQ</i> can be solved in <i>\<O(n), O(1)\></i> complexity by reducing it to the <i>LCA</i> problem. To solve the general <i>RMQ</i> problem we would convert it to an <i>LCA</i> problem in <i>O(n)</i> time and then convert the <i>LCA</i> answer to an <i>RMQ</i> answer in O(1) time.  
@@ -165,5 +169,3 @@ Using the previous stack-based approach for building Cartesian trees, we can cou
 Two blocks share an <i>RMQ</i> structure if and only if they have the same Cartesian tree number. Since we only care whether blocks can share <i>RMQ</i> structures or not, we never need to build Cartesian trees. We can just compute the Cartesian tree number for each block.  
 Choosing <i>b = (logn / 4)</i> we have:  
 O((n/b)log(n/b) + 4<sup>b</sup>b<sup>2</sup>) = O(4(n/logn)logn + (1/16)log<sup>2</sup>n&radic;n) = O(n)  
-
-![block_structure_rmq](img/block_structure_rmq.png)
