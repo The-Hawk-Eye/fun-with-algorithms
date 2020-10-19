@@ -1,10 +1,10 @@
-import time
-import math
-import random
 import sys
-sys.path.append("..")
+sys.path.append("../utils/")
+sys.setrecursionlimit(10000)
 
-from utils.tree import Tree
+import math
+from collections import deque
+from binary_tree import BinaryTree
 import lca
 
 
@@ -13,7 +13,7 @@ class RMQ_base:
     Concrete subclasses must implement the methods _preprocess() and _query().
     """
     def __init__(self, arr):
-        """ Constructing an instance of the RMQ_base class.
+        """ Initialize an instance of the RMQ_base class.
         @param arr (List[int]): A list of integers.
         """
         self._arr = arr
@@ -27,7 +27,7 @@ class RMQ_base:
 
     def _query(self, i, j):
         """ Query the preprocessed structure. Given array indecies i and j return the index
-        of the minimal element in tha range arr[i...j]. 
+        of the minimal element in tha range arr[i...j].
         @param i (int): Element index.
         @param j (int): Element index.
         @return k (int): Element index such that arr[k] = min arr[i...j]
@@ -251,8 +251,14 @@ class RMQ_block(RMQ_base):
 
 
 class RMQ_1(RMQ_block):
+    """ Concrete class implementing block decomposition stragety.
+    This class implements an indexing structure for the case when all the elements
+    of the array differ by +1 or -1.
+    A mapping between b-sized blocks and b-bit integers is used to detect
+    similar blocks.
+    """
     def __init__(self, arr):
-        """ Constructing an instance of the RMQ_1 class.
+        """ Initialize an instance of the RMQ_1 class.
         Assert that every pair of consecutive elements differs by +/- 1.
         @param arr (List[int]): A list of integers.
         """
@@ -263,9 +269,8 @@ class RMQ_1(RMQ_block):
 
     def _compute_block_id(self, block):
         """ Compute an id for each block.
-        Since consecutive elements differ by +/- 1, every block is
-        unambiguously defined by the sequence of 1 or -1 jumps between
-        consecutive elements.
+        Since consecutive elements differ by +/- 1, every block is unambiguously
+        defined by the sequence of 1 or -1 jumps between consecutive elements.
         Mapping the sequence of jumps to a bit value of 1 or 0 results
         in a (*block_size* - 1)-bit integer number.
         This number is the id of the block.
@@ -288,98 +293,63 @@ class RMQ_1(RMQ_block):
         return int(code, 2)
 
 
+class RMQ_Fischer_Heun(RMQ_block):
+    """ Concrete class implementing block decomposition stragety.
+    This class implements an indexing structure for the general case.
+    A mapping between b-sized blocks and 2b-bit integers is used to detect
+    similar blocks.
+    """
+    def _compute_block_id(self, block):
+        """ For every block build a Cartesian tree using stack-based approach.
+        During the build process encode stack pushes as *1* and stack pops as *0*.
+        The generated 2b-bit number is the id of the block.
+        @param block (List[int]): An array of integer numbers.
+        @return code (int): A 2b-bit integer giving the id of the block,
+                            where b is the size of the block.
+        """
+        binary_code = [0] * (2* len(block))
+        idx = 0
+        Q = deque(maxlen=len(block))  # stack
+
+        for i in range(len(block)):
+            while (len(Q) > 0) and (Q[-1] > block[i]):
+                Q.pop()
+                idx += 1
+            Q.append(block[i])
+            binary_code[idx] = 1
+            idx += 1
+
+        code = "".join(str(bit) for bit in binary_code)
+        return int(code, 2)
+
+
 class RMQ_Index:
     """ Concrete class for RMQ indexing structure.
     The RMQ problem is reduced to the LCA problem by building a Cartesian tree
     for the array. Searching for a minimal element in a subarray amounts to
     finding the least common ancestor of the nodes representing the start and the
     end of that subarray.
-    We keep an _index array storying positions of the nodes in the tree.
-    The position sotred at index *i* corresponds to the array element at index *i*.
+    We keep an _index array storing positions of the nodes in the tree.
+    The position stored at index *i* corresponds to the array element at index *i*.
     """
     def __init__(self, arr):
+        """ Initialize an instance of the RMQ_Index class.
+        @param arr (List[int]): A list of integers.
+        """
         self._arr = arr
         self._length = len(arr)
-        self._index = [None] * self._length
-
-        self._tree = Tree()
-        self._reduce(0, self._length, None)
+        self._tree = BinaryTree()
+        self._pos_index = self._tree.build_cartesian_tree(self._arr)
         self._lca = lca.LCA_Index(self._tree)
 
-    def _reduce(self, start, end, p):
-        """ Reduce the RMQ problem to LCA by building a Cartesian tree for the array.
-        @param start (int): Start index of the subarray.
-        @param end (int): End index of the subarray.
-        @param p (Position): Position representing the node in the tree to which
-                             the Cartesian tree of the subarray must be attached.
-        """
-        min_elem = min(self._arr[start : end])
-        min_idx = start + self._arr[start : end].index(min_elem)
-
-        if self._tree.is_empty():
-            node = self._tree._add_root(min_idx)
-        else:
-            node = self._tree._add_child(p, min_idx)
-
-        if min_idx > start:
-            self._reduce(start, min_idx, node)
-        if min_idx + 1 < end:
-            self._reduce(min_idx + 1, end, node)
-
-        self._index[min_idx] = node
-
     def __call__(self, i, j):
+        """ To answer queries locate the positions of the nodes storing indecies i and j.
+        Find the least common ancestor of these nodes. And return the index stored at that node.
+        @param i (int): Element index.
+        @param j (int): Element index.
+        @return k (int): Element index such that arr[k] = min arr[i...j]
         """
-        """
-        u = self._index[i]
-        v = self._index[j]
+        u = self._pos_index[i]
+        v = self._pos_index[j]
         w = self._lca(u, v)
         return w.value()
-
-
-if __name__ == "__main__":
-    random.seed(0)
-
-    def generate_random_array(size):
-        arr = [random.randint(0, 1000000)] * size
-        for i in range(1, size):
-            step = (-1) ** random.randint(0, 1)
-            arr[i] = arr[i - 1] + step
-        return arr
-
-    def check_correctness(RMQ_strategy):
-        sizes = [10, 100, 1000, 10000]
-        trials = 20
-        for size in sizes:
-            arr = generate_random_array(size)
-            rmq = RMQ_strategy(arr)
-            for i in range(trials):
-                start = random.randint(0, size-1)
-                end = random.randint(start, size-1)
-                _min = start + arr[start:end+1].index(min(arr[start:end+1]))
-                _min_rmq = rmq(start, end)
-                if _min != _min_rmq:
-                    raise Exception("%s not implemented correctly!" % (rmq.__class__.__name__))
-        print("%s implementation is correct!" % (rmq.__class__.__name__))
-
-    def check_complexity(RMQ_strategy):
-        if RMQ_strategy.__name__ == "RMQ_table":
-            sizes = [1000, 2000, 4000]#, 8000, 16000]   # x2
-        else:
-            sizes = [1000, 8000, 64000]#, 512000, 4096000]  # x8
-        print("size \t\t time")
-        for size in sizes:
-            arr = generate_random_array(size)
-            tic = time.time()
-            rmq = RMQ_strategy(arr)
-            toc = time.time()
-            print("%d \t\t %.3f" %(size, toc - tic))
-
-
-    for strategy in (RMQ_table, RMQ_sparse, RMQ_1, RMQ_Index):
-        check_correctness(strategy)
-
-    # complexity      O(n^2)     O(nlogn)    O(n)     O(n)
-    for strategy in (RMQ_table, RMQ_sparse, RMQ_1, RMQ_Index):
-        print("\nCheck time complexity for %s" % (strategy.__name__))
-        check_complexity(strategy)
