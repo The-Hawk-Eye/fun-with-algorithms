@@ -24,7 +24,7 @@ The tree ADT also supports the following mutator methods:
     T.replace(p, val): Replace the value of the node at Position p with the new value.
 """
 
-from traversal_algorithms import breadth_first_traversal
+from .traversal_algorithms import breadth_first_traversal
 
 class Tree:
     #---------------- nested Node class ----------------------#
