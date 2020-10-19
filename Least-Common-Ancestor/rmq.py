@@ -1,9 +1,11 @@
-import sys
-sys.path.append("../utils/")
-
+import os
 import math
 from collections import deque
+
+CURRENT_DIR = os.getcwd()
+os.chcwd("../utils/")
 from binary_tree import BinaryTree
+os.chcwd(CURRENT_DIR)
 import lca
 
 

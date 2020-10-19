@@ -1,8 +1,11 @@
-import sys
-sys.path.append("../utils/")
+import os
 
+CURRENT_DIR = os.getcwd()
+os.chcwd("../utils/")
 from tree import Tree
+os.chcwd(CURRENT_DIR)
 import rmq
+
 
 class LCA_Index:
     def __init__(self, tree):
