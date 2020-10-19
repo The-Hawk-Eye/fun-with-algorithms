@@ -1,6 +1,5 @@
 import sys
 sys.path.append("../utils/")
-sys.setrecursionlimit(10000)
 
 import math
 from collections import deque

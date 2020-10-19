@@ -1,6 +1,5 @@
 import sys
 sys.path.append("../utils/")
-sys.setrecursionlimit(10000)
 
 from tree import Tree
 import rmq
