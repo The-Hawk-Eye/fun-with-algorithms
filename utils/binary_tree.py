@@ -16,7 +16,7 @@ The binary tree ADT also supports the following mutator methods:
 """
 
 from collections import deque
-from tree import Tree
+from .tree import Tree
 
 class BinaryTree(Tree):
     #---------------- nested Node class ----------------------#
