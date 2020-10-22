@@ -1,11 +1,14 @@
+import sys
+sys.path.append("../")
+
 import os
 import math
 from collections import deque
 
 CURRENT_DIR = os.getcwd()
-os.chcwd("../utils/")
-from binary_tree import BinaryTree
-os.chcwd(CURRENT_DIR)
+os.chdir("../utils/")
+from utils.binary_tree import BinaryTree
+os.chdir(CURRENT_DIR)
 import lca
 
 
@@ -354,3 +357,7 @@ class RMQ_Index:
         v = self._pos_index[j]
         w = self._lca(u, v)
         return w.value()
+
+
+if __name__ == "__main__":
+    print("true")
