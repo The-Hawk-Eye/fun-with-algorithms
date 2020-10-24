@@ -1,9 +1,12 @@
-import os
+import sys
+sys.path.append("../")
 
-CURRENT_DIR = os.getcwd()
-os.chcwd("../utils/")
-from tree import Tree
-os.chcwd(CURRENT_DIR)
+# import os
+
+# CURRENT_DIR = os.getcwd()
+# os.chdir("../utils/")
+from utils.tree import Tree
+# os.chdir(CURRENT_DIR)
 import rmq
 
 

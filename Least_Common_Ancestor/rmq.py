@@ -1,14 +1,14 @@
 import sys
 sys.path.append("../")
 
-import os
+# import os
 import math
 from collections import deque
 
-CURRENT_DIR = os.getcwd()
-os.chdir("../utils/")
+# CURRENT_DIR = os.getcwd()
+# os.chdir("../utils/")
 from utils.binary_tree import BinaryTree
-os.chdir(CURRENT_DIR)
+# os.chdir(CURRENT_DIR)
 import lca
 
 
