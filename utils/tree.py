@@ -221,11 +221,16 @@ class Tree:
         return self._make_position(new_node)
 
     def _compute_depths(self):
-        for p in self.positions():
+        """ Traverse the tree in a breadth first manner and compute the depth
+        of each node from the root of the tree.
+        """
+        for p in breadth_first_traversal(self):
             node = self._validate(p)
             if p == self.root():
                 node._depth = 0
             else:
                 parent = self.parent(p)
-                par_node = self._validate(parent)
-                node._depth = par_node._depth + 1
+                parent_node = self._validate(parent)
+                node._depth = parent_node._depth + 1
+
+#
