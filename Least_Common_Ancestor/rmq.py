@@ -354,8 +354,4 @@ class RMQ_Index:
         w = self._lca(u, v)
         return w.value()
 
-
-if __name__ == "__main__":
-    print("true")
-
 #
