@@ -168,4 +168,4 @@ Using the previous stack-based approach for building Cartesian trees, we can cou
 
 Two blocks share an <i>RMQ</i> structure if and only if they have the same Cartesian tree number. Since we only care whether blocks can share <i>RMQ</i> structures or not, we never need to build Cartesian trees. We can just compute the Cartesian tree number for each block.  
 Choosing <i>b = (logn / 4)</i> we have:  
-O((n/b)log(n/b) + 4<sup>b</sup>b<sup>2</sup>) = O(4(n/logn)logn + (1/16)log<sup>2</sup>n&radic;n) = O(n)  
+<i>O((n/b)log(n/b) + 4<sup>b</sup>b<sup>2</sup>) = O(4(n/logn)logn + (1/16)log<sup>2</sup>n&radic;n) = O(n)</i>  
