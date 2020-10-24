@@ -1,14 +1,10 @@
 import sys
-sys.path.append("../")
-
-# import os
 import math
 from collections import deque
+sys.path.append("../")
 
-# CURRENT_DIR = os.getcwd()
-# os.chdir("../utils/")
+
 from utils.binary_tree import BinaryTree
-# os.chdir(CURRENT_DIR)
 import lca
 
 
@@ -361,3 +357,5 @@ class RMQ_Index:
 
 if __name__ == "__main__":
     print("true")
+
+#

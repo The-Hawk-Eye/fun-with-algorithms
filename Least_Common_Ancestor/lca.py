@@ -1,12 +1,8 @@
 import sys
 sys.path.append("../")
 
-# import os
 
-# CURRENT_DIR = os.getcwd()
-# os.chdir("../utils/")
 from utils.tree import Tree
-# os.chdir(CURRENT_DIR)
 import rmq
 
 
@@ -52,3 +48,5 @@ class LCA_Index:
         """
         idx = self._rmq(self._start[p.index()], self._start[q.index()])
         return self._visits[idx]
+
+#
