@@ -196,3 +196,5 @@ class BinaryTree(Tree):
 
         node._parent = new_node
         return self._make_position(new_node)
+
+#
