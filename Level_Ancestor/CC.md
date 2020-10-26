@@ -117,8 +117,9 @@ The sparse table has <i>O(Llog n)</i> entries, where <i>L</i> is the number of l
         <i>d = 2<sup>l</sup> - 1  
         <i>p<sub>v</sub>[l + 1] = p(Ladders<sub>path(u)</sub>[ind(u) - d])</i>  
 
-  * <i>O(n + L * log n)</i> processing time  
+  * <i>O(n + Llog n)</i> processing time  
   * <i>O(1)</i> query time  
 
+![ladder decomposition](img/ladder_decomposition.png) 
 
 ### The Macro-Micro-Tree Algorithm ###
