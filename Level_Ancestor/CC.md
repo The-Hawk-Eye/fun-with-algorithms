@@ -58,7 +58,7 @@ The complexity of this procedure depends on the number of paths we traverse. Giv
 <i>|Paths<sub>path(v)</sub>| + 1 &le; |Paths<sub>path(u)</sub>|</i>  
 Since we used greedy decomposition the node <i>u</i> must belong to a longer path than the node <i>v</i>.  
 
-Let <i>v<sub>0</sub> = v<i>, 
+Let <i>v<sub>0</sub> = v</i>, 
 <i>v<sub>1</sub> = p(Paths<sub>v<sub>0</sub></sub>[0])</i>, 
 <i>v<sub>2</sub> = p(Paths<sub>v<sub>1</sub></sub>[0])</i>, ..., 
 v<sub>k</sub> be the nodes for which the querying procedure has been recursively called. Then we have the following:  
