@@ -31,9 +31,10 @@ Answering a query requires one simple table lookup.
   * <i>O(1)</i> query time  
 
 ### Path Decomposition ###
-To solve the <i>LA</i> problem we will decompose the tree into paths. To understand why this is advantageous, let us consider a single path of the tree. Solving the <i>LA</i> problem on a single path of length <i>m</i> can be done by maintaining an array <i>Path[0...m-1]</i>, where the nodes of the path are stored in top-to-bottom order from root to leaf. Suppose node <i>u</i> is stored at position <i>i</i>, then to answer <i>LA(u, k)</i> (for <i>k &le; i</i>) we simply return <i>Path[i - k]</i>.  
+To solve the <i>LA</i> problem we will decompose the tree into paths. To understand why this is advantageous let us consider a single path of the tree. Solving the <i>LA</i> problem on a single path of length <i>m</i> can be done by maintaining an array <i>Path[0...m-1]</i>, where the nodes of the path are stored in top-to-bottom order from root to leaf. Suppose node <i>u</i> is stored at position <i>i</i>, then to answer <i>LA(u, k)</i> (for <i>k &le; i</i>) we simply return  
+<i>Path[i - k]</i>.  
 
-Looking for an optimal solution, the tree must be decomposed into paths with maximal lengths. We will find a <i>long-path decomposition</i> of the tree <i>T</i> by greedily decomposing the tree into disjoint paths. At each step we find the longest root-leaf path in <i>T</i> and remove it from the tree. This removal breaks the tree into subtrees <i>T<sub>1</sub> , T<sub>2</sub> , .... Recursively split these subtrees by removing their longest root-leaf paths. Each removed path is stored as an array in bottom-up path order (from leaf to root).  
+Looking for an optimal solution, the tree must be decomposed into paths with maximal lengths. We will find a <i>long-path decomposition</i> of the tree <i>T</i> by greedily decomposing the tree into disjoint paths. At each step we find the longest root-leaf path in <i>T</i> and remove it from the tree. This removal breaks the tree into subtrees <i>T<sub>1</sub> , T<sub>2</sub></i> , .... Recursively split these subtrees by removing their longest root-leaf paths. Each removed path is stored as an array in top-to-bottom path order (from root to leaf).  
 
 To find a long-path decomposition of the tree <i>T</i> in linear time we use the following procedure:  
   1. Compute the depths of the nodes of the tree. This can be done in <i>O(n)</i> time using simple breadth-first traversal.  
@@ -61,20 +62,20 @@ Let <i>v<sub>0</sub> = v<i>,
 <i>v<sub>1</sub> = p(Paths<sub>v<sub>0</sub></sub>[0])</i>, 
 <i>v<sub>2</sub> = p(Paths<sub>v<sub>1</sub></sub>[0])</i>, ..., 
 v<sub>k</sub> be the nodes for which the querying procedure has been recursively called. Then we have the following:  
-  * <i>Paths<sub>path(v<sub>i</sub>)</sub> &cup; Paths<sub>path(v<sub>j</sub>)</sub> = &empty;</i>  
+  * <i>Paths<sub>path(v<sub>i</sub>)</sub> &cap; Paths<sub>path(v<sub>j</sub>)</sub> = &empty;</i>  
   * <i>Paths<sub>path(v<sub>i</sub>)</sub> + 1 &le; Paths<sub>path(v<sub>i + 1</sub>)</sub></i>  
-  * <i>&Sum;<sub>0 &le; i &le; k</sub> |Paths<sub>path(v<sub>i</sub>)</sub>| = n</i>  
+  * <i>&Sum;<sub>0 &le; i &le; k</sub> |Paths<sub>path(v<sub>i</sub>)</sub>| &le; n</i>  
 
 <i>
 Paths<sub>path(v<sub>i</sub>)</sub> + 1 &le; Paths<sub>path(v<sub>i + 1</sub>)</sub>  
 &rarr; Paths<sub>path(v<sub>0</sub>)</sub> + i &le; Paths<sub>path(v<sub>i</sub>)</sub>  
 &rarr; &Sum; |Paths<sub>path(v<sub>i</sub>)</sub>| &ge; &Sum; (|Paths<sub>path(v<sub>0</sub>)</sub>| + i) &ge; &Sum; i  
-&rarr; &Sum;<sub>0 &le; i &le; k</sub> &le; n  
+&rarr; &Sum;<sub>0 &le; i &le; k</sub> i &le; n  
 </i>
 
-In the worst case the "&le;" sign is an "=" sign and we have that querying can be done in <i>O(&sqrt;n)</i> time.  
+In the worst case the "&le;" sign is an "=" sign and we have that querying can be done in <i>O(&sqr;n)</i> time.  
   * <i>O(n)</i> processing time  
-  * <i>O(&sqrt;n)</i> query time  
+  * <i>O(&sqr;n)</i> query time  
 
 ![path decomposition](img/path_decomposition.png)  
 
