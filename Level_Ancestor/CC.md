@@ -40,15 +40,15 @@ To find a long-path decomposition of the tree <i>T</i> in linear time we use the
   1. Compute the depths of the nodes of the tree. This can be done in <i>O(n)</i> time using simple breadth-first traversal.  
   2. Build a list of the leaves of the tree sorted by depths in descending order <i>L = [l<sub>0</sub> , l<sub>1</sub> , ..., l<sub>k</sub>]</i>. This can be done in <i>O(n)</i> time using bucket sort.  
   3. Iteratively build longest path arrays starting with each of the leaves:  
-  		3.1. Starting at leaf <i>l<sub>i</sub></i> traverse the tree upwards  
-  		3.2. Mark every visited node  
-  		3.3. Add every visited node to the path array  
-  		3.4. Stop when reaching a node that is already marked, or when reaching the root  
+        3.1. Starting at leaf <i>l<sub>i</sub></i> traverse the tree upwards  
+        3.2. Mark every visited node  
+        3.3. Add every visited node to the path array  
+        3.4. Stop when reaching a node that is already marked, or when reaching the root  
   4. Store the path arrays in an array of arrays <i>Paths</i>  
   5. For every node store the number of the path array to which it belongs:  
-  		<i>path(v) = i &rarr; v &in; Paths<sub>i</sub></i>  
+        <i>path(v) = i &rarr; v &in; Paths<sub>i</sub></i>  
   6. For every node store the position at which it occurs in the path array:  
-  		<i>ind(v) = j &rarr; Paths<sub>path(v)</sub>[j] = v</i>  
+        <i>ind(v) = j &rarr; Paths<sub>path(v)</sub>[j] = v</i>  
 
 To answer level ancestor queries we move upwards jumping from path to path:  
 <i>LA(v, k) = Paths<sub>path(v)</sub>[ind(v) - k]</i> if <i>k &le; ind(v)</i>  
@@ -66,17 +66,56 @@ v<sub>k</sub> be the nodes for which the querying procedure has been recursively
   * <i>Paths<sub>path(v<sub>i</sub>)</sub> + 1 &le; Paths<sub>path(v<sub>i + 1</sub>)</sub></i>  
   * <i>&Sum;<sub>0 &le; i &le; k</sub> |Paths<sub>path(v<sub>i</sub>)</sub>| &le; n</i>  
 
-<i>
-Paths<sub>path(v<sub>i</sub>)</sub> + 1 &le; Paths<sub>path(v<sub>i + 1</sub>)</sub>  
-&rarr; Paths<sub>path(v<sub>0</sub>)</sub> + i &le; Paths<sub>path(v<sub>i</sub>)</sub>  
-&rarr; &Sum; |Paths<sub>path(v<sub>i</sub>)</sub>| &ge; &Sum; (|Paths<sub>path(v<sub>0</sub>)</sub>| + i) &ge; &Sum; i  
-&rarr; &Sum;<sub>0 &le; i &le; k</sub> i &le; n  
-</i>
+<i>Paths<sub>path(v<sub>i</sub>)</sub> + 1 &le; Paths<sub>path(v<sub>i + 1</sub>)</sub></i>  
+<i>&rarr; Paths<sub>path(v<sub>0</sub>)</sub> + i &le; Paths<sub>path(v<sub>i</sub>)</sub></i>  
+<i>&rarr; &Sum; |Paths<sub>path(v<sub>i</sub>)</sub>| &ge; &Sum; (|Paths<sub>path(v<sub>0</sub>)</sub>| + i) &ge; &Sum; i</i>  
+<i>&rarr; &Sum;<sub>0 &le; i &le; k</sub> i &le; n</i>  
 
-In the worst case the "&le;" sign is an "=" sign and we have that querying can be done in <i>O(&sqr;n)</i> time.  
+In the worst case the "&le;" sign is an "=" sign and we have that querying can be done in <i>O(&radic;n)</i> time.  
   * <i>O(n)</i> processing time  
-  * <i>O(&sqr;n)</i> query time  
+  * <i>O(&radic;n)</i> query time  
 
 ![path decomposition](img/path_decomposition.png)  
 
+### Ladder Algorithm ###
+For the path decomposition we had the following relation:  
+<i>Paths<sub>path(v<sub>i</sub>)</sub> + 1 &le; Paths<sub>path(v<sub>i + 1</sub>)</sub></i>  
 
+With this relation we achieved <i>O(&radic;n)</i> query time. To achieve <i>O(log n)</i> query time we must have the following relation:  
+<i>Paths<sub>path(v<sub>i</sub>)</sub> * 2 &le; Paths<sub>path(v<sub>i + 1</sub>)</sub></i>  
+
+Then:  
+<i>Paths<sub>path(v<sub>0</sub>)</sub> * 2<sup>i</sup> &le; Paths<sub>path(v<sub>i</sub>)</sub></i>  
+<i>&Sum; |Paths<sub>path(v<sub>i</sub>)</sub>| &ge; &Sum; (|Paths<sub>path(v<sub>0</sub>)</sub>| * 2<sup>i</sup>) &ge; &Sum;<sub>0 &le; i &le; k</sub> 2<sup>i</sup></i>  
+
+And we have <i>k &in; O(log n)</i>  
+
+For this reason we extend the long paths into <i>Ladders</i>: for every path <i>Paths<sub>i</sub></i> we build a ladder <i>Ladders<sub>i</sub></i> by doubling the path. Each path is extended upward by adding the immediate ancestors at the top of the path to the array. Extending the paths into ladders naively requires <i>O(n)</i> time.  
+
+Again for every node we store the following information:   
+  * <i>path(v) = i &rarr; v &in; Ladders<sub>i</sub></i>  
+  * <i>ind(v) = j &rarr; Ladders<sub>path(v)</sub>[j] = v</i>  
+
+We could again answer level ancestor querys by jumping from ladder to ladder. However, for every node <i>v</i> we could store in a sparse table every <i>2<sup>l</sup> -th</i> ancestor of that node. Then, to answer the level ancestor query <i>LA(v, k)</i>, we compute <i>d</i> and <i>l</i> such that:  
+<i>k = 2<sup>l</sup> + d</i>  
+<i> 0 &le; d < 2<sup>l</sup></i>  
+Let <i>u = p<sup>2<sup>l</sup></sup>(v)</i>, then <i>p<sup>k</sup>(v) = p<sup>d</sup>(u)</i>. Thus, we have:  
+<i>LA(v, k) = Ladder<sub>path(u)</sub>[ind(u) - d]</i>
+
+To see why this is the case let <i>h<sub>v</sub> = height(v)</i> be the number of nodes in the longest downward path from node <i>v</i> to a leaf. Node <i>v</i> belongs to path <i>Paths<sub>path(v)</sub></i>. Since this path was build greedily it has at least <i>h<sub>v</sub></i> nodes. Thus, the array <i>Ladder<sub>path(v)</sub></i> has at least <i>2 * h<sub>v</sub></i> elements, and also this array contains at least <i>h<sub>v</sub></i> ancestors of <i>v</i>. Now, since node <i>u = p<sup>2<sup>l</sup></sup>(v)</i>, then <i>h<sub>u</sub> = height(u) &ge; 2<sup>l</sup></i>. Also <i>Ladder<sub>path(u)</sub></i> contains at least <i>h<sub>u</sub></i> ancestors of node <i>u</i>, and in particular it contains <i>p<sup>d</sup>(u)</i>.  
+
+What is more, instead of storing a sparse table for every node, we could store a sparse table only for the leaves of the tree. To answer level ancestor queries we must also store a pointer from every node to one of its sub-leaves.  
+Let <i>l<sub>v</sub> = leaf(v)</i> be the leaf to which node <i>v</i> points. Then:  
+<i>LA(v, k) = LA(l<sub>v</sub>, k + depth(l<sub>v</sub>) - depth(v))</i>  
+
+The sparse table has <i>O(Llog n)</i> entries, where <i>L</i> is the number of leaves. To build the table in <i>O(Llog n)</i> time we will build it bottom up. For every leaf <i>v</i> do the following:  
+  1. Allocate an array <i>p<sub>v</sub>[0, 1, ..., logn]</i>  
+  2. Initialize <i>p<sub>v</sub>[0] = v</i>  
+  3. The <i>2<sup>l + 1</sup></i> level ancestor of <i>v</i> is stored in the ladder of the <i>2<sup>l</sup></i> level ancestor of <i>v</i>  
+        <i>p<sup>2<sup>l + 1</sup></sup>(v) = p<sup>2<sup>l</sup></sup>(p<sup>2<sup>l</sup></sup>(v))</i>
+        <i>u = p<sub>v</sub>[l]</i>  
+        <i>d = 2<sub>l</sub> - 1  
+        <i>p<sub>v</sub>[l + 1] = p(Ladders<sub>path(u)</sub>[ind(u) - d])</i>  
+
+
+### The Macro-Micro-Tree Algorithm ###
