@@ -1,11 +1,11 @@
-import sys
 import math
-from collections import deque
+import sys
 sys.path.append("../")
 
 
-from utils.binary_tree import BinaryTree
 import lca
+from utils.binary_tree import BinaryTree
+from utils.stack import Stack
 
 
 class RMQ_base:
@@ -309,13 +309,13 @@ class RMQ_Fischer_Heun(RMQ_block):
         """
         binary_code = [0] * (2* len(block))
         idx = 0
-        Q = deque(maxlen=len(block))  # stack
+        S = Stack()
 
         for i in range(len(block)):
-            while (len(Q) > 0) and (Q[-1] > block[i]):
-                Q.pop()
+            while (not S.is_empty()) and (S.top() > block[i]):
+                S.pop()
                 idx += 1
-            Q.append(block[i])
+            S.push(block[i])
             binary_code[idx] = 1
             idx += 1
 
@@ -352,6 +352,6 @@ class RMQ_Index:
         u = self._pos_index[i]
         v = self._pos_index[j]
         w = self._lca(u, v)
-        return w.value()
+        return w.elem()
 
 #

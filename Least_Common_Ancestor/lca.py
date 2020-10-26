@@ -2,8 +2,8 @@ import sys
 sys.path.append("../")
 
 
-from utils.tree import Tree
 import rmq
+from utils.tree import Tree
 
 
 class LCA_Index:
