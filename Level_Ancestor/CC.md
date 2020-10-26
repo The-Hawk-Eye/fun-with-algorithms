@@ -96,7 +96,7 @@ Again for every node we store the following information:
   * <i>path(v) = i &rarr; v &in; Ladders<sub>i</sub></i>  
   * <i>ind(v) = j &rarr; Ladders<sub>path(v)</sub>[j] = v</i>  
 
-We could again answer level ancestor querys by jumping from ladder to ladder. However, for every node <i>v</i> we could store in a sparse table every <i>2<sup>l</sup> -th</i> ancestor of that node. Then, to answer the level ancestor query <i>LA(v, k)</i>, we compute <i>d</i> and <i>l</i> such that:  
+We could again answer level ancestor queries by jumping from ladder to ladder. However, for every node <i>v</i> we could store in a sparse table every <i>2<sup>l</sup> -th</i> ancestor of that node. Then, to answer the level ancestor query <i>LA(v, k)</i>, we compute <i>d</i> and <i>l</i> such that:  
 <i>k = 2<sup>l</sup> + d</i>  
 <i> 0 &le; d < 2<sup>l</sup></i>  
 Let <i>u = p<sup>2<sup>l</sup></sup>(v)</i>, then <i>p<sup>k</sup>(v) = p<sup>d</sup>(u)</i>. Thus, we have:  
@@ -112,10 +112,13 @@ The sparse table has <i>O(Llog n)</i> entries, where <i>L</i> is the number of l
   1. Allocate an array <i>p<sub>v</sub>[0, 1, ..., logn]</i>  
   2. Initialize <i>p<sub>v</sub>[0] = v</i>  
   3. The <i>2<sup>l + 1</sup></i> level ancestor of <i>v</i> is stored in the ladder of the <i>2<sup>l</sup></i> level ancestor of <i>v</i>  
-        <i>p<sup>2<sup>l + 1</sup></sup>(v) = p<sup>2<sup>l</sup></sup>(p<sup>2<sup>l</sup></sup>(v))</i>
+        <i>p<sup>2<sup>l + 1</sup></sup>(v) = p<sup>2<sup>l</sup></sup>(p<sup>2<sup>l</sup></sup>(v))</i>  
         <i>u = p<sub>v</sub>[l]</i>  
-        <i>d = 2<sub>l</sub> - 1  
+        <i>d = 2<sup>l</sup> - 1  
         <i>p<sub>v</sub>[l + 1] = p(Ladders<sub>path(u)</sub>[ind(u) - d])</i>  
+
+  * <i>O(n + L * log n)</i> processing time  
+  * <i>O(1)</i> query time  
 
 
 ### The Macro-Micro-Tree Algorithm ###
