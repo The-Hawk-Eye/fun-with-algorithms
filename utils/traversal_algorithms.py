@@ -1,3 +1,5 @@
+from .queue import Queue
+
 from collections import deque
 
 def breadth_first_traversal(tree):
@@ -8,13 +10,14 @@ def breadth_first_traversal(tree):
 	if tree.is_empty():
 		return None
 
-	frontier = deque()
-	frontier.append(tree.root())
-	while len(frontier) > 0:	# frontier not empty
-		node = frontier.popleft()
+	frontier = Queue()
+	frontier.enqueue(tree.root())
+	while not frontier.is_empty():
+		node = frontier.dequeue()
 		yield node
-		frontier.extend(tree.children(node))
 
+		for child in tree.children(node):
+			frontier.enqueue(child)
 
 def depth_first_traversal(tree):
 	""" Depth-first traversal of a tree object.
