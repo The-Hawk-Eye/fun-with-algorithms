@@ -1,6 +1,5 @@
 from .queue import Queue
 
-from collections import deque
 
 def breadth_first_traversal(tree):
 	""" Breath-first traversal of a tree object.
