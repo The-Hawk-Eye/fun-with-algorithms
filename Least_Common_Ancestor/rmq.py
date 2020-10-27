@@ -3,7 +3,7 @@ import sys
 sys.path.append("../")
 
 
-import lca
+from . import lca
 from utils.binary_tree import BinaryTree
 from utils.stack import Stack
 
