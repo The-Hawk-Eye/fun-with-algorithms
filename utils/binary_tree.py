@@ -85,7 +85,8 @@ class BinaryTree(Tree):
         if node._left is not None:
             raise ValueError("Left child exists!")
 
-        left_ch = self._Node(elem, idx=self._size, depth=self.depth(p) + 1, parent=node)
+        left_ch = self._Node(elem, idx=self._curr_idx, depth=self.depth(p) + 1, parent=node)
+        self._curr_idx += 1
         node._left = left_ch
         self._size += 1
         return self._make_position(left_ch)
@@ -101,7 +102,8 @@ class BinaryTree(Tree):
         if node._right is not None:
             raise ValueError("Right child exists!")
 
-        right_ch = self._Node(elem, idx=self._size, depth=self.depth(p) + 1, parent=node)
+        right_ch = self._Node(elem, idx=self._curr_idx, depth=self.depth(p) + 1, parent=node)
+        self._curr_idx += 1
         node._right = right_ch
         self._size += 1
         return self._make_position(right_ch)
@@ -133,6 +135,7 @@ class BinaryTree(Tree):
         # Set the self instance to an empty tree.
         self._root = None
         self._size = 0
+        self._curr_idx = 0
 
         # Maintaining a stack of the nodes in the right spine.
         S = Stack()
@@ -172,7 +175,8 @@ class BinaryTree(Tree):
         @return new_p (Position): Return Position representing the new node.
         """
         node = self._validate(p)
-        new_node = self._Node(elem, idx=self._size, depth=node._depth, parent=node._parent)
+        new_node = self._Node(elem, idx=self._curr_idx, depth=node._depth, parent=node._parent)
+        self._curr_idx += 1
         if left:
             new_node._left = node
         else:
