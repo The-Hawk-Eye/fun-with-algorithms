@@ -35,8 +35,8 @@ class PositionalContainer:
             @param container (Container): Container object to which the node belongs.
             @param node (Node): Node object.
             """
-            self._container = container     # this is used to check whether two positions
-                                            # represent nodes in the same Container structure
+            self._container = container     # this is used to validate positions by checking
+                                            # whether they belong to the given Container structure
             self._node = node
 
         def elem(self):
@@ -104,5 +104,13 @@ class PositionalContainer:
         if p._container is not self:
             raise ValueError("p does not belong to this container")
         return p._node
+
+    def _reindex(self):
+        """ Traverse the container and assign a unique index to each node. """
+        curr_idx = 0
+        for p in self.positions():
+            p._node._index = curr_idx
+            curr_idx += 1
+        return curr_idx
 
 #
