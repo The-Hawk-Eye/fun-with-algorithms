@@ -21,7 +21,7 @@ from .positional_container import PositionalContainer
 
 
 class DoublyLinkedList(PositionalContainer):
-    #---------------- nested Node class ----------------------#
+    #--------------- nested Node class ----------------#
     class _Node:
         """ Lightweight non-public class for storing a node. """
         __slots__ = "_elem", "_index", "_prev", "_next"
@@ -46,6 +46,7 @@ class DoublyLinkedList(PositionalContainer):
         self._header._next = self._trailer
         self._trailer._prev = self._header
         self._size = 0
+        self._curr_idx = 0
 
     #---------------- public accessors ----------------#
     def first(self):
@@ -91,7 +92,8 @@ class DoublyLinkedList(PositionalContainer):
         @return new_node (Position): Return Position representing the new node.
         """
         node = self._validate(p)
-        new_node = self._Node(elem, idx=self._size, prev=node._prev, next=node)
+        new_node = self._Node(elem, idx=self._curr_idx, prev=node._prev, next=node)
+        self._curr_idx += 1
         node._prev._next = new_node
         node._prev = new_node
         self._size += 1
@@ -104,7 +106,8 @@ class DoublyLinkedList(PositionalContainer):
         @return new_node (Position): Return Position representing the new node.
         """
         node = self._validate(p)
-        new_node = self._Node(elem, idx=self._size, prev=node, next=node._next)
+        new_node = self._Node(elem, idx=self._curr_idx, prev=node, next=node._next)
+        self._curr_idx += 1
         node._next._prev = new_node
         node._next = new_node
         self._size += 1
