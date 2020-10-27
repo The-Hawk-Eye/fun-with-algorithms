@@ -49,6 +49,7 @@ class Tree(PositionalContainer):
         """ Initialize an empty tree. """
         self._root = None
         self._size = 0
+        self._curr_idx = 0
 
     #---------------- public accessors ----------------#
     def root(self):
@@ -116,6 +117,7 @@ class Tree(PositionalContainer):
             raise ValueError("Root exists")
         self._root = self._Node(elem, idx=0, depth=0)
         self._size = 1
+        self._curr_idx = 1
         return self._make_position(self._root)
 
     def add_child(self, p, elem):
@@ -125,7 +127,8 @@ class Tree(PositionalContainer):
         @return child (Position): Return Position representing the new child.
         """
         node = self._validate(p)
-        child = self._Node(elem, idx=self._size, depth=self.depth(p) + 1, parent=node)
+        child = self._Node(elem, idx=self._curr_idx, depth=self.depth(p) + 1, parent=node)
+        self._curr_idx += 1
         node._children.append(child)
         self._size += 1
         return self._make_position(child)
@@ -133,14 +136,15 @@ class Tree(PositionalContainer):
     #---- private methods - should not be invoked by the user ----#
     def _insert(self, p, elem):
         """ Insert a new node at Position p. Attach the subtree rooted at the existing
-        node as a child of the new node. Note that the depths of the nodes must be recomputed
-        after executing the method _insert.
+        node as a child of the new node. Note that the depths of the nodes must be
+        recomputed after executing the method _insert.
         @param p (Position): Position representing the node in the tree.
         @param elem: Element to be stored at the new node.
         @return new_p (Position): Return Position representing the new node.
         """
         node = self._validate(p)
-        new_node = self._Node(elem, idx=self._size, depth=node._depth, parent=node._parent)
+        new_node = self._Node(elem, idx=self._curr_idx, depth=node._depth, parent=node._parent)
+        self._curr_idx += 1
         node._parent = new_node
         new_node._children.append(node)
         self._size += 1
