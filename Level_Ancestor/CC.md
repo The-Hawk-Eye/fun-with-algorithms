@@ -123,7 +123,7 @@ The sparse table has <i>O(Llog n)</i> entries, where <i>L</i> is the number of l
 ![ladder decomposition](img/ladder_decomposition.png) 
 
 ### The Macro-Micro-Tree Algorithm ###
-The bottleneck in the previous algorithm is computing the sparse table. It takes <i>O(Llog n)</i> time. To achieve linear boundary of the algorithm the tree must have <i>O(n / log n)</i> leaves.  
+In the previous algorithm computing the ladders takes linear time. The bottleneck is computing the sparse table. It takes <i>O(Llog n)</i> time. To achieve linear boundary of the algorithm the tree must have <i>O(n / log n)</i> leaves.  
 
 To speed up the algorithm we will use a <i>micro-macro division</i> of the tree. A micro-macro divison partitions the nodes of a tree into a <i>macro</i> tree and <i>micro</i> trees, where each micro tree is a connected subtree of the original tree.
 
@@ -137,7 +137,34 @@ Let <i>T = (V, p r)</i> be a rooted tree and let <i>B &in; &#8469;</i>. Let us c
       <i>p(v)</i> is a macro node  
   4. <i>Macro leaves</i> are the leaves of the macro tree <i>T<sub>macro</sub></i>.  
 
+The idea here is to compute a sparse table for all macro leaves, and to compute a simple naive table for all micro trees. However, building a table for every micro tree would not work because there are too many micro trees. Instead we will enumerate all possible shapes of trees of size at most <i>B</i> and build a simple table for them.  
+
 Considering this micro-macro division of <i>T</i> we can easily show that the number of macro leaves is at most <i>n / B</i>, where <i>n</i> is the number of nodes in <i>T</i>. Since every macro leaf <i>l</i> is a macro node we have that <i>|T<sub>l</sub>| > B</i>. Also, for every two macro leaves <i>l<sub>i</sub></i> and <i>l<sub>j</sub></i> we have that <i>T<sub>l<sub>i</sub></sub> &cap; T<sub>l<sub>i</sub></sub> = &empty;</i>. Then:  
 
-<i>kB &le; &sum; |T<sub>l<sub>i</sub></sub>| = |&cup; L<sub>l<sub>i</sub></sub>| &le; n</i>  
-<i>k &le; n / b</i>  
+<i>kB &le; &sum; |T<sub>l<sub>i</sub></sub>| = |&#8899; L<sub>l<sub>i</sub></sub>| &le; n</i>  
+<i>k &le; n / B</i>  
+
+We can also show that the number of possible shapes of trees of size at most <i>B</i> is no more than <i>4<sup>B</sup></i>. Performing a depth-first traversal on a tree of size <i>m</i> and enumerating every down-traversal as 0 (from parent to child) and every up-traversal as 1 (from child to parent), the shape of the tree is uniquely determined by the <i>2(m-1)-pattern</i> of 0s and 1s. Thus, there are no more than <i>2<sup>2(m - 1)</sup></i> possible shapes for trees with size <i>m</i>. The total number of possible shapes of trees of size at most <i>B</i> is:  
+<i>&sum;<sub>1 &le; m &le; B</sub> 2<sup>2(m - 1)</sup> = &sum; <sub>0 &le; m &le; B-1</sub> 4<sup>m</sup> = (4<sup>B</sup> - 1) / 3 < 4<sup>B</sup></i>  
+
+For the total preprocessing time we have the following:  
+<i>O(n / B * log n + 4<sup>B</sup> * B<sup>2</sup>)</i>  
+Thus we must have:  
+  * <i>n / B * log n &in; O(n)</i>  
+  * <i>4<sup>B</sup> * B<sup>2</sup> &in; O(n)</i>  
+
+From the first equation we can see that <i>B &ge; c * log n</i> for some constant <i>c</i>.  
+Substituting in the second equation we have:  
+<i>4<sup>c log n</sup> * (c log n)<sup>2</sup> &in; O(n)</i>  
+<i>n<sup>2c</sup> * c<sup>2</sup> * log<sup>2</sup> n &in; O(n)</i>  
+
+Choosing <i>c < 1/2</i> we can see that we have an asymptotically tight bound.  
+For example if <i>c = 1/4</i> we have <i>O(&radic;n log<sup>2</sup> n)</i> processing time.  
+
+Querying the structure is performed at two steps. Given a query <i>LA<sub>T</sub>(v, k)</i> first we check whether the height of node <i>v</i> is greater or smaller than <i>B</i>.  
+  * If <i>h<sub>v</sub> > B</i> then <i>v</i> is a macro node belonging to <i>T<sub>macro</sub></i> and we store a pointer to one of its sub-leaves <i>l<sub>v</sub> = leaf(v)</i>. Having <i>l<sub>v</sub></i> we can simply use ladder decomposition algorithm.  
+  * If <i>h<sub>v</sub> &le; B</i> then <i>v</i> is a micro node and we store a pointer to the root of the microtree <i>T<sub>micro<sub>k</sub></sub></i> that it belongs to <i>r<sub>v</sub> = root(v)</i>. In case <i>k > depth(v) - depth(r<sub>v</sub>)</i> we can again use the ladder decomposition algorithm. Otherwise <i>k &le; depth(v) - depth(r<sub>v</sub>)</i> and the level <i>k</i> ancestor of node <i>v</i> is located inside the micro tree <i>T<sub>micro<sub>k</sub></sub></i>. Now we simply find the simple table associated with that tree and perform a table lookup.
+
+In conclusion the complexity of the algorithm is:  
+  * <i>O(n + Llog n)</i> processing time  
+  * <i>O(1)</i> query time  
