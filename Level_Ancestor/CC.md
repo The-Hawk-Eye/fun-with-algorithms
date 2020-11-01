@@ -123,3 +123,21 @@ The sparse table has <i>O(Llog n)</i> entries, where <i>L</i> is the number of l
 ![ladder decomposition](img/ladder_decomposition.png) 
 
 ### The Macro-Micro-Tree Algorithm ###
+The bottleneck in the previous algorithm is computing the sparse table. It takes <i>O(Llog n)</i> time. To achieve linear boundary of the algorithm the tree must have <i>O(n / log n)</i> leaves.  
+
+To speed up the algorithm we will use a <i>micro-macro division</i> of the tree. A micro-macro divison partitions the nodes of a tree into a <i>macro</i> tree and <i>micro</i> trees, where each micro tree is a connected subtree of the original tree.
+
+<!-- insert pic -->
+
+Let <i>T = (V, p r)</i> be a rooted tree and let <i>B &in; &#8469;</i>. Let us consider a micro-macro division of <i>T</i> such that all micro trees contain at most <i>B</i> nodes:  
+  1. A <i>micro node</i> is any node <i>v</i> such that <i>h<sub>v</sub> &le; B</i>.  
+  2. A <i>macro node</i> is any node <i>v</i> such that <i>h<sub>v</sub>  > B</i>.  
+  3. A <i>micro tree</i> is a subtree <i>T<sub>v</sub></i> rooted at node <i>v</i> such that:  
+      <i>|T<sub>v</sub>| &le; B</i>  
+      <i>p(v)</i> is a macro node  
+  4. <i>Macro leaves</i> are the leaves of the macro tree <i>T<sub>macro</sub></i>.  
+
+Considering this micro-macro division of <i>T</i> we can easily show that the number of macro leaves is at most <i>n / B</i>, where <i>n</i> is the number of nodes in <i>T</i>. Since every macro leaf <i>l</i> is a macro node we have that <i>|T<sub>l</sub>| > B</i>. Also, for every two macro leaves <i>l<sub>i</sub></i> and <i>l<sub>j</sub></i> we have that <i>T<sub>l<sub>i</sub></sub> &cap; T<sub>l<sub>i</sub></sub> = &empty;</i>. Then:  
+
+<i>kB &le; &sum; |T<sub>l<sub>i</sub></sub>| = |&cup; L<sub>l<sub>i</sub></sub>| &le; n</i>  
+<i>k &le; n / b</i>  
