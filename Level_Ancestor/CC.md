@@ -114,7 +114,7 @@ The sparse table has <i>O(Llog n)</i> entries, where <i>L</i> is the number of l
   3. The <i>2<sup>l + 1</sup></i> level ancestor of <i>v</i> is stored in the ladder of the <i>2<sup>l</sup></i> level ancestor of <i>v</i>  
         <i>p<sup>2<sup>l + 1</sup></sup>(v) = p<sup>2<sup>l</sup></sup>(p<sup>2<sup>l</sup></sup>(v))</i>  
         <i>u = p<sub>v</sub>[l]</i>  
-        <i>d = 2<sup>l</sup> - 1  
+        <i>d = 2<sup>l</sup> - 1</i>  
         <i>p<sub>v</sub>[l + 1] = p(Ladders<sub>path(u)</sub>[ind(u) - d])</i>  
 
   * <i>O(n + Llog n)</i> processing time  
