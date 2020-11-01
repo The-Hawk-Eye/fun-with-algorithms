@@ -163,7 +163,8 @@ For example if <i>c = 1/4</i> we have <i>O(&radic;n log<sup>2</sup> n)</i> proce
 
 Querying the structure is performed at two steps. Given a query <i>LA<sub>T</sub>(v, k)</i> first we check whether the height of node <i>v</i> is greater or smaller than <i>B</i>.  
   * If <i>h<sub>v</sub> > B</i> then <i>v</i> is a macro node belonging to <i>T<sub>macro</sub></i> and we store a pointer to one of its sub-leaves <i>l<sub>v</sub> = leaf(v)</i>. Having <i>l<sub>v</sub></i> we can simply use ladder decomposition algorithm.  
-  * If <i>h<sub>v</sub> &le; B</i> then <i>v</i> is a micro node and we store a pointer to the root of the microtree <i>T<sub>micro<sub>k</sub></sub></i> that it belongs to <i>r<sub>v</sub> = root(v)</i>. In case <i>k > depth(v) - depth(r<sub>v</sub>)</i> we can again use the ladder decomposition algorithm. Otherwise <i>k &le; depth(v) - depth(r<sub>v</sub>)</i> and the level <i>k</i> ancestor of node <i>v</i> is located inside the micro tree <i>T<sub>micro<sub>k</sub></sub></i>. Now we simply find the simple table associated with that tree and perform a table lookup.
+  * If <i>h<sub>v</sub> &le; B</i> then <i>v</i> is a micro node and we store a pointer to the root of the micro tree <i>T<sub>micro<sub>k</sub></sub></i> that it belongs to <i>r<sub>v</sub> = root(v)</i>.  
+  In case <i>k > depth(v) - depth(r<sub>v</sub>)</i> we can again use the ladder decomposition algorithm. Otherwise <i>k &le; depth(v) - depth(r<sub>v</sub>)</i> and the level <i>k</i> ancestor of node <i>v</i> is located inside the micro tree <i>T<sub>micro<sub>k</sub></sub></i>. Now we simply find the simple table associated with that tree and perform a table lookup.
 
 In conclusion the complexity of the algorithm is:  
   * <i>O(n + Llog n)</i> processing time  
