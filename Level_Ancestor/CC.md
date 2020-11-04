@@ -127,7 +127,7 @@ In the previous algorithm computing the ladders takes linear time. The bottlenec
 
 To speed up the algorithm we will use a <i>micro-macro division</i> of the tree. A micro-macro divison partitions the nodes of a tree into a <i>macro</i> tree and <i>micro</i> trees, where each micro tree is a connected subtree of the original tree.
 
-![macro micro tree](img/micro_macro_tree.png)  
+![micro macro tree](img/micro_macro_tree.png)  
 
 Let <i>T = (V, p r)</i> be a rooted tree and let <i>B &in; &#8469;</i>. Let us consider a micro-macro division of <i>T</i> such that all micro trees contain at most <i>B</i> nodes:  
   1. A <i>micro node</i> is any node <i>v</i> such that <i>h<sub>v</sub> &le; B</i>.  
@@ -135,7 +135,7 @@ Let <i>T = (V, p r)</i> be a rooted tree and let <i>B &in; &#8469;</i>. Let us c
   3. A <i>micro tree</i> is a subtree <i>T<sub>v</sub></i> rooted at node <i>v</i> such that:  
       <i>|T<sub>v</sub>| &le; B</i>  
       <i>p(v)</i> is a macro node  
-  4. A <i>macro leaf</i> is a macro node such that every child of that node is a micro node.
+  4. A <i>macro leaf</i> is a macro node such that every child of that node is a micro node.  
 
 The idea here is to compute a sparse table for all macro leaves, and to compute a simple naive table for all micro trees. However, building a table for every micro tree would not work because there are too many micro trees. Instead we will enumerate all possible shapes of trees of size at most <i>B</i> and build a simple table for them.  
 

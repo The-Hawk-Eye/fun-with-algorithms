@@ -46,7 +46,7 @@ class LA_table(LA_base):
     """
     def _preprocess(self):
         """ Precompute all n^2 possible queries and store them in a table. """
-        # A 2D table storying all possible queries.
+        # A 2D table storing all possible queries.
         self._table = {}
 
         # Build the table using bottom-up dynamic programming.
@@ -92,7 +92,7 @@ class LA_sparse(LA_base):
     """
     def _preprocess(self):
         """ Decompose the tree into paths with maximal lengths. Extend the paths
-        into ladders by doubling their length. Precompute a sparse table storying
+        into ladders by doubling their length. Precompute a sparse table storing
         ancestors of levels 1, 2, 4, 8, ...., 2^k.
         """
         # Precompute a logarithm table. log[n] = k => 2^k <= n < 2^(k+1)
@@ -122,6 +122,11 @@ class LA_sparse(LA_base):
         self._build_sparse_table()
 
     def _query(self, p, k):
+        """ Answering lavel ancestor queries for a node p is performed at three steps. First we find
+        the jump-node descendant of p and we precompute the level k. Then we jump to the ancestor
+        of level 2^l using the jump pointer. Finally we look inside the ladder of the ancestor of 
+        level 2^l.
+        """
         if k > self._tree.depth(p):
             return None
 
@@ -216,7 +221,16 @@ class LA_sparse(LA_base):
 
 
 class LA_macro_micro(LA_base):
-    """
+    """ Concrete class implementing the macro-micro tree strategy.
+    We divide the tree into a macro tree and disjoint micro trees. We perform
+    ladder decomposition of the tree and designate the macro leaves as jump nodes.
+    We enumerate all possible shapes of the micro trees and precompute a simple
+    table for every shape.
+
+    To answer level ancestor queries we check wheter the node belongs to the
+    macro tree or to one of the micro trees. Querying the macro tree is done
+    using the ladder decomposition and querying the micro trees is done using
+    table lookup. Querying takes O(1) time.
     """
     #---------------- nested LA_macro_sparse class ----------------------#
     class _LA_macro_sparse(LA_sparse):
@@ -247,18 +261,29 @@ class LA_macro_micro(LA_base):
             self._jump_nodes.sort(key=lambda p: self._tree.depth(p), reverse=True)
 
     def _preprocess(self):
-        """
+        """ Divide the tree into a marco tree and disjoint micro trees. Build a ladder
+        decomposition of the entire tree and compute a sparse table for the jump nodes.
+        Enumerate all possible shapes of the micro trees and build a simple table for
+        every shape.
         """
         # Size of each micro tree: B = 1/4 logn.
         self._block_size = int(1/4 * math.log2(self._size))
 
+        # Build a list of ladders and a sparse table for the jump nodes.
         self._la_macro = self._LA_macro_sparse(self._tree)
 
+        # Decompose the tree into macro tree and micro trees.
         self._micro_macro_decomposition()
+
+        # Build simple tables for the micro trees.
         self._build_micro_tree_tables()
 
     def _query(self, p, k):
-        """
+        """ To answer level ancestor queries we first check whether the node is a macro node or
+        a micro node. For macro nodes we query the macro structure using ladders and jump ponters.
+        For micro nodes we check wheter the level ancestor is a macro node or a micro node. If the
+        level ancestor is a macro node we again query the macro structure. If the level ancestor is
+        a micro node we query the simple table for the micro tree.
         """
         if self._tree.height(p) > self._block_size:                         # macro node
             return self._la_macro(p, k)
@@ -269,28 +294,24 @@ class LA_macro_micro(LA_base):
                 k = k - (self._tree.depth(p) - self._tree.depth(root)) - 1
                 return self._la_macro(parent, k)                            # query the macro tree
             else:                                                           # query the micro tree
-                code, positions, positions_inverse = self._codes[root.index()]
+                code, f, f_inv = self._codes[root.index()]
                 table = self._micro_tables[code]
-                ancestor = table(positions_inverse[p.index()], k)
-                result = positions[ancestor.index()]
+                ancestor = table(f[p.index()], k)
+                result = f_inv[ancestor.elem()]
                 return result
 
     def _micro_macro_decomposition(self):
-        """
+        """ Build a list of the macro leaves and a list of the micro roots of the tree.
+        Store a mapping that associates every micro node with the root of its micro tree.
         """
         # Store all macro leaves and the roots of all micro trees.
         self._macro_leaves = self._la_macro._jump_nodes[:]
         self._micro_roots = []
 
-        # for jump in self._macro_leaves:
-        #     for child in self._tree.children(jump):
-        #         if self._tree.height(child) <= self._block_size:
-        #             self._micro_roots.append(child)
-
         # A mapping that associates every micro node with the root of its micro tree.
         self._root = {}
 
-        # Index array storying for every micro node a pointer to the root of its micro tree.
+        # Index array storing for every micro node a pointer to the root of its micro tree.
         self._root = [None] * self._size
         for p in depth_first_traversal(self._tree):
             if self._tree.height(p) <= self._block_size:            # micro node
@@ -302,7 +323,8 @@ class LA_macro_micro(LA_base):
                     self._root[p.index()] = self._root[parent.index()]
 
     def _build_micro_tree_tables(self):
-        """
+        """ Encode every micro tree. Build a simple table for the micro trees with
+        different shapes (different codes).
         """
         # A mapping that associates micro tree encoding with its corresponding table.
         self._micro_tables = {}
@@ -312,26 +334,29 @@ class LA_macro_micro(LA_base):
 
         # For every micro tree compute a simle table to answer LA queries.
         for p in self._micro_roots:
-            code, positions, positions_inverse = self._encode(p)    # encode the micro tree
-            self._codes[p.index()] = code, positions, positions_inverse
-            if code not in self._micro_tables:                      # build a simple table if needed
+            code, f, f_inv = self._encode(p)            # encode the micro tree
+            self._codes[p.index()] = code, f, f_inv
+            if code not in self._micro_tables:          # build a simple table if needed
                 self._micro_tables[code] = LA_table(self._decode(code))
 
     def _encode(self, p):
         """ Given a position encode the subtree rooted at that node.
-        @param p (Position):
+        @param p (Position): Position representing the micro root of the micro tree.
         @return code (int): A 2b-bit integer giving the id of the subtree,
                             where b is the size of the subtree.
+        @return f (Dict): A mapping that associates every node of the micro tree with a node
+                          of the representative tree.
+        @return f_inv (Dict): An inverse mapping.
         """
         binary_code = [1]
-        positions = []
-        positions_inverse = {}
+        f = {}
+        f_inv = {}
         idx = 0
 
         def dfs(q):
             nonlocal idx
-            positions.append(q)
-            positions_inverse[q.index()] = idx
+            f[q.index()] = idx
+            f_inv[idx] = q
             idx += 1
 
             for ch in self._tree.children(q):
@@ -340,12 +365,12 @@ class LA_macro_micro(LA_base):
                 binary_code.append(1)
         dfs(p)
         code = "".join(str(bit) for bit in binary_code)
-        return int(code, 2), positions, positions_inverse
+        return int(code, 2), f, f_inv
 
     def _decode(self, code):
         """ Given a binary code build a tree corresponding to that code.
         @param code (int):  A 2b-bit number encoding a tree of size b.
-        @param p (Position)
+        @param p (Position):
         @return tree (Tree): A Tree object corresponding to the binary encoding.
         """
         binary_code = [bit for bit in "{0:b}".format(code)]
