@@ -169,3 +169,9 @@ Querying the structure is performed at two steps. Given a query <i>LA<sub>T</sub
 In conclusion the complexity of the algorithm is:  
   * <i>O(n + Llog n)</i> processing time  
   * <i>O(1)</i> query time  
+
+
+## ENCODING MICRO TREES ##
+As noted above every micro tree is uniquely encoded by the sequence of down-traversals and up-traversals performed on a depth-first traversal. We will now show that the number of shapes is <i>&Theta;(4<sup>B</sup>)</i>.  
+As before we will encode every down-traversal as 0 and every up-traversal as 1. Let <i>w(T)</i> be the bit sequence of 0s and 1s corresponding to traversing the tree <i>T</i>. Since a depth-first traversal starts at the root of the tree and ends at the root of the tree, we must have the same number of down-traversals and up-traversals. Considering a tree with <i>n</i> nodes, we have <i>n-1</i> down-traversals and <i>n-1</i> up-traversals.  
+Thus, we can visualise <i>w(T)</i> as a path starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> with <i>(n-1) &rarr;</i> and <i>(n-1) &#2191;</i>.
