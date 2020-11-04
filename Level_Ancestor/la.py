@@ -217,7 +217,7 @@ class LA_sparse(LA_base):
                 l += 1
 
 
-class LA_macro_micro(LA_base):
+class LA_macro_micro(LA_sparse):
     """ Concrete class implementing the macro-micro tree strategy.
     We divide the tree into a macro tree and disjoint micro trees. We perform
     ladder decomposition of the tree and designate the macro leaves as jump nodes.
