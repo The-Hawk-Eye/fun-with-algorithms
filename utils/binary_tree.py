@@ -18,19 +18,17 @@ class BinaryTree(Tree):
         """ Lightweight non-public class for storing a node.
         Overwrite the nested Node class.
         """
-        __slots__ = "_elem", "_index", "_depth", "_parent", "_left", "_right"
-        def __init__(self, elem, idx, depth, parent=None, left=None, right=None):
+        __slots__ = "_elem", "_index", "_parent", "_left", "_right"
+        def __init__(self, elem, idx, parent=None, left=None, right=None):
             """ Initialize a _Node instance.
             @param elem: Element stored at the node.
             @param idx (int): Integer used to uniquely identify a Node object.
-            @param depth (int): Depth of the node from the root of the tree.
             @param parent (Node): The parent of the node.
             @param left (Node): Left child of the node.
             @param right (Node): Right child of the node.
             """
             self._elem = elem
             self._index = idx
-            self._depth = depth
             self._parent = parent
             self._left = left
             self._right = right
@@ -85,10 +83,14 @@ class BinaryTree(Tree):
         if node._left is not None:
             raise ValueError("Left child exists!")
 
-        left_ch = self._Node(elem, idx=self._curr_idx, depth=self.depth(p) + 1, parent=node)
+        left_ch = self._Node(elem, idx=self._curr_idx, parent=node)
         self._curr_idx += 1
         node._left = left_ch
         self._size += 1
+
+        # Invalidate depths and heights after modifying the tree.
+        self._depths, self._heights = None, None
+
         return self._make_position(left_ch)
 
     def add_right(self, p, elem):
@@ -102,10 +104,14 @@ class BinaryTree(Tree):
         if node._right is not None:
             raise ValueError("Right child exists!")
 
-        right_ch = self._Node(elem, idx=self._curr_idx, depth=self.depth(p) + 1, parent=node)
+        right_ch = self._Node(elem, idx=self._curr_idx, parent=node)
         self._curr_idx += 1
         node._right = right_ch
         self._size += 1
+
+        # Invalidate depths and heights after modifying the tree.
+        self._depths, self._heights = None, None
+
         return self._make_position(right_ch)
 
     def add_child(self, p, elem):
@@ -123,6 +129,41 @@ class BinaryTree(Tree):
             return self.add_right(p, elem)
         else:
             raise ValueError("The node already has two children!")
+
+    def insert(self, p, elem, left=True):
+        """ Overwrite the _insert method.
+        Insert a new node at Position p. Attach the subtree rooted at the existing node
+        as a child of the new node. Note that the depths of the nodes must be recomputed
+        after executing the method _insert.
+        @param p (Position): Position representing the node in the tree.
+        @param elem: Element to be stored at the new node.
+        @param left (bool): If True attach the subtree as the left child of the node.
+                            Otherwise attach as the right child of the node.
+        @return new_p (Position): Return Position representing the new node.
+        """
+        node = self._validate(p)
+        new_node = self._Node(elem, idx=self._curr_idx, parent=node._parent)
+        self._curr_idx += 1
+        if left:
+            new_node._left = node
+        else:
+            new_node._right = node
+        self._size += 1
+
+        if p == self.root():
+            self._root = new_node
+        else:
+            parent = node._parent
+            if parent._left == node:
+                parent._left = new_node
+            else:
+                parent._right = new_node
+        node._parent = new_node
+
+        # Invalidate depths and heights after modifying the tree.
+        self._depths, self._heights = None, None
+
+        return self._make_position(new_node)
 
     def build_cartesian_tree(self, arr):
         """ Build a Cartesian Tree for the given array. Each nodes of the tree
@@ -151,48 +192,15 @@ class BinaryTree(Tree):
             elif last_pop is None:
                 p = self.add_right(S.top(), i)
             else:
-                p = self._insert(last_pop, i, left=True)
+                p = self.insert(last_pop, i, left=True)
 
             pos_index[i] = p
             S.push(p)
             last_pop = None
 
-        # Recompute the depths of the nodes after building the tree.
-        self._compute_depths()
+        # Recompute the indices, depths, and heights of the nodes after building the tree.
+        self.reindex()
 
         return pos_index
-
-    #---- private methods - should not be invoked by the user ----#
-    def _insert(self, p, elem, left=True):
-        """ Overwrite the _insert method.
-        Insert a new node at Position p. Attach the subtree rooted at the existing node
-        as a child of the new node. Note that the depths of the nodes must be recomputed
-        after executing the method _insert.
-        @param p (Position): Position representing the node in the tree.
-        @param elem: Element to be stored at the new node.
-        @param left (bool): If True attach the subtree as the left child of the node.
-                            Otherwise attach as the right child of the node.
-        @return new_p (Position): Return Position representing the new node.
-        """
-        node = self._validate(p)
-        new_node = self._Node(elem, idx=self._curr_idx, depth=node._depth, parent=node._parent)
-        self._curr_idx += 1
-        if left:
-            new_node._left = node
-        else:
-            new_node._right = node
-        self._size += 1
-
-        if p == self.root():
-            self._root = new_node
-        else:
-            parent = node._parent
-            if parent._left == node:
-                parent._left = new_node
-            else:
-                parent._right = new_node
-
-        node._parent = new_node
-        return self._make_position(new_node)
 
 #

@@ -5,12 +5,14 @@ The position object supports the methods:
     p.index(): Return the index of the node at Position p.
 
 The PositionalContainer ADT supports the following accessor methods:
+    C.positions(): Generate an iteration of all positions of the container C.
     C.is_empty(): Return True if the container does not contain C any nodes.
     iter(C): Generate an iteration of the elements at the nodes of the container C.
     len(C): Return the total number of nodes in the container C.
 
 The PositionalContainer ADT also supports the following mutator method:
     C.replace(p, elem): Replace the element at the node at Position p with the new elem.
+    C.reindex(): Traverse the container and assign a unique index to each node.
 """
 
 
@@ -67,6 +69,10 @@ class PositionalContainer:
         raise NotImplementedError("This method must be implemented by the subclass")
 
     #---------------- public accessors ----------------#
+    def positions(self):
+        """ Generate an iteration of all positions of the tree."""
+        raise NotImplementedError("This method must be implemented by the subclass")
+
     def is_empty(self):
         """ Return True if the container is empty. """
         return len(self) == 0
@@ -92,6 +98,14 @@ class PositionalContainer:
         node._elem = elem
         return old
 
+    def reindex(self):
+        """ Traverse the container and assign a unique index to each node. """
+        curr_idx = 0
+        for p in self.positions():
+            p._node._index = curr_idx
+            curr_idx += 1
+        return curr_idx
+
     #---- private methods - should not be invoked by the user ----#
     def _make_position(self, node):
         """ Return Position instance for given node (or None if no node). """
@@ -104,13 +118,5 @@ class PositionalContainer:
         if p._container is not self:
             raise ValueError("p does not belong to this container")
         return p._node
-
-    def _reindex(self):
-        """ Traverse the container and assign a unique index to each node. """
-        curr_idx = 0
-        for p in self.positions():
-            p._node._index = curr_idx
-            curr_idx += 1
-        return curr_idx
 
 #
