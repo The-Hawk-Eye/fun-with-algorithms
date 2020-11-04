@@ -238,14 +238,28 @@ Ordered rooted trees <i>T<sub>1</sub>(V<sub>1</sub> , p<sub>1</sub> , r<sub>1</s
   * <i>f(l<sub>1</sub>(v<sub>1</sub>, i)) = l<sub>2</sub>(f(v<sub>1</sub>), i) &forall; v<sub>1</sub> &in; V<sub>1</sub> and &forall; i &in; {1, 2, ..., d(v<sub>1</sub>)}</i>  
 
 Now, when encoding an ordered tree using depth-first traversal, we will traverse the tree in order:  
+
+![encoding micro tree](https://latex.codecogs.com/svg.latex?w(T)=0w(T_{l(r,1)})10w(T_{l(r,2)})1...0w(T_{l(r,d(r))})1)  
+
+
+
 <i>w(T) = 0w(T<sub>l(r, 1)</sub>)10w(T<sub>l(r, 2)</sub>)1....0w(T<sub>l(r, d(r))</sub>)1</i>  
 
 We can easily see that two ordered rooted trees <i>T<sub>1</sub></i> and <i>T<sub>2</sub></i> are isomorphic if and only if <i>w(T<sub>1</sub>) = w(T<sub>2</sub>)</i>.  
 
 If <i>T<sub>1</sub></i> and <i>T<sub>2</sub></i> are isomorphic and <i>f</i> is an isomorphism, then we have:  
+
+![isomorphism](https://latex.codecogs.com/svg.latex?f(p_{1}^{k}(v_{1}))=p_{2}^{k}(f(v_{1})))  
+
+
+
 <i>f(p<sub>1</sub><sup>k</sup>(v<sub>1</sub>)) = p<sub>2</sub><sup>k</sup>(f(v<sub>1</sub>))</i> 
 <i>p<sub>1</sub><sup>k</sup>(v<sub>1</sub>) = f<sup>-1</sup>(p<sub>2</sub><sup>k</sup>(f(v<sub>1</sub>)))</i>  
 
-To proove this we will use induction on k:  
+To proove this we will use induction on <i>k</i>. For <i>k = 0</i> the equality holds. For <i>k + 1</i> we have:  
+
+![isomorphism](https://latex.codecogs.com/svg.latex?f(p_{1}^{k+1}(v_{1}))=f(p_{1}(p_{1}^{k}(v_{1})))=p_{2}(f(p_{1}^{k}(v_{1})))=p_{2}(p_{2}^{k}(f(v_{1})))=p_{2}^{k+1}(f(v_{1})))  
+
+
 <i>f(p<sub>1</sub><sup>k</sup>(v<sub>1</sub>)) = p<sub>2</sub><sup>k</sup>(f(v<sub>1</sub>))</i>   
 <i>f(p<sub>1</sub><sup>k + 1</sup>(v<sub>1</sub>)) = f(p<sub>1</sub>(p<sub>1</sub><sup>k</sup>(v<sub>1</sub>))) = p<sub>2</sub>f(p<sub>1</sub><sup>k</sup>(v<sub>1</sub>)) = p<sub>2</sub>(p<sub>2</sub><sup>k</sup>(f(v<sub>1</sub>))) = p<sub>2</sub><sup>k + 1</sup>(f(v<sub>1</sub>))</i>  
