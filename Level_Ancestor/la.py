@@ -337,7 +337,8 @@ class LA_macro_micro(LA_base):
             code, f, f_inv = self._encode(p)            # encode the micro tree
             self._codes[p.index()] = code, f, f_inv
             if code not in self._micro_tables:          # build a simple table if needed
-                self._micro_tables[code] = LA_table(self._decode(code))
+                repr_tree = self._decode(code, f, f_inv)
+                self._micro_tables[code] = LA_table(repr_tree)
 
     def _encode(self, p):
         """ Given a position encode the subtree rooted at that node.
@@ -367,7 +368,7 @@ class LA_macro_micro(LA_base):
         code = "".join(str(bit) for bit in binary_code)
         return int(code, 2), f, f_inv
 
-    def _decode(self, code):
+    def _decode(self, code, f, f_inv):
         """ Given a binary code build a tree corresponding to that code.
         @param code (int):  A 2b-bit number encoding a tree of size b.
         @param p (Position):
@@ -386,10 +387,13 @@ class LA_macro_micro(LA_base):
         elem = 0
 
         cursor = tree.add_root(elem)
+        # f[f_inv[elem].index()] = cursor
+
         elem += 1
         for bit in binary_code:
             if bit == 0:
                 cursor = tree.add_child(cursor, elem)
+                # f[f_inv[elem].index()] = cursor
                 elem += 1
             elif bit == 1:
                 cursor = tree.parent(cursor)
