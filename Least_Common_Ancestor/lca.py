@@ -11,6 +11,9 @@ class LCA_Index:
         self._levels = []
         self._start = [0] * len(tree)
 
+        # Compute the depths and the heights of all nodes.
+        self._tree.reindex()
+
         self._time = 0
         self._reduce(tree.root())
         self._rmq = rmq.RMQ_1(self._levels)
