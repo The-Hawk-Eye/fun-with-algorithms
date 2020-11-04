@@ -215,7 +215,26 @@ Thus, we have:
 
 ![lower bound](https://latex.codecogs.com/svg.latex?\frac{4^{n-1}}{2n-1}\leq\binom{(2(n-1))}{n-1})  
 
-
-
-
 ### Isomorphic trees ###
+Let <i>T<sub>1</sub>(V<sub>1</sub> , p<sub>1</sub> , r<sub>1</sub>)</i> and <i>T<sub>2</sub>(V<sub>2</sub> , p<sub>2</sub> , r<sub>2</sub>)</i> be rooted trees. We say that <i>T<sub>1</sub></i> and <i>T<sub>2</sub></i> are isomorphic if there exists a bijection <i>f: V<sub>1</sub> &rarr; V<sub>2</sub></i> such that:  
+  * <i>f(r<sub>1</sub>) = r<sub>2</sub></i>  
+  * <i>f(p<sub>1</sub>(v<sub>1</sub>)) = p<sub>2</sub>(f(v<sub>1</sub>))</i>  
+
+![isomorphic trees](img/isomorphic_trees.png)  
+
+We will call the tree <i>T(V, p, r, l)</i> an ordered rooted tree if:  
+  * <i>(V, p, r)</i> is a rooted tree  
+  * <i>l: V &times; &#8469; &rarr; V</i> is a partial function mapping a node to one of its children
+
+
+  such that for every <i>v &in; V</i> and every <i>i = 0, 1, 2, ..., d(v)</i> we have:  
+      <i>p(l(v, i)) = v</i>  
+    where <i>d(v) is the number of descendants of node <i>v</i>.  
+
+Ordered rooted trees <i>T<sub>1</sub>(V<sub>1</sub> , p<sub>1</sub> , r<sub>1</sub> , l<sub>1</sub>)</i> and <i>T<sub>2</sub>(V<sub>2</sub> , p<sub>2</sub> , r<sub>2</sub> , l<sub>2</sub>)</i> are isomorphic if there exists a bijection <i>f: V<sub>1</sub> &rarr; V<sub>2</sub></i> such that:  
+  * <i>f(r<sub>1</sub>) = r<sub>2</sub></i>  
+  * <i>f(p<sub>1</sub>(v<sub>1</sub>)) = p<sub>2</sub>(f(v<sub>1</sub>))</i>  
+  * <i>l<sub>1</sub>(v<sub>1</sub>, i)</i> is defined &harr; <i>l<sub>2</sub>(v<sub>2</sub>, i)</i>  
+  * <i>f(l<sub>1</sub>(v<sub>1</sub>, i)) = l<sub>2</sub>(f(v<sub>1</sub>), i) &forall; v<sub>1</sub> &in; V<sub>1</sub> and &forall; i &in; {1, 2, ..., d(v<sub>1</sub>)}</i>  
+
+
