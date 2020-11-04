@@ -54,7 +54,7 @@ class LA_table(LA_base):
             self._table[p.index()] = [p]
 
             l = 0
-            while (l <= self._tree.depth(p)):
+            while (l < self._tree.depth(p)):
                 u = self._table[p.index()][l]
                 w = self._tree.parent(u)
                 self._table[p.index()].append(w)
