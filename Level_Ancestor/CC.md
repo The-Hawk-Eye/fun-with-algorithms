@@ -191,8 +191,14 @@ Every "bad" path can be modified in the following way:
 The modified path has <i>k + ((n-1) - (k-1)) = n-2</i> &rarr; and <i>k+1 + ((n-1) - k) = n</i> &#8593;. Thus, every modified path starts at <i>(0, 0)</i> and ends at <i>(n-2, n)</i>.  
 We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</i> can be modified using the reversed procedure and the result would be a path starting at <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i>. Thus, the number of <i>"bad"</i> paths is exactly equal to the total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-2, n)</i>.  
 <i>#bad = C<sub>n-2</sub><sup>2(n-1)</sup></i>
- 
-<img src="https://latex.codecogs.com/svg.latex?\text{bad}=\frac{(2n-2)!}{(n-2)!&space;&space;n!}" />  
 
-<img src="https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2n-2)!}{(n-1)!&space;&space;(n-1)!}-\frac{(2n-2)!}{(n-2)!&space;&space;n!}" />
+![number of bad paths](https://latex.codecogs.com/svg.latex?\text{bad}=\frac{(2n-2)!}{(n-2)!n!})  
+
+
+
+<img src="https://latex.codecogs.com/svg.latex?\text{bad}=\frac{(2n-2)!}{(n-2)!n!}" />  
+
+<img src="https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2n-2)!}{(n-1)!(n-1)!}-\frac{(2n-2)!}{(n-2)!n!}" />  
+
+
 
