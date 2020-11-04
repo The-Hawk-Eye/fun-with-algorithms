@@ -174,4 +174,23 @@ In conclusion the complexity of the algorithm is:
 ## ENCODING MICRO TREES ##
 As noted above every micro tree is uniquely encoded by the sequence of down-traversals and up-traversals performed on a depth-first traversal. We will now show that the number of shapes is <i>&Theta;(4<sup>B</sup>)</i>.  
 As before we will encode every down-traversal as 0 and every up-traversal as 1. Let <i>w(T)</i> be the bit sequence of 0s and 1s corresponding to traversing the tree <i>T</i>. Since a depth-first traversal starts at the root of the tree and ends at the root of the tree, we must have the same number of down-traversals and up-traversals. Considering a tree with <i>n</i> nodes, we have <i>n-1</i> down-traversals and <i>n-1</i> up-traversals.  
-Thus, we can visualise <i>w(T)</i> as a path starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> with <i>(n-1) &rarr;</i> and <i>(n-1) &#8593;</i>.
+Thus, we can visualise <i>w(T)</i> as a path starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> with <i>(n-1) &rarr;</i> and <i>(n-1) &#8593;</i>.  
+It is important to note that the number of down-traversals is always greater than or equal to the number of up-traversals. Thus, the path representing <i>w(T)</i> does not cross the diagonal <i>y = x</i>, i.e. the path does not contain any points of the type <i>(k, k+1)</i>.  
+Call any path starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> <i>"good"</i> if the path has <i>(n-1)</i> &rarr; and <i>(n-1)</i> &#8593;, and does not contain any point of the type <i>(k, k+1)</i>. Call the path <i>"bad"</i> if it cointains points of the type <i>(k, k+1)</i>.  
+
+![micro tree encoding](img/micro_tree_encoding.png)  
+
+The total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> is <i>C<sub>n-1</sub><sup>2(n-1)</sup>. We have <i>2(n-1)</i> positions and we have to choose <i>(n-1)</i> of them and place &rarr; on these positions.  
+Thus the number of good paths is:  
+<i>#good = C<sub>n-1</sub><sup>2(n-1)</sup> - #bad</i>  
+
+Every "bad" path can be modified in the following way:  
+  1. Leave the path unchanged until the first time it crosses a point of the type <i>(k, k+1)</i>.  
+  2. After that change every &rarr; with &#8593; and every &#8593; with &rarr;.  
+
+The modified path has <i>k + ((n-1) - (k-1)) = n-2</i> &rarr; and <i>k+1 + ((n-1) - k) = n</i> &#8593;. Thus, every modified path starts at <i>(0, 0)</i> and ends at <i>(n-2, n)</i>.  
+We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</i> can be modified using the reversed procedure and the result would be a path starting at <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i>. Thus, the number of <i>"bad"</i> paths is exactly equal to the total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-2, n)</i>.  
+<i>#bad = C<sub>n-2</sub><sup>2(n-1)</sup></i>
+
+\frac{n!}{k!\,(n-k)!}
+
