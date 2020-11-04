@@ -172,7 +172,8 @@ In conclusion the complexity of the algorithm is:
 
 
 ## ENCODING MICRO TREES ##
-As noted above every micro tree is uniquely encoded by the sequence of down-traversals and up-traversals performed on a depth-first traversal. We will now show that the number of shapes is <i>&Theta;(4<sup>B</sup>)</i>.  
+### Tight bounds ###
+As noted above every micro tree is uniquely encoded by the sequence of down-traversals and up-traversals performed on a depth-first traversal. We showed that the number of micro trees is <i>O(4<sup>B</sup>)</i>. We will now show that the number of micro trees is <i>&Omega;(4<sup>B</sup>)</i>.  
 As before we will encode every down-traversal as 0 and every up-traversal as 1. Let <i>w(T)</i> be the bit sequence of 0s and 1s corresponding to traversing the tree <i>T</i>. Since a depth-first traversal starts at the root of the tree and ends at the root of the tree, we must have the same number of down-traversals and up-traversals. Considering a tree with <i>n</i> nodes, we have <i>n-1</i> down-traversals and <i>n-1</i> up-traversals.  
 Thus, we can visualise <i>w(T)</i> as a path starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> with <i>(n-1) &rarr;</i> and <i>(n-1) &#8593;</i>.  
 It is important to note that the number of down-traversals is always greater than or equal to the number of up-traversals. Thus, the path representing <i>w(T)</i> does not cross the diagonal <i>y = x</i>, i.e. the path does not contain any points of the type <i>(k, k+1)</i>.  
@@ -181,7 +182,7 @@ Call any path starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> <i>"go
 ![micro tree encoding](img/micro_tree_encoding.png)  
 
 The total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> is <i>C<sub>n-1</sub><sup>2(n-1)</sup>. We have <i>2(n-1)</i> positions and we have to choose <i>(n-1)</i> of them and place &rarr; on these positions.  
-Thus the number of good paths is:  
+Thus the number of good paths of length <i>2(n-1)</i> is:  
 
 ![#good](https://latex.codecogs.com/svg.latex?\text{good}=C_{n-1}^{2(n-1)}-\text{bad})  
 
@@ -196,4 +197,16 @@ We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</
 ![#good](https://latex.codecogs.com/svg.latex?\text{good}=C_{n-1}^{2(n-1)}-C_{n-2}^{2(n-1)})  
 
 ![compute #good](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
-![compute #good cont](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{(2(n-1))}{n-1})  
+![compute #good](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{(2(n-1))}{n-1})  
+
+Finally, we will show that the total number of paths of length <i>2(n-1)</i> and, thus, the total number of different trees of size <i>n</i> is &Omega;(4<sup>n</sup>).  
+
+![lower bound](https://latex.codecogs.com/svg.latex?\sum_{k=0}^{2(n-1)}\binom{(2(n-1))}{k}=2^{2(n-1)}=4^{n-1})  
+![lower bound](https://latex.codecogs.com/svg.latex?\binom{(2(n-1))}{k}<=\binom{(2(n-1))}{n-1}\text{for all k})  
+![lower bound](https://latex.codecogs.com/svg.latex?4^{n-1}=\sum_{k=0}^{2(n-1)}\binom{(2(n-1))}{k}<=(2n-1)\binom{(2(n-1))}{n-1})  
+![lower bound](https://latex.codecogs.com/svg.latex?\binom{(2(n-1))}{n-1}>=\frac{4^{n-1}}{2n-1})  
+
+
+
+
+### Isomorphic trees ###
