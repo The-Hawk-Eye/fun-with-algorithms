@@ -192,11 +192,11 @@ The modified path has <i>k + ((n-1) - (k-1)) = n-2</i> &rarr; and <i>k+1 + ((n-1
 We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</i> can be modified using the reversed procedure and the result would be a path starting at <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i>. Thus, the number of <i>"bad"</i> paths is exactly equal to the total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-2, n)</i>.  
 <i>#bad = C<sub>n-2</sub><sup>2(n-1)</sup></i>
 
-![number of bad paths](https://latex.codecogs.com/svg.latex?\text{bad}=\frac{(2n-2)!}{(n-2)!n!})  
+![number of bad paths](https://latex.codecogs.com/svg.latex?\text{bad}=\binom{(2n-2)!}{(n-2)!n!})  
 
-![number of good paths](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2n-2)!}{(n-1)!(n-1)!}-\frac{(2n-2)!}{(n-2)!n!})  
-![number of good paths cont1](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2n-2)!}{(n-1)!(n-1)!}(1-\frac{n-1}{n}))  
-![number of good paths cont2](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binomial{2(n-1)}{n-1})  
+![number of good paths](https://latex.codecogs.com/svg.latex?\text{good}=\binom{(2n-2)!}{(n-1)!(n-1)!}-\frac{(2n-2)!}{(n-2)!n!})  
+![number of good paths cont1](https://latex.codecogs.com/svg.latex?\text{good}=\binom{(2n-2)!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
+![number of good paths cont2](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{2(n-1)}{n-1})  
 
 
 
