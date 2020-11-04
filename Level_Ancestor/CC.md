@@ -193,7 +193,7 @@ The modified path has <i>k + ((n-1) - (k-1)) = n-2</i> &rarr; and <i>k+1 + ((n-1
 We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</i> can be modified using the reversed procedure and the result would be a path starting at <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i>. Thus, the number of <i>"bad"</i> paths is exactly equal to the total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-2, n)</i>.  
 
 ![#bad](https://latex.codecogs.com/svg.latex?\text{bad}=C_{n-2}^{2(n-1)})  
-
+![#good](https://latex.codecogs.com/svg.latex?\text{good}=C_{n-1}^{2(n-1)}-C_{n-2}^{2(n-1)})  
 
 ![compute #good](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
 ![compute #good cont](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{(2(n-1))}{n-1})  
