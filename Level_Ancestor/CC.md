@@ -198,6 +198,8 @@ We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</
 
 ![compute #good cont](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{(2(n-1))}{n-1})  
 
+![compute #good cont](https://render.githubusercontent.com/render/math?math=\frac{1}{n}\binom{2(n-1)}{n-1})  
 
+<img src="https://render.githubusercontent.com/render/math?math=\frac{1}{n}\binom{2(n-1)}{n-1}">  
 
 
