@@ -194,11 +194,11 @@ We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</
 
 ![number of bad paths](https://latex.codecogs.com/svg.latex?\text{bad}=\binom{(2n-2)!}{(n-2)!n!})  
 
-![number of good paths](https://latex.codecogs.com/svg.latex?\text{good}=\binom{(2n-2)!}{(n-1)!(n-1)!}-\frac{(2n-2)!}{(n-2)!n!})  
+![number of good paths](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2n-2)!}{(n-1)!(n-1)!}-\frac{(2n-2)!}{(n-2)!n!})  
 
-![number of good paths cont1](https://latex.codecogs.com/svg.latex?\text{good}=\binom{(2n-2)!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
+![number of good paths cont1](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2n-2)!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
 
-![number of good paths cont2](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{(2n-2)!}{(n-1)!})  
+![number of good paths cont2](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{2(n-1)}{n-1})  
 
 
 ![test](https://latex.codecogs.com/svg.latex?\text[test]=\binom{a}{b})  
