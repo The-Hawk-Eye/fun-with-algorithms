@@ -194,18 +194,10 @@ We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</
 
 ![#bad](https://latex.codecogs.com/svg.latex?\text{bad}=C_{n-2}^{2(n-1)})  
 
-![compute #good](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right)=\frac{1}{n}\binom{(2(n-1))}{n-1})  
+![compute #good](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
+
+![compute #good cont](https://latex.codecogs.com/svg.latex?&tab;=\frac{1}{n}\binom{(2(n-1))}{n-1})  
 
 
-
-
-
-![number of bad paths](https://latex.codecogs.com/svg.latex?\text{bad}=\frac{(2(n-1))!}{(n-2)!n!})  
-
-![number of good paths](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!})  
-
-![number of good paths cont1](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
-
-![number of good paths cont2](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{(2(n-1))}{n-1})  
 
 
