@@ -224,12 +224,12 @@ Let <i>T<sub>1</sub>(V<sub>1</sub> , p<sub>1</sub> , r<sub>1</sub>)</i> and <i>T
 
 We will call the tree <i>T(V, p, r, l)</i> an ordered rooted tree if:  
   * <i>(V, p, r)</i> is a rooted tree  
-  * <i>l: V &times; &#8469; &rarr; V</i> is a partial function mapping a node to one of its children
+  * <i>l: V &times; &#8469; &rarr; V</i> is a partial function that is ordering the descendants of a node <i>v</i>. If node <i>v</i> has <i>d(v)</i> descendants the expression <i>l(v, i)</i> maps node <i>v</i> to its <i>i-th</i> child.  
+  For every <i>v &in; V</i> and every <i>i = 1, 2, ..., d(v)</i> we have:  
 
+![ordering](https://latex.codecogs.com/svg.latex?p(l(v,i))=v)  
 
-  such that for every <i>v &in; V</i> and every <i>i = 0, 1, 2, ..., d(v)</i> we have:  
-      <i>p(l(v, i)) = v</i>  
-    where <i>d(v) is the number of descendants of node <i>v</i>.  
+<i>p(l(v, i)) = v</i>  
 
 Ordered rooted trees <i>T<sub>1</sub>(V<sub>1</sub> , p<sub>1</sub> , r<sub>1</sub> , l<sub>1</sub>)</i> and <i>T<sub>2</sub>(V<sub>2</sub> , p<sub>2</sub> , r<sub>2</sub> , l<sub>2</sub>)</i> are isomorphic if there exists a bijection <i>f: V<sub>1</sub> &rarr; V<sub>2</sub></i> such that:  
   * <i>f(r<sub>1</sub>) = r<sub>2</sub></i>  
