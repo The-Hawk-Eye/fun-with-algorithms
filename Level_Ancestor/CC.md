@@ -104,9 +104,9 @@ Let <i>u = p<sup>2<sup>l</sup></sup>(v)</i>, then <i>p<sup>k</sup>(v) = p<sup>d<
 
 To see why this is the case let <i>h<sub>v</sub> = height(v)</i> be the number of nodes in the longest downward path from node <i>v</i> to a leaf. Node <i>v</i> belongs to path <i>Paths<sub>path(v)</sub></i>. Since this path was build greedily it has at least <i>h<sub>v</sub></i> nodes. Thus, the array <i>Ladder<sub>path(v)</sub></i> has at least <i>2 * h<sub>v</sub></i> elements, and also this array contains at least <i>h<sub>v</sub></i> ancestors of <i>v</i>. Now, since node <i>u = p<sup>2<sup>l</sup></sup>(v)</i>, then <i>h<sub>u</sub> = height(u) &ge; 2<sup>l</sup></i>. Also <i>Ladder<sub>path(u)</sub></i> contains at least <i>h<sub>u</sub></i> ancestors of node <i>u</i>, and in particular it contains <i>p<sup>d</sup>(u)</i>.  
 
-What is more, instead of storing a sparse table for every node, we could store a sparse table only for the leaves of the tree. To answer level ancestor queries we must also store a pointer from every node to one of its sub-leaves.  
-Let <i>l<sub>v</sub> = leaf(v)</i> be the leaf to which node <i>v</i> points. Then:  
-<i>LA(v, k) = LA(l<sub>v</sub>, k + depth(l<sub>v</sub>) - depth(v))</i>  
+What is more, instead of storing a sparse table for every node, we could store a sparse table only for the leaves of the tree. These nodes will be called <i>jump nodes</i>. To answer level ancestor queries we must also store a pointer from every node to its jump node descendant.  
+Let <i>j<sub>v</sub> = jump(v)</i> be the jump node to which node <i>v</i> points. Then:  
+<i>LA(v, k) = LA(j<sub>v</sub>, k + depth(j<sub>v</sub>) - depth(v))</i>  
 
 The sparse table has <i>O(Llog n)</i> entries, where <i>L</i> is the number of leaves. To build the table in <i>O(Llog n)</i> time we will build it bottom up. For every leaf <i>v</i> do the following:  
   1. Allocate an array <i>p<sub>v</sub>[0, 1, ..., logn]</i>  
@@ -127,7 +127,7 @@ In the previous algorithm computing the ladders takes linear time. The bottlenec
 
 To speed up the algorithm we will use a <i>micro-macro division</i> of the tree. A micro-macro divison partitions the nodes of a tree into a <i>macro</i> tree and <i>micro</i> trees, where each micro tree is a connected subtree of the original tree.
 
-![macro micro tree](img/macro_micro_tree.png)  
+![macro micro tree](img/micro_macro_tree.png)  
 
 Let <i>T = (V, p r)</i> be a rooted tree and let <i>B &in; &#8469;</i>. Let us consider a micro-macro division of <i>T</i> such that all micro trees contain at most <i>B</i> nodes:  
   1. A <i>micro node</i> is any node <i>v</i> such that <i>h<sub>v</sub> &le; B</i>.  
@@ -135,7 +135,7 @@ Let <i>T = (V, p r)</i> be a rooted tree and let <i>B &in; &#8469;</i>. Let us c
   3. A <i>micro tree</i> is a subtree <i>T<sub>v</sub></i> rooted at node <i>v</i> such that:  
       <i>|T<sub>v</sub>| &le; B</i>  
       <i>p(v)</i> is a macro node  
-  4. <i>Macro leaves</i> are the leaves of the macro tree <i>T<sub>macro</sub></i>.  
+  4. A <i>macro leaf</i> is a macro node such that every child of that node is a micro node.
 
 The idea here is to compute a sparse table for all macro leaves, and to compute a simple naive table for all micro trees. However, building a table for every micro tree would not work because there are too many micro trees. Instead we will enumerate all possible shapes of trees of size at most <i>B</i> and build a simple table for them.  
 
@@ -162,7 +162,7 @@ Choosing <i>c < 1/2</i> we can see that we have an asymptotically tight bound.
 For example if <i>c = 1/4</i> we have <i>O(&radic;n log<sup>2</sup> n)</i> processing time.  
 
 Querying the structure is performed at two steps. Given a query <i>LA<sub>T</sub>(v, k)</i> first we check whether the height of node <i>v</i> is greater or smaller than the value <i>B</i>.  
-  * If <i>h<sub>v</sub> > B</i> then <i>v</i> is a macro node belonging to <i>T<sub>macro</sub></i> and we store a pointer to one of its sub-leaves <i>l<sub>v</sub> = leaf(v)</i>. Having <i>l<sub>v</sub></i> we can simply use the ladder decomposition algorithm.  
+  * If <i>h<sub>v</sub> > B</i> then <i>v</i> is a macro node belonging to <i>T<sub>macro</sub></i> and we store a pointer to one of the macro leaves <i>l<sub>v</sub> = leaf(v)</i>. Having <i>l<sub>v</sub></i> we can simply use the ladder decomposition algorithm.  
   * If <i>h<sub>v</sub> &le; B</i> then <i>v</i> is a micro node and we store a pointer to the root of the micro tree <i>T<sub>micro<sub>i</sub></sub></i> that it belongs to (<i>r<sub>v</sub> = root(v)</i>).  
   In case <i>k > depth(v) - depth(r<sub>v</sub>)</i> we can again use the ladder decomposition algorithm. Otherwise <i>k &le; depth(v) - depth(r<sub>v</sub>)</i> and the level <i>k</i> ancestor of node <i>v</i> is located inside the micro tree <i>T<sub>micro<sub>i</sub></sub></i>. Now we simply find the simple table associated with that tree and perform a table lookup.
 

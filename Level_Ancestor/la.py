@@ -1,3 +1,11 @@
+import math
+
+
+from utils.tree import Tree
+from utils.queue import Queue
+from utils.traversal_algorithms import depth_first_traversal
+
+
 class LA_base:
     """ Abstract base class for the LA indexing structure.
     Concrete subclasses must implement the methods _preprocess() and _query().
@@ -8,6 +16,8 @@ class LA_base:
         """
         self._tree = tree
         self._size = len(tree)
+
+        self._tree.reindex()
         self._preprocess()
 
     def _preprocess(self):
@@ -36,11 +46,12 @@ class LA_table(LA_base):
     """
     def _preprocess(self):
         """ Precompute all n^2 possible queries and store them in a table. """
-        self._table = [[None] for i in range(self._size)]
+        # A 2D table storying all possible queries.
+        self._table = {}
 
         # Build the table using bottom-up dynamic programming.
         for p in self._tree.positions():
-            self._table[p.index()][0] = p
+            self._table[p.index()] = [p]
 
             l = 0
             parent = self._tree.parent(p)
@@ -54,8 +65,13 @@ class LA_table(LA_base):
 
     def _query(self, p, k):
         """ Perform simple table look-up. """
-        if k > self._tree.depth(p):
-        # if k >= len(self._table[p.index()]):
+        if isinstance(p, int):
+            if k >= len(self._table[p]):
+                return None
+            return self._table[p][k]
+
+        # if k > self._tree.depth(p):
+        if k >= len(self._table[p.index()]):
             return None
         return self._table[p.index()][k]
 
@@ -79,21 +95,6 @@ class LA_sparse(LA_base):
         into ladders by doubling their length. Precompute a sparse table storying
         ancestors of levels 1, 2, 4, 8, ...., 2^k.
         """
-        self._tree._reindex()
-
-        # Build a list of leaves and sort in linear time.
-        self._leaves = [p for p in self._tree.positions() if self._tree.is_leaf(p)]
-        self._leaves.sort(key=lambda p: self._tree.depth(p))     # Bucket sort should be used !
-
-        # List of ladders. Each ladder is a list of nodes.
-        self._ladders = [None] * len(self._leaves)
-
-        # Array storing the index of the unique path containing the node.
-        self._path = [None] * self._size
-
-        # Index array storing the index of the node in the path which contains it.
-        self._ind = [None] * self._size
-
         # Precompute a logarithm table. log[n] = k => 2^k <= n < 2^(k+1)
         self._log = [0] * (self._size + 1)
         temp = 1
@@ -111,17 +112,67 @@ class LA_sparse(LA_base):
         for i in range(1, self._logsize):
             self._pow[i] = 2 * self._pow[i - 1]
 
+        # Build a list of the jump nodes sorted by depth.
+        self._build_jump_nodes()
+
         # Build a list of ladders.
+        self._build_ladders()
+
+        # Build a sparse table of ancestors of levels 1, 2, 4, 8, ...., 2^k only for the leaves.
+        self._build_sparse_table()
+
+    def _query(self, p, k):
+        if k > self._tree.depth(p):
+            return None
+
+        if k == 0:
+            return p
+
+        # Find the jump-node descendant of the node and recompute the query level.
+        jump = self._jump[p.index()]
+        k = k + self._tree.depth(jump) - self._tree.depth(p)
+
+        l = self._log[k]        # k = 2^l + d
+        d = k - self._pow[l]
+
+        u = self._table[jump.index()][l]
+        w = self._ladders[self._path[u.index()]][self._ind[u.index()] - d]
+
+        return w
+
+    def _build_jump_nodes(self):
+        """ Build a list of jump nodes for the tree. Designate the leaves of the tree as
+        jump nodes. Sort the list in linear time.
+        """
+        self._jump_nodes = [p for p in self._tree.positions() if self._tree.is_leaf(p)]
+        self._jump_nodes.sort(key=lambda p: self._tree.depth(p), reverse=True)     # Bucket sort should be used !
+
+    def _build_ladders(self):
+        """ Build a list of ladders. """
+        # List of ladders. Each ladder is a list of nodes.
+        self._ladders = [None] * len(self._jump_nodes)
+
+        # Array storing the index of the unique path containing the node.
+        self._path = [None] * self._size
+
+        # Index array storing the index of the node in the path which contains it.
+        self._ind = [None] * self._size
+
+        # Index array storing a pointer to the jump-node descendant of the node.
+        self._jump = [None] * self._size
+
+        # Decompose the tree into paths with maximal lengths.
         marked = {p.index() : False for p in self._tree.positions()}
-        for idx, leaf in enumerate(self._leaves):
+        for idx, jump in enumerate(self._jump_nodes):
             # Greedy build of a path.
             ladder = []
-            curr = leaf
+            curr = jump
             while (curr is not None) and not (marked[curr.index()]):
                 ladder.append(curr)
                 marked[curr.index()] = True
                 self._path[curr.index()] = idx
-                self._ind[curr.index()] = len(ladder)
+                self._ind[curr.index()] = len(ladder) - 1
+                self._jump[curr.index()] = jump
                 curr = self._tree.parent(curr)
 
             # Double path to build a ladder.
@@ -133,39 +184,191 @@ class LA_sparse(LA_base):
             # Reverse the ladder.
             ladder_size = len(ladder)
             for i in range(path_size):
-                node = ladder[i].index()
-                self._ind[node] = ladder_size - self._ind[node] - 1
+                node = ladder[i]
+                self._ind[node.index()] = ladder_size - self._ind[node.index()] - 1
             ladder.reverse()
 
             # Add ladder to the list of ladders.
             self._ladders[idx] = ladder
 
-        # Build a sparse table of ancestors of levels 1, 2, 4, 8, ...., 2^k
-        self._table = [None] * self._size
-        for p in self._tree.positions():
-            self._table[p.index()] = [p]
+    def _build_sparse_table(self):
+        """ Build a sparse table of ancestors of levels 1, 2, 4, 8, ...., 2^k only for the leaves. """
+        self._table = {}
+
+        for p in self._jump_nodes:
+            self._table[p.index()] = [self._tree.parent(p)]       # table[p][0] = parent(p)
 
             l = 0
             while l < self._logsize:
                 u = self._table[p.index()][l]
 
-                if self._ind[u.index()] + 1 < self._pow[l]:     # incomplete ladder
+                if u is None:
                     break
 
-                w = self._ladders[self._path[u.index()]][self._ind[u.index()] - self._pow[l] + 1]
+                if self._ind[u.index()] < self._pow[l]:     # incomplete ladder
+                    break
+
+                i = self._path[u.index()]                   # u belongs to path_i
+                j = self._ind[u.index()]                    # path_i[j] = u
+                w = self._ladders[i][j - self._pow[l]]
                 self._table[p.index()].append(w)
                 l += 1
 
+
+class LA_macro_micro(LA_base):
+    """
+    """
+    #---------------- nested LA_macro_sparse class ----------------------#
+    class _LA_macro_sparse(LA_sparse):
+        def _build_jump_nodes(self):
+            """ Build a list of jump nodes for the tree.
+            Designate the macro leaves (the leaves of the macro tree) as jump nodes.
+            Sort the list in linear time.
+            """
+            self._jump_nodes = []
+
+            # Size of each micro tree: B = 1/4 logn.
+            B = int(1/4 * math.log2(self._size))
+
+            Q = Queue()
+            Q.enqueue(self._tree.root())
+
+            while not Q.is_empty():
+                p = Q.dequeue()
+
+                if self._tree.height(p) > B:
+                    for ch in self._tree.children(p):
+                        if self._tree.height(ch) <= B:
+                            self._jump_nodes.append(p)
+                        else:
+                            Q.enqueue(ch)
+
+            # Bucket sort should be used for sorting!
+            self._jump_nodes.sort(key=lambda p: self._tree.depth(p), reverse=True)
+
+    def _preprocess(self):
+        """
+        """
+        # Size of each micro tree: B = 1/4 logn.
+        self._block_size = int(1/4 * math.log2(self._size))
+
+        self._la_macro = self._LA_macro_sparse(self._tree)
+
+        self._micro_macro_decomposition()
+        self._build_micro_tree_tables()
+
     def _query(self, p, k):
-        if k > self._tree.depth(p):
-            return None
+        """
+        """
+        if self._tree.height(p) > self._block_size:                         # macro node
+            return self._la_macro(p, k)
+        else:                                                               # micro node
+            root = self._root[p.index()]                                    # root of the micro tree
+            if k > (self._tree.depth(p) - self._tree.depth(root)):
+                parent = self._tree.parent(root)
+                k = k - (self._tree.depth(p) - self._tree.depth(root)) - 1
+                return self._la_macro(parent, k)                            # query the macro tree
+            else:                                                           # query the micro tree
+                code, positions, positions_inverse = self._codes[root.index()]
+                table = self._micro_tables[code]
+                ancestor = table(positions_inverse[p.index()], k)
+                result = positions[ancestor.index()]
+                return result
 
-        l = self._log[k]        # k = 2^l + d
-        d = k - self._pow[l]
+    def _micro_macro_decomposition(self):
+        """
+        """
+        # Store all macro leaves and the roots of all micro trees.
+        self._macro_leaves = self._la_macro._jump_nodes[:]
+        self._micro_roots = []
 
-        u = self._table[p.index()][l]
-        w = self._ladders[self._path[u.index()]][self._ind[u.index()] - d]
+        # for jump in self._macro_leaves:
+        #     for child in self._tree.children(jump):
+        #         if self._tree.height(child) <= self._block_size:
+        #             self._micro_roots.append(child)
 
-        return w
+        # A mapping that associates every micro node with the root of its micro tree.
+        self._root = {}
+
+        # Index array storying for every micro node a pointer to the root of its micro tree.
+        self._root = [None] * self._size
+        for p in depth_first_traversal(self._tree):
+            if self._tree.height(p) <= self._block_size:            # micro node
+                parent = self._tree.parent(p)
+                if self._tree.height(parent) > self._block_size:    # root of a micro tree
+                    self._micro_roots.append(p)
+                    self._root[p.index()] = p
+                else:
+                    self._root[p.index()] = self._root[parent.index()]
+
+    def _build_micro_tree_tables(self):
+        """
+        """
+        # A mapping that associates micro tree encoding with its corresponding table.
+        self._micro_tables = {}
+
+        # A mapping that stores the encoding of each micro tree.
+        self._codes = {}
+
+        # For every micro tree compute a simle table to answer LA queries.
+        for p in self._micro_roots:
+            code, positions, positions_inverse = self._encode(p)    # encode the micro tree
+            self._codes[p.index()] = code, positions, positions_inverse
+            if code not in self._micro_tables:                      # build a simple table if needed
+                self._micro_tables[code] = LA_table(self._decode(code))
+
+    def _encode(self, p):
+        """ Given a position encode the subtree rooted at that node.
+        @param p (Position):
+        @return code (int): A 2b-bit integer giving the id of the subtree,
+                            where b is the size of the subtree.
+        """
+        binary_code = [1]
+        positions = []
+        positions_inverse = {}
+        idx = 0
+
+        def dfs(q):
+            nonlocal idx
+            positions.append(q)
+            positions_inverse[q.index()] = idx
+            idx += 1
+
+            for ch in self._tree.children(q):
+                binary_code.append(0)
+                dfs(ch)
+                binary_code.append(1)
+        dfs(p)
+        code = "".join(str(bit) for bit in binary_code)
+        return int(code, 2), positions, positions_inverse
+
+    def _decode(self, code):
+        """ Given a binary code build a tree corresponding to that code.
+        @param code (int):  A 2b-bit number encoding a tree of size b.
+        @param p (Position)
+        @return tree (Tree): A Tree object corresponding to the binary encoding.
+        """
+        binary_code = [bit for bit in "{0:b}".format(code)]
+        binary_code = binary_code[1:]
+
+        # Assert the binary code is a valid encoding of a tree.
+        zeros = len([x for x in binary_code if x == 0])
+        ones = len([x for x in binary_code if x == 1])
+        assert(zeros == ones)
+
+        #
+        tree = Tree()
+        elem = 0
+
+        cursor = tree.add_root(elem)
+        elem += 1
+        for bit in binary_code:
+            if bit == 0:
+                cursor = tree.add_child(cursor, elem)
+                elem += 1
+            elif bit == 1:
+                cursor = tree.parent(cursor)
+
+        return tree
 
 #
