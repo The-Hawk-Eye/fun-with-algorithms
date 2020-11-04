@@ -127,7 +127,7 @@ In the previous algorithm computing the ladders takes linear time. The bottlenec
 
 To speed up the algorithm we will use a <i>micro-macro division</i> of the tree. A micro-macro divison partitions the nodes of a tree into a <i>macro</i> tree and <i>micro</i> trees, where each micro tree is a connected subtree of the original tree.
 
-![micro macro tree](img/micro_macro_tree.png)  
+![macro micro tree](img/macro_micro_tree.png)  
 
 Let <i>T = (V, p r)</i> be a rooted tree and let <i>B &in; &#8469;</i>. Let us consider a micro-macro division of <i>T</i> such that all micro trees contain at most <i>B</i> nodes:  
   1. A <i>micro node</i> is any node <i>v</i> such that <i>h<sub>v</sub> &le; B</i>.  
