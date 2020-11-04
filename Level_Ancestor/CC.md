@@ -226,8 +226,7 @@ We will call the tree <i>T(V, p, r, l)</i> an ordered rooted tree if:
   * <i>(V, p, r)</i> is a rooted tree  
   * <i>l: V &times; &#8469; &rarr; V</i> is a partial function that is ordering the descendants of a node <i>v</i>. If node <i>v</i> has <i>d(v)</i> descendants the expression <i>l(v, i)</i> maps node <i>v</i> to its <i>i-th</i> child.  
   For every <i>v &in; V</i> and every <i>i = 1, 2, ..., d(v)</i> we have:  
-
-![ordering](https://latex.codecogs.com/svg.latex?p(l(v,i))=v)  
+  ![ordering](https://latex.codecogs.com/svg.latex?p(l(v,i))=v)  
 
 <i>p(l(v, i)) = v</i>  
 
