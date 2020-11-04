@@ -197,18 +197,23 @@ We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</
 ![#good](https://latex.codecogs.com/svg.latex?\text{good}=C_{n-1}^{2(n-1)}-C_{n-2}^{2(n-1)})  
 
 ![compute #good](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
+
 ![compute #good](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{(2(n-1))}{n-1})  
 
 Finally, we will show that the total number of paths of length <i>2(n-1)</i> and, thus, the total number of different trees of size <i>n</i> is &Omega;(4<sup>n</sup>).  
 We have the following identity:  
+
 ![lower bound](https://latex.codecogs.com/svg.latex?\sum_{k=0}^{2(n-1)}\binom{(2(n-1))}{k}=2^{2(n-1)}=4^{n-1})  
 
 And for every <i>k</i> the following inequality holds:  
+
 ![lower bound](https://latex.codecogs.com/svg.latex?\binom{(2(n-1))}{k}\leq\binom{(2(n-1))}{n-1})  
 
 Thus, we have:  
+
 ![lower bound](https://latex.codecogs.com/svg.latex?4^{n-1}=\sum_{k=0}^{2(n-1)}\binom{(2(n-1))}{k}\leq(2n-1)\binom{(2(n-1))}{n-1})  
-![lower bound](https://latex.codecogs.com/svg.latex?\binom{(2(n-1))}{n-1}\geq\frac{4^{n-1}}{2n-1})  
+
+![lower bound](https://latex.codecogs.com/svg.latex?\frac{4^{n-1}}{2n-1}\leq\binom{(2(n-1))}{n-1})  
 
 
 
