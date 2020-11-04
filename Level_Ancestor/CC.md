@@ -181,7 +181,7 @@ Call any path starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> <i>"go
 
 ![micro tree encoding](img/micro_tree_encoding.png)  
 
-The total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> is <i>C<sub>n-1</sub><sup>2(n-1)</sup>. We have <i>2(n-1)</i> positions and we have to choose <i>(n-1)</i> of them and place &rarr; on these positions.  
+The total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> is <i>C<sub>n-1</sub><sup>2(n-1)</sup></i>. We have <i>2(n-1)</i> positions and we have to choose <i>(n-1)</i> of them and place &rarr; on these positions.  
 Thus the number of good paths of length <i>2(n-1)</i> is:  
 
 ![#good](https://latex.codecogs.com/svg.latex?\text{good}=C_{n-1}^{2(n-1)}-\text{bad})  
@@ -202,9 +202,12 @@ We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</
 Finally, we will show that the total number of paths of length <i>2(n-1)</i> and, thus, the total number of different trees of size <i>n</i> is &Omega;(4<sup>n</sup>).  
 
 ![lower bound](https://latex.codecogs.com/svg.latex?\sum_{k=0}^{2(n-1)}\binom{(2(n-1))}{k}=2^{2(n-1)}=4^{n-1})  
-![lower bound](https://latex.codecogs.com/svg.latex?\binom{(2(n-1))}{k}<=\binom{(2(n-1))}{n-1}\text{for all k})  
-![lower bound](https://latex.codecogs.com/svg.latex?4^{n-1}=\sum_{k=0}^{2(n-1)}\binom{(2(n-1))}{k}<=(2n-1)\binom{(2(n-1))}{n-1})  
-![lower bound](https://latex.codecogs.com/svg.latex?\binom{(2(n-1))}{n-1}>=\frac{4^{n-1}}{2n-1})  
+
+![lower bound](https://latex.codecogs.com/svg.latex?\binom{(2(n-1))}{k}\leq\binom{(2(n-1))}{n-1}\text{for all k})  
+
+![lower bound](https://latex.codecogs.com/svg.latex?4^{n-1}=\sum_{k=0}^{2(n-1)}\binom{(2(n-1))}{k}\leq(2n-1)\binom{(2(n-1))}{n-1})  
+
+![lower bound](https://latex.codecogs.com/svg.latex?\binom{(2(n-1))}{n-1}\geq\frac{4^{n-1}}{2n-1})  
 
 
 
