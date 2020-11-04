@@ -196,5 +196,5 @@ $\frac{n!}{k!(n-k)!}$
 
 <img src="https://latex.codecogs.com/svg.latex?\Large&space;x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" title="\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" />
 
-<img src="https://latex.codecogs.com/svg.latex? \text{#bad} = \frac{[2(n-1)]!}{(n-2)! n!}" />  
+<img src="https://latex.codecogs.com/gif.latex?\text{#bad} = \frac{[2(n-1)]!}{(n-2)! n!}" />  
 
