@@ -183,7 +183,7 @@ Call any path starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> <i>"go
 The total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i> is <i>C<sub>n-1</sub><sup>2(n-1)</sup>. We have <i>2(n-1)</i> positions and we have to choose <i>(n-1)</i> of them and place &rarr; on these positions.  
 Thus the number of good paths is:  
 
-<img src="https://render.githubusercontent.com/render/math?math=\Medium\text{good}=C_{n-1}^{2(n-1)}-\text{bad}">  
+![#good](https://render.githubusercontent.com/render/math?math=\large\text{good}=C_{n-1}^{2(n-1)}-\text{bad})  
 
 Every "bad" path can be modified in the following way:  
   1. Leave the path unchanged until the first time it crosses a point of the type <i>(k, k+1)</i>.  
@@ -192,8 +192,21 @@ Every "bad" path can be modified in the following way:
 The modified path has <i>k + ((n-1) - (k-1)) = n-2</i> &rarr; and <i>k+1 + ((n-1) - k) = n</i> &#8593;. Thus, every modified path starts at <i>(0, 0)</i> and ends at <i>(n-2, n)</i>.  
 We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</i> can be modified using the reversed procedure and the result would be a path starting at <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i>. Thus, the number of <i>"bad"</i> paths is exactly equal to the total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-2, n)</i>.  
 
-<img src="https://render.githubusercontent.com/render/math?math=\Large\text{bad}=C_{n-2}^{2(n-1)}">  
+![#bad](https://render.githubusercontent.com/render/math?math=\large\text{bad}=C_{n-2}^{2(n-1)})  
 
 ![compute #good](https://render.githubusercontent.com/render/math?math=\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
 ![compute #good cont](https://render.githubusercontent.com/render/math?math=\text{good}=\frac{1}{n}\binom{2(n-1)}{n-1})  
 
+
+
+
+![compute #good](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
+
+![compute #good cont](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{(2(n-1))}{n-1})  
+
+![compute #good cont](https://render.githubusercontent.com/render/math?math=\frac{1}{n}\binom{2(n-1)}{n-1})  
+
+
+<img src="https://render.githubusercontent.com/render/math?math=\text{bad}=C_{n-2}^{2(n-1)}\\">  
+<img src="https://render.githubusercontent.com/render/math?math=\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right)\\">  
+<img src="https://render.githubusercontent.com/render/math?math=\text{good}=\frac{1}{n}\binom{2(n-1)}{n-1}\\">  
