@@ -228,8 +228,6 @@ We will call the tree <i>T(V, p, r, l)</i> an ordered rooted tree if:
   For every <i>v &in; V</i> and every <i>i = 1, 2, ..., d(v)</i> we have:  
   ![ordering](https://latex.codecogs.com/svg.latex?p(l(v,i))=v)  
 
-<i>p(l(v, i)) = v</i>  
-
 Ordered rooted trees <i>T<sub>1</sub>(V<sub>1</sub> , p<sub>1</sub> , r<sub>1</sub> , l<sub>1</sub>)</i> and <i>T<sub>2</sub>(V<sub>2</sub> , p<sub>2</sub> , r<sub>2</sub> , l<sub>2</sub>)</i> are isomorphic if there exists a bijection <i>f: V<sub>1</sub> &rarr; V<sub>2</sub></i> such that:  
   * <i>f(r<sub>1</sub>) = r<sub>2</sub></i>  
   * <i>f(p<sub>1</sub>(v<sub>1</sub>)) = p<sub>2</sub>(f(v<sub>1</sub>))</i>  

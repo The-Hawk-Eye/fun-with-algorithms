@@ -54,14 +54,11 @@ class LA_table(LA_base):
             self._table[p.index()] = [p]
 
             l = 0
-            parent = self._tree.parent(p)
-            while (l < self._size - 1) and (parent is not None):
+            while (l <= self._tree.depth(p)):
                 u = self._table[p.index()][l]
                 w = self._tree.parent(u)
                 self._table[p.index()].append(w)
-
                 l += 1
-                parent = self._tree.parent(w)
 
     def _query(self, p, k):
         """ Perform simple table look-up. """
@@ -232,34 +229,6 @@ class LA_macro_micro(LA_base):
     using the ladder decomposition and querying the micro trees is done using
     table lookup. Querying takes O(1) time.
     """
-    #---------------- nested LA_macro_sparse class ----------------------#
-    class _LA_macro_sparse(LA_sparse):
-        def _build_jump_nodes(self):
-            """ Build a list of jump nodes for the tree.
-            Designate the macro leaves (the leaves of the macro tree) as jump nodes.
-            Sort the list in linear time.
-            """
-            self._jump_nodes = []
-
-            # Size of each micro tree: B = 1/4 logn.
-            B = int(1/4 * math.log2(self._size))
-
-            Q = Queue()
-            Q.enqueue(self._tree.root())
-
-            while not Q.is_empty():
-                p = Q.dequeue()
-
-                if self._tree.height(p) > B:
-                    for ch in self._tree.children(p):
-                        if self._tree.height(ch) <= B:
-                            self._jump_nodes.append(p)
-                        else:
-                            Q.enqueue(ch)
-
-            # Bucket sort should be used for sorting!
-            self._jump_nodes.sort(key=lambda p: self._tree.depth(p), reverse=True)
-
     def _preprocess(self):
         """ Divide the tree into a marco tree and disjoint micro trees. Build a ladder
         decomposition of the entire tree and compute a sparse table for the jump nodes.
@@ -270,7 +239,7 @@ class LA_macro_micro(LA_base):
         self._block_size = int(1/4 * math.log2(self._size))
 
         # Build a list of ladders and a sparse table for the jump nodes.
-        self._la_macro = self._LA_macro_sparse(self._tree)
+        super()._preprocess()
 
         # Decompose the tree into macro tree and micro trees.
         self._micro_macro_decomposition()
@@ -286,26 +255,48 @@ class LA_macro_micro(LA_base):
         a micro node we query the simple table for the micro tree.
         """
         if self._tree.height(p) > self._block_size:                         # macro node
-            return self._la_macro(p, k)
+            return super()._query(p, k)
         else:                                                               # micro node
             root = self._root[p.index()]                                    # root of the micro tree
             if k > (self._tree.depth(p) - self._tree.depth(root)):
                 parent = self._tree.parent(root)
                 k = k - (self._tree.depth(p) - self._tree.depth(root)) - 1
-                return self._la_macro(parent, k)                            # query the macro tree
-            else:                                                           # query the micro tree
+                return super()._query(parent, k)                            # query the macro tree
+            else:
                 code, f, f_inv = self._codes[root.index()]
                 table = self._micro_tables[code]
-                ancestor = table(f[p.index()], k)
+                ancestor = table(f[p.index()], k)                           # query the micro tree
                 result = f_inv[ancestor.elem()]
                 return result
+
+    def _build_jump_nodes(self):
+        """ Build a list of jump nodes for the tree.
+        Designate the macro leaves (the leaves of the macro tree) as jump nodes.
+        Sort the list in linear time.
+        """
+        self._jump_nodes = []
+        Q = Queue()
+        Q.enqueue(self._tree.root())
+
+        while not Q.is_empty():
+            p = Q.dequeue()
+
+            if self._tree.height(p) > self._block_size:
+                for ch in self._tree.children(p):
+                    if self._tree.height(ch) <= self._block_size:
+                        if p not in self._jump_nodes:
+                            self._jump_nodes.append(p)
+                    else:
+                        Q.enqueue(ch)
+
+        # Bucket sort should be used for sorting!
+        self._jump_nodes.sort(key=lambda p: self._tree.depth(p), reverse=True)
 
     def _micro_macro_decomposition(self):
         """ Build a list of the macro leaves and a list of the micro roots of the tree.
         Store a mapping that associates every micro node with the root of its micro tree.
         """
-        # Store all macro leaves and the roots of all micro trees.
-        self._macro_leaves = self._la_macro._jump_nodes[:]
+        # Store the roots of all micro trees.
         self._micro_roots = []
 
         # A mapping that associates every micro node with the root of its micro tree.
@@ -337,7 +328,7 @@ class LA_macro_micro(LA_base):
             code, f, f_inv = self._encode(p)            # encode the micro tree
             self._codes[p.index()] = code, f, f_inv
             if code not in self._micro_tables:          # build a simple table if needed
-                repr_tree = self._decode(code, f, f_inv)
+                repr_tree = self._decode(code)
                 self._micro_tables[code] = LA_table(repr_tree)
 
     def _encode(self, p):
@@ -368,13 +359,12 @@ class LA_macro_micro(LA_base):
         code = "".join(str(bit) for bit in binary_code)
         return int(code, 2), f, f_inv
 
-    def _decode(self, code, f, f_inv):
+    def _decode(self, code):
         """ Given a binary code build a tree corresponding to that code.
         @param code (int):  A 2b-bit number encoding a tree of size b.
-        @param p (Position):
         @return tree (Tree): A Tree object corresponding to the binary encoding.
         """
-        binary_code = [bit for bit in "{0:b}".format(code)]
+        binary_code = [int(bit) for bit in "{0:b}".format(code)]
         binary_code = binary_code[1:]
 
         # Assert the binary code is a valid encoding of a tree.
@@ -382,19 +372,13 @@ class LA_macro_micro(LA_base):
         ones = len([x for x in binary_code if x == 1])
         assert(zeros == ones)
 
-        #
         tree = Tree()
         elem = 0
-
         cursor = tree.add_root(elem)
-        # f[f_inv[elem].index()] = cursor
-
-        elem += 1
         for bit in binary_code:
             if bit == 0:
-                cursor = tree.add_child(cursor, elem)
-                # f[f_inv[elem].index()] = cursor
                 elem += 1
+                cursor = tree.add_child(cursor, elem)
             elif bit == 1:
                 cursor = tree.parent(cursor)
 
