@@ -185,27 +185,23 @@ Thus the number of good paths is:
 
 ![#good](https://latex.codecogs.com/svg.latex?\text{good}=C_{n-1}^{2(n-1)}-\text{bad})  
 
-<i>#good = C<sub>n-1</sub><sup>2(n-1)</sup> - #bad</i>  
-
 Every "bad" path can be modified in the following way:  
   1. Leave the path unchanged until the first time it crosses a point of the type <i>(k, k+1)</i>.  
   2. After that change every &rarr; with &#8593; and every &#8593; with &rarr;.  
 
 The modified path has <i>k + ((n-1) - (k-1)) = n-2</i> &rarr; and <i>k+1 + ((n-1) - k) = n</i> &#8593;. Thus, every modified path starts at <i>(0, 0)</i> and ends at <i>(n-2, n)</i>.  
 We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</i> can be modified using the reversed procedure and the result would be a path starting at <i>(0, 0)</i> and ending at <i>(n-1, n-1)</i>. Thus, the number of <i>"bad"</i> paths is exactly equal to the total number of paths starting from <i>(0, 0)</i> and ending at <i>(n-2, n)</i>.  
-<i>#bad = C<sub>n-2</sub><sup>2(n-1)</sup></i>
 
-
-![number of bad paths](https://latex.codecogs.com/svg.latex?\text{bad}=C_{n-1}^{2(n-1)})  
+![number of bad paths](https://latex.codecogs.com/svg.latex?\text{bad}=C_{n-2}^{2(n-1)})  
 
 
 ![number of bad paths](https://latex.codecogs.com/svg.latex?\text{bad}=\binom{(2n-2)!}{(n-2)!n!})  
 
-![number of good paths](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2n-2)!}{(n-1)!(n-1)!}-\frac{(2n-2)!}{(n-2)!n!})  
+![number of good paths](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!})  
 
-![number of good paths cont1](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2n-2)!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
+![number of good paths cont1](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
 
-![number of good paths cont2](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{2(n-1)}{n-1})  
+![number of good paths cont2](https://latex.codecogs.com/svg.latex?\text{good}=\frac{1}{n}\binom{(2(n-1))}{n-1})  
 
 
 ![test](https://latex.codecogs.com/svg.latex?\text[test]=\binom{a}{b})  
