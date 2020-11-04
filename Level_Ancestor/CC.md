@@ -196,7 +196,7 @@ We can see that every path starting at <i>(0, 0)</i> and ending at <i>(n-2, n)</
 
 ![compute #good](https://latex.codecogs.com/svg.latex?\text{good}=\frac{(2(n-1))!}{(n-1)!(n-1)!}-\frac{(2(n-1))!}{(n-2)!n!}=\frac{(2(n-1))!}{(n-1)!(n-1)!}\left(1-\frac{n-1}{n}\right))  
 
-![compute #good cont](https://latex.codecogs.com/svg.latex?&tab;=\frac{1}{n}\binom{(2(n-1))}{n-1})  
+![compute #good cont](https://latex.codecogs.com/svg.latex?&space;&space;&space;&space;&space;=\frac{1}{n}\binom{(2(n-1))}{n-1})  
 
 
 
