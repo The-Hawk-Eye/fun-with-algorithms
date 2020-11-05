@@ -1,0 +1,5 @@
+# python binary files
+__pycache__/
+
+# unit tests
+unit_test.py
