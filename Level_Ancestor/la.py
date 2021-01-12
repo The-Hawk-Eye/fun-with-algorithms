@@ -3,7 +3,7 @@ import math
 
 from utils.tree import Tree
 from utils.queue import Queue
-from utils.traversal_algorithms import depth_first_traversal
+from utils.traversal_algorithms import breadth_first_traversal, depth_first_traversal
 
 
 class LA_base:
@@ -50,7 +50,7 @@ class LA_table(LA_base):
         self._table = {}
 
         # Build the table using bottom-up dynamic programming.
-        for p in self._tree.positions():
+        for p in breadth_first_traversal(self._tree):
             self._table[p.index()] = [p]
 
             l = 0
@@ -254,18 +254,18 @@ class LA_macro_micro(LA_sparse):
         level ancestor is a macro node we again query the macro structure. If the level ancestor is
         a micro node we query the simple table for the micro tree.
         """
-        if self._tree.height(p) > self._block_size:                         # macro node
-            return super()._query(p, k)
-        else:                                                               # micro node
-            root = self._root[p.index()]                                    # root of the micro tree
-            if k > (self._tree.depth(p) - self._tree.depth(root)):
+        if self._tree.height(p) > self._block_size:     # macro node
+            return super()._query(p, k)                 # query the macro tree
+        else:                                           # micro node
+            root = self._root[p.index()]
+            if k > (self._tree.depth(p) - self._tree.depth(root)):  # ancestor is a macro node
                 parent = self._tree.parent(root)
                 k = k - (self._tree.depth(p) - self._tree.depth(root)) - 1
-                return super()._query(parent, k)                            # query the macro tree
-            else:
+                return super()._query(parent, k)                    # query the macro tree
+            else:                                                   # ancestor is a micro node
                 code, f, f_inv = self._codes[root.index()]
                 table = self._micro_tables[code]
-                ancestor = table(f[p.index()], k)                           # query the micro tree
+                ancestor = table(f[p.index()], k)                   # query the micro tree
                 result = f_inv[ancestor.elem()]
                 return result
 
@@ -293,8 +293,8 @@ class LA_macro_micro(LA_sparse):
         self._jump_nodes.sort(key=lambda p: self._tree.depth(p), reverse=True)
 
     def _micro_macro_decomposition(self):
-        """ Build a list of the macro leaves and a list of the micro roots of the tree.
-        Store a mapping that associates every micro node with the root of its micro tree.
+        """ Build a list of the micro roots of the tree. Store a mapping that associates
+        every micro node with the root of its micro tree.
         """
         # Store the roots of all micro trees.
         self._micro_roots = []

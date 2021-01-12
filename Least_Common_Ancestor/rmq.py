@@ -6,6 +6,7 @@ sys.path.append("../")
 from . import lca
 from utils.binary_tree import BinaryTree
 from utils.stack import Stack
+from utils.traversal_algorithms import build_cartesian_tree
 
 
 class RMQ_base:
@@ -338,8 +339,9 @@ class RMQ_Index:
         """
         self._arr = arr
         self._length = len(arr)
-        self._tree = BinaryTree()
-        self._pos_index = self._tree.build_cartesian_tree(self._arr)
+        self._tree, self._pos_index = build_cartesian_tree(self._arr)
+        # self._tree = BinaryTree()
+        # self._pos_index = self._tree.build_cartesian_tree(self._arr)
         self._lca = lca.LCA_Index(self._tree)
 
     def __call__(self, i, j):

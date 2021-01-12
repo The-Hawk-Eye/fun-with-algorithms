@@ -10,8 +10,7 @@ to the accessor methods supported by the positional container ADT:
     T.height(p): Return the height of the node at Position p.
     T.is_root(p): Return True if Position p is the root of T.
     T.is_leaf(p): Return True if Position p does not have any children.
-    T.positions(strategy): Generate an iteration of all positions of tree T
-                           using the given strategy for tree traversal.
+    T.positions(): Generate an iteration of all positions of tree T.
 
 The tree data structure also supports the following mutator methods in addition
 to the mutator methods supported by the positional container ADT:
@@ -22,7 +21,7 @@ to the mutator methods supported by the positional container ADT:
 """
 
 from .positional_container import PositionalContainer
-from .traversal_algorithms import breadth_first_traversal
+
 
 class Tree(PositionalContainer):
     #---------------- nested Node class ----------------------#
@@ -112,14 +111,16 @@ class Tree(PositionalContainer):
         """ Return True if Position p dos not have any children. """
         return self.num_children(p) == 0
 
-    def positions(self, strategy=breadth_first_traversal):
+    def positions(self):
         """ Generate an iteration of all positions of the tree.
-        @param strategy (func): A function implementing the strategy for tree traversal.
-                                Default is breadth-first traversal.
         @yield p (Position): Position representing the node in the tree.
         """
-        for p in strategy(self):
+        def expand(p):
             yield p
+            for ch in self.children(p):
+                for _c in expand(ch):
+                    yield _c
+        return expand(self.root())
 
     #---------------- public mutators ----------------#
     def add_root(self, elem):
@@ -177,7 +178,8 @@ class Tree(PositionalContainer):
         """ Traverse the tree and assign a unique index to each node. Compute the depths
         and the heights of all nodes and store them in dictionaries.
         """
-        self._curr_idx = super().reindex()
+        super().reindex()
+        self._depths, self._heights = None, None
         for p in self.positions():
             self._compute_depth(p)
             self._compute_height(p)
@@ -186,24 +188,20 @@ class Tree(PositionalContainer):
     def _compute_depth(self, p):
         if self._depths is None:
             self._depths = {self.root().index() : 0}
-
         if p.index() not in self._depths:
             depth = 1 + self._compute_depth(self.parent(p))
             self._depths[p.index()] = depth
-
         return self._depths[p.index()]
 
     def _compute_height(self, p):
         if self._heights is None:
             self._heights = {}
-
         if p.index() not in self._heights:
             if self.is_leaf(p):
                 height = 0
             else:
                 height = 1 + max(self._compute_height(ch) for ch in self.children(p))
             self._heights[p.index()] = height
-
         return self._heights[p.index()]
 
 #
