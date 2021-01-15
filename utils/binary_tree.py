@@ -10,7 +10,7 @@ The binary tree data structure also supports the following mutator methods:
 """
 
 from .tree import Tree
-from .stack import Stack
+
 
 class BinaryTree(Tree):
     #---------------- nested Node class ----------------------#
@@ -90,7 +90,6 @@ class BinaryTree(Tree):
 
         # Invalidate depths and heights after modifying the tree.
         self._depths, self._heights = None, None
-
         return self._make_position(left_ch)
 
     def add_right(self, p, elem):
@@ -111,7 +110,6 @@ class BinaryTree(Tree):
 
         # Invalidate depths and heights after modifying the tree.
         self._depths, self._heights = None, None
-
         return self._make_position(right_ch)
 
     def add_child(self, p, elem):
@@ -131,10 +129,10 @@ class BinaryTree(Tree):
             raise ValueError("The node already has two children!")
 
     def insert(self, p, elem, left=True):
-        """ Overwrite the _insert method.
+        """ Overwrite the `insert` method.
         Insert a new node at Position p. Attach the subtree rooted at the existing node
-        as a child of the new node. Note that the depths of the nodes must be recomputed
-        after executing the method _insert.
+        as a child of the new node. Note that the depths and the heights of the nodes
+        must be recomputed after executing the method `insert`.
         @param p (Position): Position representing the node in the tree.
         @param elem: Element to be stored at the new node.
         @param left (bool): If True attach the subtree as the left child of the node.
@@ -162,45 +160,6 @@ class BinaryTree(Tree):
 
         # Invalidate depths and heights after modifying the tree.
         self._depths, self._heights = None, None
-
         return self._make_position(new_node)
-
-    def build_cartesian_tree(self, arr):
-        """ Build a Cartesian Tree for the given array. Each nodes of the tree
-        stores the index of the element in the array.
-        Build an auxiliary array storing the position of each node in the tree.
-        @param arr (List[int]): A list of integers.
-        @return pos_index (List[Position]): A list of Positions. pos[i] stores the position
-                                            of the node with element the index i.
-        """
-        # Set the self instance to an empty tree.
-        self._root = None
-        self._size = 0
-        self._curr_idx = 0
-
-        # Maintaining a stack of the nodes in the right spine.
-        S = Stack()
-        last_pop = None
-
-        # Iterate through the array and insert the new nodes. Store the position of the Node.
-        pos_index = [None] * len(arr)
-        for i in range(len(arr)):
-            while (not S.is_empty()) and (arr[S.top().elem()] > arr[i]):
-                last_pop = S.pop()
-            if self.is_empty():
-                p = self.add_root(i)
-            elif last_pop is None:
-                p = self.add_right(S.top(), i)
-            else:
-                p = self.insert(last_pop, i, left=True)
-
-            pos_index[i] = p
-            S.push(p)
-            last_pop = None
-
-        # Recompute the indices, depths, and heights of the nodes after building the tree.
-        self.reindex()
-
-        return pos_index
 
 #

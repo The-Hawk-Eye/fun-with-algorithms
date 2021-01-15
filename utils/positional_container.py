@@ -86,7 +86,7 @@ class PositionalContainer:
         """ Return the total number of nodes in the container. """
         return self._size
 
-    #---------------- public mutators ------- ---------#
+    #---------------- public mutators -----------------#
     def replace(self, p, elem):
         """ Replace the element at the node at Position p with the new elem.
         @param p (Position): Position representing the node in the container.

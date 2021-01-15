@@ -49,9 +49,7 @@ class Tree(PositionalContainer):
         self._root = None
         self._size = 0
         self._curr_idx = 0
-
-        self._depths = None
-        self._heights = None
+        self._depths, self._heights = None, None
 
     #---------------- public accessors ----------------#
     def root(self):
@@ -151,13 +149,12 @@ class Tree(PositionalContainer):
 
         # Invalidate depths and heights after modifying the tree.
         self._depths, self._heights = None, None
-
         return self._make_position(child)
 
     def insert(self, p, elem):
         """ Insert a new node at Position p. Attach the subtree rooted at the existing
-        node as a child of the new node. Note that the depths of the nodes must be
-        recomputed after executing the method _insert.
+        node as a child of the new node. Note that the depths and the heights of the nodes
+        must be recomputed after executing the method `insert`.
         @param p (Position): Position representing the node in the tree.
         @param elem: Element to be stored at the new node.
         @return new_p (Position): Return Position representing the new node.
@@ -171,7 +168,6 @@ class Tree(PositionalContainer):
 
         # Invalidate depths and heights after modifying the tree.
         self._depths, self._heights = None, None
-
         return self._make_position(new_node)
 
     def reindex(self):
